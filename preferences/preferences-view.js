@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 
-export default function PreferencesView({currentState, fields, texts, labels, onChangeLogin,
-  onChangeRegistration, fieldChangeEvent, onForgotPassword,
-  fieldBlurEvent, buttonClick, handleChange, changeView }) {
+export default function PreferencesView({currentState, fields, texts, labels, path }) {
 
 
     return (
       <div>
-        <div> Preferences Page </div>
+        <div> Preferences Page {path} </div>
       </div>
     );
 }
@@ -20,12 +18,5 @@ PreferencesView.propTypes = {
 	fields: PropTypes.object,
   texts: PropTypes.object,
   labels: PropTypes.object,
-  onChangeLogin: PropTypes.func,
-  onChangeRegistration: PropTypes.func,
-  onForgotPassword: PropTypes.func,
-  fieldChangeEvent: PropTypes.func,
-  fieldBlurEvent: PropTypes.func,
-  buttonClick: PropTypes.func,
-  handleChange: PropTypes.func,
-  changeView: PropTypes.func
+  path: PropTypes.string
 };
