@@ -1,31 +1,20 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Table from '../../coreView/common/table';
 
+export default function UsersView({users }) {
 
-export default function UsersView({currentState, fields, texts, labels, onChangeLogin,
-  onChangeRegistration, fieldChangeEvent, onForgotPassword,
-  fieldBlurEvent, buttonClick, handleChange, changeView }) {
-
+    let columns = [];
+    if (users.appLabels != null && users.appLabels.ADMIN_USER_TABLE != null) {
+      columns = users.appLabels.ADMIN_USER_TABLE;
+    }
 
     return (
-      <div>
-        <div> Users Page </div>
-      </div>
+      <Table items={users.items} columns={columns} />
     );
 }
 
 
 UsersView.propTypes = {
-  currentState: PropTypes.object,
-	fields: PropTypes.object,
-  texts: PropTypes.object,
-  labels: PropTypes.object,
-  onChangeLogin: PropTypes.func,
-  onChangeRegistration: PropTypes.func,
-  onForgotPassword: PropTypes.func,
-  fieldChangeEvent: PropTypes.func,
-  fieldBlurEvent: PropTypes.func,
-  buttonClick: PropTypes.func,
-  handleChange: PropTypes.func,
-  changeView: PropTypes.func
+  users: PropTypes.object
 };
