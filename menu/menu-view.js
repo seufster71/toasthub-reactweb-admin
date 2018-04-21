@@ -1,31 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Table from '../../coreView/common/table';
 
+export default function MenuView({menus}) {
 
-export default function MenuView({currentState, fields, texts, labels, onChangeLogin,
-  onChangeRegistration, fieldChangeEvent, onForgotPassword,
-  fieldBlurEvent, buttonClick, handleChange, changeView }) {
-
-
-    return (
-      <div>
-        <div> Menu Page </div>
-      </div>
-    );
+  let columns = [];
+  if (menus.appLabels != null && menus.appLabels.ADMIN_MENU_TABLE != null) {
+    columns = menus.appLabels.ADMIN_MENU_TABLE;
+  }
+  return (
+    <Table items={menus.items} columns={columns} />
+  );
 }
 
-
 MenuView.propTypes = {
-  currentState: PropTypes.object,
-	fields: PropTypes.object,
-  texts: PropTypes.object,
-  labels: PropTypes.object,
-  onChangeLogin: PropTypes.func,
-  onChangeRegistration: PropTypes.func,
-  onForgotPassword: PropTypes.func,
-  fieldChangeEvent: PropTypes.func,
-  fieldBlurEvent: PropTypes.func,
-  buttonClick: PropTypes.func,
-  handleChange: PropTypes.func,
-  changeView: PropTypes.func
+  menus: PropTypes.object
 };

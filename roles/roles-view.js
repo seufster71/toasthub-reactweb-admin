@@ -1,31 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Table from '../../coreView/common/table';
 
+export default function RolesView({roles}) {
 
-export default function RolesView({currentState, fields, texts, labels, onChangeLogin,
-  onChangeRegistration, fieldChangeEvent, onForgotPassword,
-  fieldBlurEvent, buttonClick, handleChange, changeView }) {
-
-
-    return (
-      <div>
-        <div> Roles Page </div>
-      </div>
-    );
+  let columns = [];
+  if (roles.appLabels != null && roles.appLabels.ADMIN_ROLE_TABLE != null) {
+    columns = roles.appLabels.ADMIN_ROLE_TABLE;
+  }
+  return (
+    <Table items={roles.items} columns={columns} />
+  );
 }
 
 
 RolesView.propTypes = {
-  currentState: PropTypes.object,
-	fields: PropTypes.object,
-  texts: PropTypes.object,
-  labels: PropTypes.object,
-  onChangeLogin: PropTypes.func,
-  onChangeRegistration: PropTypes.func,
-  onForgotPassword: PropTypes.func,
-  fieldChangeEvent: PropTypes.func,
-  fieldBlurEvent: PropTypes.func,
-  buttonClick: PropTypes.func,
-  handleChange: PropTypes.func,
-  changeView: PropTypes.func
+  roles: PropTypes.object
 };

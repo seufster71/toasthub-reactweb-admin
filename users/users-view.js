@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Table from '../../coreView/common/table';
 
-export default function UsersView({users }) {
+export default function UsersView({users}) {
 
     let columns = [];
     if (users.appLabels != null && users.appLabels.ADMIN_USER_TABLE != null) {
