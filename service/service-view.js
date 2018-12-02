@@ -1,31 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Table from '../../coreView/common/table';
 
+export default function ServiceView({services}) {
 
-export default function ServiceView({currentState, fields, texts, labels, onChangeLogin,
-  onChangeRegistration, fieldChangeEvent, onForgotPassword,
-  fieldBlurEvent, buttonClick, handleChange, changeView }) {
-
-
-    return (
-      <div>
-        <div> Service Page </div>
-      </div>
-    );
+  let columns = [];
+  if (services.appLabels != null && services.appLabels.ADMIN_SERVICE_CRAWLER_TABLE != null) {
+    columns = services.appLabels.ADMIN_SERVICE_CRAWLER_TABLE;
+  }
+  return (
+    <Table items={services.items} columns={columns} />
+  );
 }
 
 
 ServiceView.propTypes = {
-  currentState: PropTypes.object,
-	fields: PropTypes.object,
-  texts: PropTypes.object,
-  labels: PropTypes.object,
-  onChangeLogin: PropTypes.func,
-  onChangeRegistration: PropTypes.func,
-  onForgotPassword: PropTypes.func,
-  fieldChangeEvent: PropTypes.func,
-  fieldBlurEvent: PropTypes.func,
-  buttonClick: PropTypes.func,
-  handleChange: PropTypes.func,
-  changeView: PropTypes.func
+  services: PropTypes.object
 };

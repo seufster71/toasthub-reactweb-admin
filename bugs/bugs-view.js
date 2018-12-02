@@ -1,31 +1,20 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Table from '../../coreView/common/table';
+
+export default function BugsView({bugs}) {
 
 
-export default function BugsView({currentState, fields, texts, labels, onChangeLogin,
-  onChangeRegistration, fieldChangeEvent, onForgotPassword,
-  fieldBlurEvent, buttonClick, handleChange, changeView }) {
-
-
+    let columns = [];
+    if (bugs.appLabels != null && bugs.appLabels.ADMIN_BUGS_TABLE != null) {
+      columns = bugs.appLabels.ADMIN_BUGS_TABLE;
+    }
     return (
-      <div>
-        <div> Bugs Page </div>
-      </div>
+      <Table items={bugs.items} columns={columns} />
     );
 }
 
 
 BugsView.propTypes = {
-  currentState: PropTypes.object,
-	fields: PropTypes.object,
-  texts: PropTypes.object,
-  labels: PropTypes.object,
-  onChangeLogin: PropTypes.func,
-  onChangeRegistration: PropTypes.func,
-  onForgotPassword: PropTypes.func,
-  fieldChangeEvent: PropTypes.func,
-  fieldBlurEvent: PropTypes.func,
-  buttonClick: PropTypes.func,
-  handleChange: PropTypes.func,
-  changeView: PropTypes.func
+  bugs: PropTypes.object
 };
