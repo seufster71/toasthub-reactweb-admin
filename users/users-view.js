@@ -31,5 +31,12 @@ export default function UsersView({containerState, users, appPrefs, onPageLimitC
 
 
 UsersView.propTypes = {
-  users: PropTypes.object
+  containerState: PropTypes.object,
+  users: PropTypes.object,
+  appPrefs: PropTypes.object,
+  onPageLimitChange: PropTypes.func,
+  onSearchChange: PropTypes.func,
+  onSearchClick: PropTypes.func,
+  onPaginationClick: PropTypes.func,
+  onFilterClick: PropTypes.func
 };
