@@ -4,11 +4,14 @@ import List from '../../coreView/common/list';
 import Search from '../../coreView/common/search';
 import Modal from '../../coreView/common/modal';
 import DeleteModal from '../../coreView/common/delete-modal';
+import Tabs from '../../coreView/common/tabs';
 
 export default function PreferencesView({containerState, preferences, appPrefs, onPageLimitChange,
   onSearchChange, onSearchClick, onPaginationClick, onFilterClick, onSaveFilter, onClearFilter,
-  onSavePreference, onDeletePreference, onAddModal, onDeleteModal, onCloseModal}) {
+  onSavePreference, onDeletePreference, onAddModal, onDeleteModal, onCloseModal, onClickTabItem, onToggleItem}) {
 
+  let tabLabels = ["Fields","Labels","Texts"];
+  let activeTab = "Fields";
   let columns = [];
   if (preferences.appLabels != null && preferences.appLabels.ADMIN_PREFERENCE_TABLE != null) {
     columns = preferences.appLabels.ADMIN_PREFERENCE_TABLE;
@@ -39,21 +42,24 @@ export default function PreferencesView({containerState, preferences, appPrefs, 
           second: '2-digit'
         }).format(items[i].modified);
       cells.push(<div key={0} >
-              <div className="row"><div className="col-md-12"><h5>{items[i].title.langTexts[0].text}</h5></div></div>
-              <div className="col-md-4">
-
-                <div>Category: {items[i].category}</div>
-                <div>Code: {items[i].name}</div>
-              </div>
-              <div className="col-md-4">
-                <div>Status: {active}</div>
-                <div><small>Created: {created}</small></div>
-                <div><small>Modified: {modified}</small></div>
-              </div>
-              <div className="col-md-4">
-                <i className="fa fa-pencil-square-o" onClick={onAddModal()}/>
-                <i className="fa fa-trash" onClick={onDeleteModal()}/>
-              </div>
+              <div className="row">
+                <div className="col-md-12"><i className="fa fa-plus-square" onClick={onToggleItem(items[i].id)}/><span> {items[i].title.langTexts[0].text}</span></div></div>
+                <div className="col-md-4">
+                  <div>Category: {items[i].category}</div>
+                  <div>Code: {items[i].name}</div>
+                </div>
+                <div className="col-md-4">
+                  <div>Status: {active}</div>
+                  <div><small>Created: {created}</small></div>
+                  <div><small>Modified: {modified}</small></div>
+                </div>
+                <div className="col-md-4">
+                  <i className="fa fa-pencil-square-o" onClick={onAddModal()}/>
+                  <i className="fa fa-trash" onClick={onDeleteModal()}/>
+                </div>
+                <div className="col-md-12">
+                <Tabs tabLabels={tabLabels} activeTab={activeTab} onClickTabItem={onClickTabItem()}/>
+                </div>
               </div>);
 
       listRows.push(<li key={items[i].id} scope="row" className="row">{cells}</li>);
@@ -140,5 +146,7 @@ PreferencesView.propTypes = {
   onDeletePreference: PropTypes.func,
   onAddModal: PropTypes.func,
   onDeleteModal: PropTypes.func,
-  onCloseModal: PropTypes.func
+  onCloseModal: PropTypes.func,
+  onClickTabItem: PropTypes.func,
+  onToggleItem: PropTypes.func
 };
