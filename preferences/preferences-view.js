@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import List from '../../coreView/common/list';
 import Search from '../../coreView/common/search';
 import Modal from '../../coreView/common/modal';
+import DeleteModal from '../../coreView/common/delete-modal';
 
 export default function PreferencesView({containerState, preferences, appPrefs, onPageLimitChange,
-  onSearchChange, onSearchClick, onPaginationClick, onFilterClick, onSaveFilter, onClearFilter, onSavePreference, onOpenAddModal, onCloseModal}) {
+  onSearchChange, onSearchClick, onPaginationClick, onFilterClick, onSaveFilter, onClearFilter,
+  onSavePreference, onDeletePreference, onAddModal, onDeleteModal, onCloseModal}) {
 
   let columns = [];
   if (preferences.appLabels != null && preferences.appLabels.ADMIN_PREFERENCE_TABLE != null) {
@@ -36,9 +38,10 @@ export default function PreferencesView({containerState, preferences, appPrefs, 
           minute: '2-digit',
           second: '2-digit'
         }).format(items[i].modified);
-      cells.push(<div key={0} scope="row" className="row">
+      cells.push(<div key={0} >
+              <div className="row"><div className="col-md-12"><h5>{items[i].title.langTexts[0].text}</h5></div></div>
               <div className="col-md-4">
-                <h5>{items[i].title.langTexts[0].text}</h5>
+
                 <div>Category: {items[i].category}</div>
                 <div>Code: {items[i].name}</div>
               </div>
@@ -48,21 +51,22 @@ export default function PreferencesView({containerState, preferences, appPrefs, 
                 <div><small>Modified: {modified}</small></div>
               </div>
               <div className="col-md-4">
-                <i className="fa fa-pencil-square-o" onClick={onCloseModal()}/>
-                <i className="fa fa-trash" onClick={onCloseModal()}/>
+                <i className="fa fa-pencil-square-o" onClick={onAddModal()}/>
+                <i className="fa fa-trash" onClick={onDeleteModal()}/>
               </div>
               </div>);
 
-      listRows.push(<li key={items[i].id} >{cells}</li>);
+      listRows.push(<li key={items[i].id} scope="row" className="row">{cells}</li>);
     }
   } else {
     listRows.push(<li key="1"><div id={appPrefs.appTexts.GLOBAL_PAGE.GLOBAL_PAGE_LIST_EMPTY.name}> {appPrefs.appTexts.GLOBAL_PAGE.GLOBAL_PAGE_LIST_EMPTY.value}</div></li>);
   }
+  let header = <h5 style={{display:'inline'}}>{preferences.appTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value}</h5>;
   return (
     <div className="main_content">
       <List
       containerState={containerState}
-      header={preferences.appTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER}
+      header={header}
       items={listRows}
       itemCount={preferences.itemCount}
       pageStart={preferences.pageStart}
@@ -91,6 +95,13 @@ export default function PreferencesView({containerState, preferences, appPrefs, 
           </div>
         </div>
      </Modal>
+     <DeleteModal isOpen={containerState.isDeleteModalOpen}
+        title="Delete Preference"
+        bodyMsg="Are you sure you want to delete?"
+        onDeleteModal={onDeleteModal()}
+        onCloseModal={onCloseModal()}
+        onDelete={onDeletePreference()}
+      />
      <Modal isOpen={containerState.isFilterModalOpen} >
        <div className="modal-dialog">
          <div className="modal-content">
@@ -126,6 +137,8 @@ PreferencesView.propTypes = {
   onSaveFilter: PropTypes.func,
   onClearFilter: PropTypes.func,
   onSavePreference: PropTypes.func,
-  onOpenAddModal: PropTypes.func,
+  onDeletePreference: PropTypes.func,
+  onAddModal: PropTypes.func,
+  onDeleteModal: PropTypes.func,
   onCloseModal: PropTypes.func
 };
