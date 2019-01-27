@@ -7,23 +7,27 @@ import ProgressBar from '../../coreView/common/progress-bar';
 
 export default function DashboardView({currentState, fields, texts, labels, onChangeLogin,
   onChangeRegistration, fieldChangeEvent, onForgotPassword,
-  fieldBlurEvent, buttonClick, handleChange, changeView }) {
+  fieldBlurEvent, buttonClick, handleChange, changeView, stats }) {
 
     let data1 = {
       datasets: [{
+         label: "Members",
          backgroundColor: "#FFF",
          data: [Math.random() * 100],
       },{
+         label: "Something",
          backgroundColor: "#FFF",
          data: [Math.random() * 100],
       },{
+         label: "tathat",
          backgroundColor: "#FFF",
          data: [Math.random() * 100],
       },{
+         label: "fofof",
          backgroundColor: "#FFF",
          data: [Math.random() * 100],
       }]
-    }
+    };
 
     let data2 = {
       datasets: [{
@@ -43,9 +47,11 @@ export default function DashboardView({currentState, fields, texts, labels, onCh
          backgroundColor: "#5a5b5b",
          data: [Math.random() * 25],
       }]
+    };
+    let v1 = "0";
+    if (stats.itemCount != null) {
+      v1 = stats.itemCount.toString();
     }
-
-    let v1 = "2";
     let v2 = "15,000";
     let v3 = "+12,000";
     let v4 = "1";
@@ -110,6 +116,7 @@ DashboardView.propTypes = {
 	fields: PropTypes.object,
   texts: PropTypes.object,
   labels: PropTypes.object,
+  stats: PropTypes.object,
   onChangeLogin: PropTypes.func,
   onChangeRegistration: PropTypes.func,
   onForgotPassword: PropTypes.func,
