@@ -5,6 +5,7 @@ import Search from '../../coreView/common/search';
 import Modal from '../../coreView/common/modal';
 import DeleteModal from '../../coreView/common/delete-modal';
 import Tabs from '../../coreView/common/tabs';
+import moment from 'moment';
 
 export default function PreferencesView({containerState, preferences, appPrefs, onPageLimitChange,
   onSearchChange, onSearchClick, onPaginationClick, onFilterClick, onSaveFilter, onClearFilter,
@@ -25,22 +26,30 @@ export default function PreferencesView({containerState, preferences, appPrefs, 
       if (items[i].active == true) {
         active = "Active";
       }
-      let created = new Intl.DateTimeFormat('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        }).format(items[i].created);
-      let modified = new Intl.DateTimeFormat('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        }).format(items[i].modified);
+      let created = "";
+      if (items[i].created != null) {
+    	  created = new Intl.DateTimeFormat('en-US', {
+	          year: 'numeric',
+	          month: 'short',
+	          day: 'numeric',
+	          hour: 'numeric',
+	          minute: 'numeric',
+	          second: 'numeric',
+	          timeZone: 'America/New_York'
+    	  }).format(moment(items[i].created).toDate());
+      }
+      let modified = "";
+      if (items[i].modified != null) {
+    	  modified = new Intl.DateTimeFormat('en-US', {
+	          year: 'numeric',
+	          month: 'short',
+	          day: 'numeric',
+	          hour: 'numeric',
+	          minute: 'numeric',
+	          second: 'numeric',
+	          timeZone: 'America/New_York'
+    	  }).format(moment(items[i].modified).toDate());
+      }
       cells.push(<div key={0} >
               <div className="row">
                 <div className="col-md-12"><i className="fa fa-plus-square" onClick={onToggleItem(items[i].id)}/><span> {items[i].title.langTexts[0].text}</span></div></div>
