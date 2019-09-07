@@ -11,7 +11,7 @@ export default function LanguageView({containerState, languages, appPrefs, onLis
   let columns = [];
   
   if (languages.appLabels != null && languages.appLabels.ADMIN_LANGUAGE_TABLE != null) {
-    columns = languages.appLabels.ADMIN_LANGUAGE_TABLE;
+	  columns = languages.appLabels.ADMIN_LANGUAGE_TABLE;
   }
   return (
 	<div>
@@ -77,18 +77,18 @@ export default function LanguageView({containerState, languages, appPrefs, onLis
 
 
 LanguageView.propTypes = {
-  containerState: PropTypes.object,
-  languages: PropTypes.object,
-  appPrefs: PropTypes.object,
-  onListLimitChange: PropTypes.func,
-  onSearchChange: PropTypes.func,
-  onSearchClick: PropTypes.func,
-  onPaginationClick: PropTypes.func,
-  onColumnSort: PropTypes.func,
-  openEditModal: PropTypes.func,
-  openDeleteModal: PropTypes.func,
-  closeModal: PropTypes.func,
-  onSaveLanguage: PropTypes.func,
-  onDeleteLanguage: PropTypes.func,
-  inputChange: PropTypes.func
+	containerState: PropTypes.object,
+	languages: PropTypes.object,
+	appPrefs: PropTypes.object,
+	onListLimitChange: PropTypes.func,
+	onSearchChange: PropTypes.func,
+	onSearchClick: PropTypes.func,
+	onPaginationClick: PropTypes.func,
+	onColumnSort: PropTypes.func,
+	openEditModal: PropTypes.func,
+	openDeleteModal: PropTypes.func,
+	closeModal: PropTypes.func,
+	onSaveLanguage: PropTypes.func,
+	onDeleteLanguage: PropTypes.func,
+	inputChange: PropTypes.func
 };
