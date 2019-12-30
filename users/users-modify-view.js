@@ -42,10 +42,16 @@ export default function UsersModifyView({containerState, user, appPrefs, userApp
     let passwordModel = {};
     let adminUserFormVerifyPassword = {};
     let verifyPasswordModel = {};
+    let adminUserFormForceReset = {};
+    let forceResetModel = {};
     let adminUserFormActive = {};
     let activeModel = {};
     let adminUserFormLanguage = {};
     let languageModel = {};
+    let adminUserFormLogLevel = {};
+    let logLevelModel = {};
+    let logLevelOptions = [];
+    
     if (userAppForms != null && userAppForms.ADMIN_USER_FORM != null) {
     	for (let i = 0; i < userAppForms.ADMIN_USER_FORM.length; i++) {
     		switch (userAppForms.ADMIN_USER_FORM[i].name) {
@@ -103,6 +109,12 @@ export default function UsersModifyView({containerState, user, appPrefs, userApp
     				verifyPasswordModel = JSON.parse(adminUserFormVerifyPassword.classModel);
     			}
     			break;
+    		case "ADMIN_USER_FORM_FORCERESET":
+    			adminUserFormForceReset = userAppForms.ADMIN_USER_FORM[i];
+    			if (adminUserFormForceReset.classModel != "") {
+    				forceResetModel = JSON.parse(adminUserFormForceReset.classModel);
+    			}
+    			break;
     		case "ADMIN_USER_FORM_ACTIVE":
     			adminUserFormActive = userAppForms.ADMIN_USER_FORM[i];
     			if (adminUserFormActive.classModel != "") {
@@ -113,6 +125,13 @@ export default function UsersModifyView({containerState, user, appPrefs, userApp
     			adminUserFormLanguage = userAppForms.ADMIN_USER_FORM[i];
     			if (adminUserFormLanguage.classModel != "") {
     				languageModel = JSON.parse(adminUserFormLanguage.classModel);
+    			}
+    			break;
+    		case "ADMIN_USER_FORM_LOGLEVEL":
+    			adminUserFormLogLevel = userAppForms.ADMIN_USER_FORM[i];
+    			if (adminUserFormLogLevel.classModel != "") {
+    				logLevelModel = JSON.parse(adminUserFormLogLevel.classModel);
+    				logLevelOptions = JSON.parse(adminUserFormLogLevel.value);
     			}
     			break;
     		}
@@ -163,6 +182,11 @@ export default function UsersModifyView({containerState, user, appPrefs, userApp
 						<Input name={adminUserFormVerifyPassword.name} inputType={adminUserFormPassword.htmlType} label={adminUserFormVerifyPassword.label} required={adminUserFormVerifyPassword.required} errors={containerState.errors} onChange={inputChange(verifyPasswordModel.field)} value={(user != null && user[verifyPasswordModel.field] != null)?user[verifyPasswordModel.field]:""}/>
 					</div>
 				}
+				{adminUserFormForceReset.rendered && 
+					<div className="col-sm-4">
+						<SwitchYesNo name={adminUserFormForceReset.name} label={adminUserFormForceReset.label} required={adminUserFormForceReset.required} fieldName={forceResetModel.field} indicatorValue={(user != null && user[forceResetModel.field] != null)?user[forceResetModel.field]:true}  onClick={inputChange} />
+					</div>
+				}
 			</div>
 			<div className="row">
 				{adminUserFormActive.rendered && 
@@ -175,7 +199,13 @@ export default function UsersModifyView({containerState, user, appPrefs, userApp
 						<Select name={adminUserFormLanguage.name} label={adminUserFormLanguage.label} required={adminUserFormLanguage.required} errors={containerState.errors} options={options} onChange={inputChange('lang')} value={(user != null && user.lang != null)?user.lang:"en"}/>
 					</div>
 				}
+				{adminUserFormLogLevel.rendered && 
+					<div className="col-md-4">
+						<Select name={adminUserFormLogLevel.name} label={adminUserFormLogLevel.label} required={adminUserFormLogLevel.required} errors={containerState.errors} options={logLevelOptions.options} onChange={inputChange(logLevelModel.field)} value={(user != null && user[logLevelModel.field] != null)?user[logLevelModel.field]:"OFF"}/>
+					</div>
+				}
 			</div>
+			
 			<button type="button" className="btn ai-btn-primary" onClick={onSave()}>Save</button>
 			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onCancel()}>Cancel</button>
     	</div>
