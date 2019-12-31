@@ -6,7 +6,7 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function LanguageView({containerState, languages, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openEditModal, openDeleteModal, closeModal, onSaveLanguage, onDeleteLanguage, inputChange }) {
+	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, inputChange }) {
 
   let columns = [];
   
@@ -29,31 +29,9 @@ export default function LanguageView({containerState, languages, appPrefs, onLis
   			onSearchClick={onSearchClick}
   			onPaginationClick={onPaginationClick}
   			onColumnSort={onColumnSort}
-  			openEditModal={openEditModal}
+  			onModify={onModify}
   			openDeleteModal={openDeleteModal}
   		/>
-  		<Modal isOpen={containerState.isEditModalOpen} onClose={closeModal()} >
-  			<div className="modal-dialog">
-  				<div className="modal-content">
-  					<div className="modal-header">
-  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-  						<h4 className="modal-title">User</h4>
-  					</div>
-  					<div className="modal-body">
-  						<Input name="LANGUAGE_NAME_input" label="Name" required="true" errors={containerState.errors} onChange={inputChange('name')} value={(languages.selected != null && languages.selected.name != null)?languages.selected.name:""}/>
-  						<Input name="LANGUAGE_CODE_input" label="Code" required="true" errors={containerState.errors} onChange={inputChange('code')} value={(languages.selected != null && languages.selected.code != null)?languages.selected.code:""}/>
-  						
-          
-  						
-  						
-  					</div>
-  					<div className="modal-footer">
-  						<button type="button" className="btn ai-btn-primary" onClick={onSaveLanguage()}>Save</button>
-  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
-  					</div>
-  				</div>
-  			</div>
-  		</Modal>
   		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
   			<div className="modal-dialog">
   				<div className="modal-content">
@@ -65,7 +43,7 @@ export default function LanguageView({containerState, languages, appPrefs, onLis
   						<h3>Are you sure you want to delete?</h3>
   					</div>
   					<div className="modal-footer">
-  						<button type="button" className="btn ai-btn-primary" onClick={onDeleteLanguage(containerState.selectedId)}>Delete</button>
+  						<button type="button" className="btn ai-btn-primary" onClick={onDelete(containerState.selectedId)}>Delete</button>
   						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
   					</div>
   				</div>
@@ -85,10 +63,9 @@ LanguageView.propTypes = {
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
 	onColumnSort: PropTypes.func,
-	openEditModal: PropTypes.func,
 	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	onSaveLanguage: PropTypes.func,
-	onDeleteLanguage: PropTypes.func,
+	onModify: PropTypes.func,
+	onDelete: PropTypes.func,
 	inputChange: PropTypes.func
 };
