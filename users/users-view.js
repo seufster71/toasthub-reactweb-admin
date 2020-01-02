@@ -7,7 +7,7 @@ import Select from '../../coreView/common/select-input';
 
 
 export default function UsersView({containerState, users, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, inputChange}) {
+	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onEditRoles, inputChange}) {
 
     let columns = [];
     
@@ -31,8 +31,10 @@ export default function UsersView({containerState, users, appPrefs, onListLimitC
     			onSearchClick={onSearchClick}
     			onPaginationClick={onPaginationClick}
     			onColumnSort={onColumnSort}
-    			onModify={onModify}
-    			openDeleteModal={openDeleteModal}
+    			onHeader={onModify}
+    			onOption1={onModify}
+    			onOption2={openDeleteModal}
+    			onOption3={onEditRoles}
     		/>
     		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
     			<div className="modal-dialog">
@@ -69,5 +71,6 @@ UsersView.propTypes = {
   closeModal: PropTypes.func,
   onModify: PropTypes.func,
   onDelete: PropTypes.func,
+  onEditRoles: PropTypes.func,
   inputChange: PropTypes.func
 };

@@ -182,7 +182,7 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     return (
     	<div className="col-lg-12">
     		
-			<h4 className="modal-title">item</h4>
+			<h4 className="modal-title">Language</h4>
 
 			<div className="row">
 				{adminitemFormFirstName.rendered && 
