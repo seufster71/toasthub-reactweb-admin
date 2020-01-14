@@ -13,11 +13,16 @@ export default function LanguageView({containerState, languages, appPrefs, onLis
   if (languages.appLabels != null && languages.appLabels.ADMIN_LANGUAGE_TABLE != null) {
 	  columns = languages.appLabels.ADMIN_LANGUAGE_TABLE;
   }
+  
+  let header = "";
+	if (languages.appTexts.ADMIN_LANGUAGE_PAGE != null && languages.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER != null) {
+		header = languages.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER;
+	}
   return (
 	<div>
   		<Table
   			containerState={containerState}
-  			header={languages.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER}
+  			header={header}
   			items={languages.items}
   			itemCount={languages.itemCount}
   			listStart={languages.listStart}
@@ -29,7 +34,9 @@ export default function LanguageView({containerState, languages, appPrefs, onLis
   			onSearchClick={onSearchClick}
   			onPaginationClick={onPaginationClick}
   			onColumnSort={onColumnSort}
-  			onModify={onModify}
+  			onHeader={onModify}
+  			onOption1={onModify}
+  			onOption2={openDeleteModal}
   			openDeleteModal={openDeleteModal}
   		/>
   		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >

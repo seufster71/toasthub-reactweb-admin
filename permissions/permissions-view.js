@@ -6,7 +6,7 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function PermissionsView({containerState, permissions, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openEditModal, openDeleteModal, closeModal, onSavePermission, onDeletePermission, inputChange }) {
+	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, inputChange }) {
 
 	let columns = [];
 	if (permissions.appLabels != null && permissions.appLabels.ADMIN_PERMISSION_TABLE != null) {
@@ -29,31 +29,10 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	  			onSearchClick={onSearchClick}
 	  			onPaginationClick={onPaginationClick}
 	  			onColumnSort={onColumnSort}
-	  			openEditModal={openEditModal}
-	  			openDeleteModal={openDeleteModal}
+	  			onHeader={onModify}
+	  			onOption1={onModify}
+	  			onOption2={openDeleteModal}
 	  		/>
-	  		<Modal isOpen={containerState.isEditModalOpen} onClose={closeModal()} >
-	  			<div className="modal-dialog">
-	  				<div className="modal-content">
-	  					<div className="modal-header">
-	  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-	  						<h4 className="modal-title">User</h4>
-	  					</div>
-	  					<div className="modal-body">
-	  						<Input name="PERMISSION_NAME_input" label="Name" required="true" errors={containerState.errors} onChange={inputChange('name')} value={(permissions.selected != null && permissions.selected.name != null)?permissions.selected.name:""}/>
-	  						<Input name="PERMISSION_CODE_input" label="Code" required="true" errors={containerState.errors} onChange={inputChange('code')} value={(permissions.selected != null && permissions.selected.code != null)?permissions.selected.code:""}/>
-	  						
-	          
-	  						
-	  						
-	  					</div>
-	  					<div className="modal-footer">
-	  						<button type="button" className="btn ai-btn-primary" onClick={onSavePermission()}>Save</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
-	  					</div>
-	  				</div>
-	  			</div>
-	  		</Modal>
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
 	  			<div className="modal-dialog">
 	  				<div className="modal-content">
@@ -65,7 +44,7 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn ai-btn-primary" onClick={onDeletePermission(containerState.selectedId)}>Delete</button>
+	  						<button type="button" className="btn ai-btn-primary" onClick={onDelete(containerState.selectedId)}>Delete</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
 	  					</div>
 	  				</div>
@@ -85,10 +64,9 @@ PermissionsView.propTypes = {
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
 	onColumnSort: PropTypes.func,
-	openEditModal: PropTypes.func,
 	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	onSavePermission: PropTypes.func,
-	onDeletePermission: PropTypes.func,
+	onModify: PropTypes.func,
+	onDelete: PropTypes.func,
 	inputChange: PropTypes.func					
 };
