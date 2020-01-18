@@ -1,18 +1,25 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../../coreView/common/modal';
-import Input from '../../coreView/common/text-input';
+import InputBuilder from '../../coreView/common/text-input-builder';
 import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
 import Select from '../../coreView/common/select-input';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
-export default function RolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange}) {
+export default function RolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminRoleFormTitle = {};
 
     let adminRoleFormCode = {};
     let codeDefault = "";
+    
+    let adminRoleFormApplication = {};
+    let applicationOptions = [];
+    if (applicationSelectList != null) {
+    	applicationOptions = applicationSelectList;
+    }
+    
     let adminRoleFormActive = {};
     let activeDefault = true;
     let activeOptions = [];
@@ -26,12 +33,9 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     			break;
     		case "ADMIN_ROLE_FORM_CODE":
     			adminRoleFormCode = itemAppForms.ADMIN_ROLE_FORM[i];
-    			if (adminRoleFormCode.classModel != "") {
-    				let codeModel = JSON.parse(adminRoleFormCode.classModel);
-    				if (item != null && item[codeModel.field] != null) {
-    					codeDefault = item[codeModel.field];
-    				}
-    			}
+    			break;
+    		case "ADMIN_ROLE_FORM_APPLICATION":
+    			adminRoleFormApplication = itemAppForms.ADMIN_ROLE_FORM[i];
     			break;
     		case "ADMIN_ROLE_FORM_ACTIVE":
     			adminRoleFormActive = itemAppForms.ADMIN_ROLE_FORM[i];
@@ -58,7 +62,12 @@ export default function RolesModifyView({containerState, item, inputFields, appP
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Input name={adminRoleFormCode.name} inputType={adminRoleFormCode.htmlType} label={adminRoleFormCode.label} rendered={adminRoleFormCode.rendered} required={adminRoleFormCode.required} errors={containerState.errors} onChange={inputChange(adminRoleFormCode.name)} value={(inputFields != null && inputFields[adminRoleFormCode.name] != null)?inputFields[adminRoleFormCode.name]:codeDefault}/>
+					<InputBuilder item={item} field={adminRoleFormCode} errors={containerState.errors} onChange={inputChange} inputFields={inputFields}/>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-sm-4">
+					<Select name={adminRoleFormApplication.name} label={adminRoleFormApplication.label} required={adminRoleFormApplication.required} errors={containerState.errors} options={applicationOptions} onChange={inputChange(adminRoleFormApplication.name)} value={(inputFields != null && inputFields[adminRoleFormApplication.name] != null)?inputFields[adminRoleFormApplication.name]:applicationDefault}/>
 				</div>
 			</div>
 			<div className="row">
