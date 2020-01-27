@@ -1,43 +1,30 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../../coreView/common/modal';
-import Input from '../../coreView/common/text-input';
-import Select from '../../coreView/common/select-input';
+import InputBuilder from '../../coreView/common/text-input-builder';
+import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
+import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
+import moment from 'moment';
 
-export default function PermissionsModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange}) {
-
-	let options=[];
-    if (appPrefs != null && appPrefs.appGlobal != null && appPrefs.appGlobal.LANGUAGES != null && appPrefs.appGlobal.LANGUAGES.length > 0){
-    	for (let i = 0; i < appPrefs.appGlobal.LANGUAGES.length; i++) {
-    		let name = appPrefs.appGlobal.LANGUAGES[i].title.defaultText;
-    		if (appPrefs.appGlobal.LANGUAGES[i].title.langTexts != null) {
-    			for (let j = 0; j < appPrefs.appGlobal.LANGUAGES[i].title.langTexts.length; j++) {
-    				if (appPrefs.appGlobal.LANGUAGES[i].title.langTexts[j].lang == appPrefs.lang) {
-    					name = appPrefs.appGlobal.LANGUAGES[i].title.langTexts[j].text;
-    				}
-    			}
-    		}
-    		options.push({"value":appPrefs.appGlobal.LANGUAGES[i].code, "text":name});
-    	}
-    }
+export default function PermissionsModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminPermissionFormTitle = {};
-    let titleDefault = "";
-    let adminPermissionFormTitleDefault = {};
-    let titleDefaultDefault = "";
-    let adminPermissionFormTitleText = {};
-    let titleTextDefault = "";
+
     let adminPermissionFormCode = {};
-    let codeDefault = "";
-    let adminPermissionFormCanRead = {};
-    let canReadDefault = "";
-    let adminPermissionFormCanWrite = {};
-    let canWriteDefault = "";
+
+    let adminPermissionFormApplication = {};
+    
+    let adminPermissionFormRights = {};
+    
+    let adminPermissionFormStartDate = {};
+    let startDateDefault = "";
+    
+    let adminPermissionFormEndDate = {};
+    let endDateDefault = "";
+    
     let adminPermissionFormActive = {};
-    let activeDefault = true;
-    let activeOptions = [];
 
     
     if (itemAppForms != null && itemAppForms.ADMIN_PERMISSION_FORM != null) {
@@ -45,104 +32,88 @@ export default function PermissionsModifyView({containerState, item, inputFields
     		switch (itemAppForms.ADMIN_PERMISSION_FORM[i].name) {
     		case "ADMIN_PERMISSION_FORM_TITLE":
     			adminPermissionFormTitle = itemAppForms.ADMIN_PERMISSION_FORM[i];
-    			if (adminPermissionFormTitle.classModel != "") {
-    				let titleModel = JSON.parse(adminPermissionFormTitle.classModel);
-    				if (item != null && item[titleModel.field] != null) {
-    					titleDefault = item[titleModel.field];
-    				}
-    			}
-    			break;
-    		case "ADMIN_PERMISSION_FORM_TITLE_DEFAULT":
-    			adminPermissionFormTitleDefault = itemAppForms.ADMIN_PERMISSION_FORM[i];
-    			if (adminPermissionFormTitleDefault.classModel != "") {
-    				let titleDefaultModel = JSON.parse(adminPermissionFormTitleDefault.classModel);
-    				if (item != null && item[titleDefaultModel.field] != null) {
-    					titleDefaultDefault = item[titleDefaultModel.field];
-    				}
-    			}
-    			break;
-    		case "ADMIN_PERMISSION_FORM_TITLE_TEXT":
-    			adminPermissionFormTitleText = itemAppForms.ADMIN_PERMISSION_FORM[i];
-    			if (adminPermissionFormTitleText.classModel != "") {
-    				let titleTextModel = JSON.parse(adminPermissionFormTitleText.classModel);
-    				if (item != null && item[titleTextModel.field] != null) {
-    					titleTextDefault = item[titleTextModel.field];
-    				}
-    			}
     			break;
     		case "ADMIN_PERMISSION_FORM_CODE":
     			adminPermissionFormCode = itemAppForms.ADMIN_PERMISSION_FORM[i];
-    			if (adminPermissionFormCode.classModel != "") {
-    				let codeModel = JSON.parse(adminPermissionFormCode.classModel);
-    				if (item != null && item[codeModel.field] != null) {
-    					codeDefault = item[codeModel.field];
+    			break;
+    		case "ADMIN_PERMISSION_FORM_APPLICATION":
+    			adminPermissionFormApplication = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			break;
+    		case "ADMIN_PERMISSION_FORM_RIGHTS":
+    			adminPermissionFormRights = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			break;
+    		case "ADMIN_PERMISSION_FORM_STARTDATE":
+    			adminPermissionFormStartDate = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			if (adminPermissionFormStartDate.classModel != "") {
+    				let startDateModel = JSON.parse(adminPermissionFormStartDate.classModel);
+    				if (item != null && item[startDateModel.field] != null) {
+    					startDateDefault = item[startDateModel.field];
     				}
     			}
     			break;
-    		case "ADMIN_PERMISSION_FORM_CAN_READ":
-    			adminPermissionFormCanRead = itemAppForms.ADMIN_PERMISSION_FORM[i];
-    			if (adminPermissionFormCanRead.classModel != "") {
-    				let canReadModel = JSON.parse(adminPermissionFormCanRead.classModel);
-    				if (item != null && item[canReadModel.field] != null) {
-    					canReadDefault = item[canReadModel.field];
-    				}
-    			}
-    			break;
-    		case "ADMIN_PERMISSION_FORM_CAN_WRITE":
-    			adminPermissionFormCanWrite = itemAppForms.ADMIN_PERMISSION_FORM[i];
-    			if (adminPermissionFormCanWrite.classModel != "") {
-    				let canWriteModel = JSON.parse(adminPermissionFormCanWrite.classModel);
-    				if (item != null && item[canWriteModel.field] != null) {
-    					canWriteDefault = item[canWriteModel.field];
+    		case "ADMIN_PERMISSION_FORM_ENDDATE":
+    			adminPermissionFormEndDate = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			if (adminPermissionFormEndDate.classModel != "") {
+    				let endDateModel = JSON.parse(adminPermissionFormEndDate.classModel);
+    				if (item != null && item[endDateModel.field] != null) {
+    					endDateDefault = item[endDateModel.field];
     				}
     			}
     			break;
     		case "ADMIN_PERMISSION_FORM_ACTIVE":
     			adminPermissionFormActive = itemAppForms.ADMIN_PERMISSION_FORM[i];
-    			if (adminPermissionFormActive.classModel != "") {
-    				let activeModel = JSON.parse(adminPermissionFormActive.classModel);
-    				if (item != null && item[activeModel.field] != null) {
-    					activeDefault = item[activeModel.field];
-    				}
-    				activeOptions = JSON.parse(adminPermissionFormActive.value);
-    			}
     			break;
     		}
     	}
     }
+    
+    let created = "";
+    if (item != null && item.created != null) {
+    	created = new Intl.DateTimeFormat('en-US',{
+    		year: 'numeric', month: 'numeric', day: 'numeric',
+    		hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'America/New_York'
+    	}).format(moment(item.created).toDate());
+    	created = <div>Created: {created}</div>;
+    }
+    
+    let modified = "";
+    if (item != null && item.modified != null) {
+    	modified = new Intl.DateTimeFormat('en-US',{
+    		year: 'numeric', month: 'numeric', day: 'numeric',
+    		hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'America/New_York'
+    	}).format(moment(item.modified).toDate());
+    	modified = <div>Last Modified: {modified}</div>
+    }
+    
     return (
     	<div className="col-lg-12">
-    		
 			<h4 className="modal-title">Permission</h4>
-
+			{created}
+			{modified}
 			<div className="row">
-				{adminPermissionFormTitle.rendered && 
-					<div className="col-sm-4">
-						<Input name={adminPermissionFormTitle.name} inputType={adminPermissionFormTitle.htmlType} label={adminPermissionFormTitle.label} required={adminPermissionFormTitle.required} errors={containerState.errors} onChange={inputChange(adminPermissionFormTitle.name)} value={(inputFields != null && inputFields[adminPermissionFormTitle.name] != null)?inputFields[adminPermissionFormTitle.name]:titleDefault}/>
-					</div>	
-				}
-				{adminPermissionFormTitleDefault.rendered && 
-					<div className="col-sm-4">
-						<Input name={adminPermissionFormTitleDefault.name} inputType={adminPermissionFormTitleDefault.htmlType} label={adminPermissionFormTitleDefault.label} required={adminPermissionFormTitleDefault.required} errors={containerState.errors} onChange={inputChange(adminPermissionFormTitleDefault.name)} value={(inputFields != null && inputFields[adminPermissionFormTitleDefault.name] != null)?inputFields[adminPermissionFormTitleDefault.name]:titleDefaultDefault}/>
-					</div>
-				}
-				{adminPermissionFormTitleText.rendered && 
-					<div className="col-sm-4">
-						<Input name={adminPermissionFormTitleText.name} inputType={adminPermissionFormTitleText.htmlType} label={adminPermissionFormTitleText.label} required={adminPermissionFormTitleText.required} errors={containerState.errors} onChange={inputChange(adminPermissionFormTitleText.name)} value={(inputFields != null && inputFields[adminPermissionFormTitleText.name] != null)?inputFields[adminPermissionFormTitleText.name]:codeDefault}/>
-					</div>
-				}
+				<div className="col-sm-4">
+					<MultiLangTextInput item={item} field={adminPermissionFormTitle} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} appPrefs={appPrefs}/>		
+				</div>
 			</div>
-			{adminPermissionFormCode.rendered && 
-				<Input name={adminPermissionFormCode.name} inputType={adminPermissionFormCode.htmlType} label={adminPermissionFormCode.label} required={adminPermissionFormCode.required} errors={containerState.errors} onChange={inputChange(adminPermissionFormCode.name)} value={(inputFields != null && inputFields[adminPermissionFormCode.name] != null)?inputFields[adminPermissionFormCode.name]:codeDefault}/>
-			}
-			
-			
 			<div className="row">
-				{adminPermissionFormActive.rendered && 
-					<div className="col-md-4">
-						<Switch name={adminPermissionFormActive.name} label={adminPermissionFormActive.label} required={adminPermissionFormActive.required} fieldName={adminPermissionFormActive.name} options={activeOptions.options} value={(inputFields != null && inputFields[adminPermissionFormActive.name] != null)?inputFields[adminPermissionFormActive.name]:activeDefault}  onClick={inputChange} />
-					</div>
-				}
+				<div className="col-sm-4">
+					<InputBuilder item={item} field={adminPermissionFormCode} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-sm-4">
+					<SelectBuilder item={item} field={adminPermissionFormApplication} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={applicationSelectList}/>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-sm-4">
+					<SelectBuilder item={item} field={adminPermissionFormRights} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-md-4">
+					<Switch item={item} field={adminPermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
+				</div>
 			</div>
 			
 			<button type="button" className="btn ai-btn-primary" onClick={onSave()}>Save</button>

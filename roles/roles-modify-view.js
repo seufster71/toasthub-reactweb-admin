@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Modal from '../../coreView/common/modal';
 import InputBuilder from '../../coreView/common/text-input-builder';
 import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
-import Select from '../../coreView/common/select-input';
+import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
+import moment from 'moment';
 
 export default function RolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminRoleFormTitle = {};
 
     let adminRoleFormCode = {};
-    let codeDefault = "";
     
     let adminRoleFormApplication = {};
     let applicationOptions = [];
@@ -24,7 +24,6 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     let activeDefault = true;
     let activeOptions = [];
 
-    
     if (itemAppForms != null && itemAppForms.ADMIN_ROLE_FORM != null) {
     	for (let i = 0; i < itemAppForms.ADMIN_ROLE_FORM.length; i++) {
     		switch (itemAppForms.ADMIN_ROLE_FORM[i].name) {
@@ -50,32 +49,51 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     		}
     	}
     }
+    
+    let applicationDefault = 0;
+    
+    let created = "";
+    if (item != null && item.created != null) {
+    	created = new Intl.DateTimeFormat('en-US',{
+    		year: 'numeric', month: 'numeric', day: 'numeric',
+    		hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'America/New_York'
+    	}).format(moment(item.created).toDate());
+    	created = <div>Created: {created}</div>;
+    }
+    
+    let modified = "";
+    if (item != null && item.modified != null) {
+    	modified = new Intl.DateTimeFormat('en-US',{
+    		year: 'numeric', month: 'numeric', day: 'numeric',
+    		hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'America/New_York'
+    	}).format(moment(item.modified).toDate());
+    	modified = <div>Last Modified: {modified}</div>
+    }
+    
     return (
     	<div className="col-lg-12">
-    		
 			<h4 className="modal-title">Role</h4>
-
+			{created}
+			{modified}
 			<div className="row">
 				<div className="col-sm-4">
-					<MultiLangTextInput formField={adminRoleFormTitle} item={item} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} appPrefs={appPrefs}/>		
+					<MultiLangTextInput field={adminRoleFormTitle} item={item} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} appPrefs={appPrefs}/>		
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<InputBuilder item={item} field={adminRoleFormCode} errors={containerState.errors} onChange={inputChange} inputFields={inputFields}/>
+					<InputBuilder item={item} field={adminRoleFormCode} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Select name={adminRoleFormApplication.name} label={adminRoleFormApplication.label} required={adminRoleFormApplication.required} errors={containerState.errors} options={applicationOptions} onChange={inputChange(adminRoleFormApplication.name)} value={(inputFields != null && inputFields[adminRoleFormApplication.name] != null)?inputFields[adminRoleFormApplication.name]:applicationDefault}/>
+					<SelectBuilder item={item} field={adminRoleFormApplication}  inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={applicationOptions}/>
 				</div>
 			</div>
 			<div className="row">
-				{adminRoleFormActive.rendered && 
-					<div className="col-md-4">
-						<Switch name={adminRoleFormActive.name} label={adminRoleFormActive.label} required={adminRoleFormActive.required} fieldName={adminRoleFormActive.name} options={activeOptions.options} value={(inputFields != null && inputFields[adminRoleFormActive.name] != null)?inputFields[adminRoleFormActive.name]:activeDefault}  onClick={inputChange} />
-					</div>
-				}
+				<div className="col-md-4">
+					<Switch item={item} field={adminRoleFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+				</div>
 			</div>
 			
 			<button type="button" className="btn ai-btn-primary" onClick={onSave()}>Save</button>

@@ -14,9 +14,18 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 	}
 	
 	let header = "";
-	if (roles.appTexts.ADMIN_ROLE_PAGE != null && roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER != null) {
-		header = roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER;
+	let parent = "";
+	if (roles.parent != null) {
+		if (roles.appTexts.ADMIN_ROLE_PAGE != null && roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT != null) {
+			header = roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT.value;
+		}
+		parent = roles.parent.title.langTexts[0].text;
+	} else {
+		if (roles.appTexts.ADMIN_ROLE_PAGE != null && roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER != null) {
+			header = roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER.value;
+		}
 	}
+	
 	
 	return (
 		  <div>
@@ -29,6 +38,7 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 	  			listLimit={roles.listLimit}
 	  			columns={columns}
 	  			appPrefs={appPrefs}
+	  			parent={parent}
 	  			onListLimitChange={onListLimitChange}
 	  			onSearchChange={onSearchChange}
 	  			onSearchClick={onSearchClick}

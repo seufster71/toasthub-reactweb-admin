@@ -6,24 +6,37 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function PermissionsView({containerState, permissions, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, inputChange }) {
+	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange }) {
 
 	let columns = [];
 	if (permissions.appLabels != null && permissions.appLabels.ADMIN_PERMISSION_TABLE != null) {
 		columns = permissions.appLabels.ADMIN_PERMISSION_TABLE;
 	}
 
+	let header = "";
+	let parent = "";
+	if (permissions.parent != null) {
+		if (permissions.appTexts.ADMIN_PERMISSION_PAGE != null && permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT != null) {
+			header = permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT.value;
+		}
+		parent = permissions.parent.title.langTexts[0].text;
+	} else {
+		if (permissions.appTexts.ADMIN_PERMISSION_PAGE != null && permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER != null) {
+			header = permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER.value;
+		}
+	}
 	return (
 		  <div>
 	  		<Table
 	  			containerState={containerState}
-	  			header={permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER}
+	  			header={header}
 	  			items={permissions.items}
 	  			itemCount={permissions.itemCount}
 	  			listStart={permissions.listStart}
 	  			listLimit={permissions.listLimit}
 	  			columns={columns}
 	  			appPrefs={appPrefs}
+	  			parent={parent}
 	  			onListLimitChange={onListLimitChange}
 	  			onSearchChange={onSearchChange}
 	  			onSearchClick={onSearchClick}
@@ -32,6 +45,7 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	  			onHeader={onModify}
 	  			onOption1={onModify}
 	  			onOption2={openDeleteModal}
+	  			onOption3={onRolePermissionModify}
 	  		/>
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
 	  			<div className="modal-dialog">
@@ -68,5 +82,6 @@ PermissionsView.propTypes = {
 	closeModal: PropTypes.func,
 	onModify: PropTypes.func,
 	onDelete: PropTypes.func,
+	onRolePermissionModify: PropTypes.func,
 	inputChange: PropTypes.func					
 };
