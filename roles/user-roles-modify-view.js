@@ -9,45 +9,45 @@ import Switch from '../../coreView/common/switch';
 import Date from '../../coreView/common/date-input';
 import moment from 'moment';
 
-export default function RolePermissionsModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function UserRolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
-    let adminRolePermissionFormRights = {};
+    let adminUserRolesFormOrder = {};
     
-    let adminRolePermissionFormStartDate = {};
+    let adminUserRolesFormStartDate = {};
     let startDateDefault = "";
     
-    let adminRolePermissionFormEndDate = {};
+    let adminUserRolesFormEndDate = {};
     let endDateDefault = "";
     
-    let adminRolePermissionFormActive = {};
+    let adminUserRolesFormActive = {};
 
     
-    if (itemAppForms != null && itemAppForms.ADMIN_ROLE_PERMISSION_FORM != null) {
-    	for (let i = 0; i < itemAppForms.ADMIN_ROLE_PERMISSION_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i].name) {
-    		case "ADMIN_ROLE_PERMISSION_FORM_RIGHTS":
-    			adminRolePermissionFormRights = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    if (itemAppForms != null && itemAppForms.ADMIN_USER_ROLE_FORM != null) {
+    	for (let i = 0; i < itemAppForms.ADMIN_USER_ROLE_FORM.length; i++) {
+    		switch (itemAppForms.ADMIN_USER_ROLE_FORM[i].name) {
+    		case "ADMIN_USER_ROLE_FORM_ORDER":
+    			adminUserRolesFormOrder = itemAppForms.ADMIN_USER_ROLE_FORM[i];
     			break;
-    		case "ADMIN_ROLE_PERMISSION_FORM_STARTDATE":
-    			adminRolePermissionFormStartDate = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
-    			if (adminRolePermissionFormStartDate.classModel != "") {
-    				let startDateModel = JSON.parse(adminRolePermissionFormStartDate.classModel);
+    		case "ADMIN_USER_ROLE_FORM_STARTDATE":
+    			adminUserRolesFormStartDate = itemAppForms.ADMIN_USER_ROLE_FORM[i];
+    			if (adminUserRolesFormStartDate.classModel != "") {
+    				let startDateModel = JSON.parse(adminUserRolesFormStartDate.classModel);
     				if (item != null && item[startDateModel.field] != null) {
     					startDateDefault = item[startDateModel.field];
     				}
     			}
     			break;
-    		case "ADMIN_ROLE_PERMISSION_FORM_ENDDATE":
-    			adminRolePermissionFormEndDate = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
-    			if (adminRolePermissionFormEndDate.classModel != "") {
-    				let endDateModel = JSON.parse(adminRolePermissionFormEndDate.classModel);
+    		case "ADMIN_USER_ROLE_FORM_ENDDATE":
+    			adminUserRolesFormEndDate = itemAppForms.ADMIN_USER_ROLE_FORM[i];
+    			if (adminUserRolesFormEndDate.classModel != "") {
+    				let endDateModel = JSON.parse(adminUserRolesFormEndDate.classModel);
     				if (item != null && item[endDateModel.field] != null) {
     					endDateDefault = item[endDateModel.field];
     				}
     			}
     			break;
-    		case "ADMIN_ROLE_PERMISSION_FORM_ACTIVE":
-    			adminRolePermissionFormActive = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    		case "ADMIN_USER_ROLE_FORM_ACTIVE":
+    			adminUserRolesFormActive = itemAppForms.ADMIN_USER_ROLE_FORM[i];
     			break;
     		}
     	}
@@ -73,27 +73,27 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     
     return (
     	<div className="col-lg-12">
-			<h4 className="modal-title">Role to Permission</h4>
+			<h4 className="modal-title">User to Role</h4>
 			{created}
 			{modified}
 			<div className="row">
 				<div className="col-sm-4">
-					<SelectBuilder item={item} field={adminRolePermissionFormRights} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<InputBuilder item={item} field={adminUserRolesFormOrder} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Date item={item} field={adminRolePermissionFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<Date item={item} field={adminUserRolesFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Date item={item} field={adminRolePermissionFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<Date item={item} field={adminUserRolesFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminRolePermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
+					<Switch item={item} field={adminUserRolesFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
 				</div>
 			</div>
 			
@@ -104,7 +104,7 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
 }
 
 
-RolePermissionsModifyView.propTypes = {
+UserRolesModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,

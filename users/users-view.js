@@ -14,12 +14,16 @@ export default function UsersView({containerState, users, appPrefs, onListLimitC
     if (users.appLabels != null && users.appLabels.ADMIN_USER_TABLE != null) {
     	columns = users.appLabels.ADMIN_USER_TABLE;
     }
+    let header = "";
+    if (users.appTexts.ADMIN_PERMISSION_PAGE != null && users.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
+		header = users.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER.value;
+	}
 
     return (
     	<div>
     		<Table
     			containerState={containerState}
-    			header={users.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER}
+    			header={header}
     			items={users.items}
     			itemCount={users.itemCount}
     			listStart={users.listStart}

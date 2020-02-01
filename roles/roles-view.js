@@ -6,7 +6,7 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function RolesView({containerState, roles, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onEditPermissions, inputChange}) {
+	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onEditPermissions, onUserRoleModify, inputChange}) {
 
 	let columns = [];
 	if (roles.appLabels != null && roles.appLabels.ADMIN_ROLE_TABLE != null) {
@@ -19,7 +19,7 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 		if (roles.appTexts.ADMIN_ROLE_PAGE != null && roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT != null) {
 			header = roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT.value;
 		}
-		parent = roles.parent.title.langTexts[0].text;
+		parent = roles.parent.username;
 	} else {
 		if (roles.appTexts.ADMIN_ROLE_PAGE != null && roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER != null) {
 			header = roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER.value;
@@ -48,6 +48,7 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 	  			onOption1={onModify}
 	  			onOption2={openDeleteModal}
 	  			onOption3={onEditPermissions}
+	  			onOption4={onUserRoleModify}
 	  			openDeleteModal={openDeleteModal}
 	  		/>
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
@@ -86,5 +87,6 @@ RolesView.propTypes = {
 	onModify: PropTypes.func,
 	onDelete: PropTypes.func,
 	onEditPermissions: PropTypes.func,
+	onUserRoleModify: PropTypes.func,
 	inputChange: PropTypes.func
 };
