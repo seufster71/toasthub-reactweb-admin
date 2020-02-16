@@ -6,7 +6,7 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function PermissionsView({containerState, permissions, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange }) {
+	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange, goBack }) {
 
 	let columns = [];
 	if (permissions.appLabels != null && permissions.appLabels.ADMIN_PERMISSION_TABLE != null) {
@@ -46,6 +46,7 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	  			onOption1={onModify}
 	  			onOption2={openDeleteModal}
 	  			onOption3={onRolePermissionModify}
+	  			goBack={goBack}
 	  		/>
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
 	  			<div className="modal-dialog">
@@ -83,5 +84,6 @@ PermissionsView.propTypes = {
 	onModify: PropTypes.func,
 	onDelete: PropTypes.func,
 	onRolePermissionModify: PropTypes.func,
-	inputChange: PropTypes.func					
+	inputChange: PropTypes.func,
+	goBack: PropTypes.func
 };

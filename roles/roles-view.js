@@ -6,7 +6,7 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function RolesView({containerState, roles, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onEditPermissions, onUserRoleModify, inputChange}) {
+	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onEditPermissions, onUserRoleModify, inputChange, goBack}) {
 
 	let columns = [];
 	if (roles.appLabels != null && roles.appLabels.ADMIN_ROLE_TABLE != null) {
@@ -50,6 +50,7 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 	  			onOption3={onEditPermissions}
 	  			onOption4={onUserRoleModify}
 	  			openDeleteModal={openDeleteModal}
+	  			goBack={goBack}
 	  		/>
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
 	  			<div className="modal-dialog">
@@ -88,5 +89,6 @@ RolesView.propTypes = {
 	onDelete: PropTypes.func,
 	onEditPermissions: PropTypes.func,
 	onUserRoleModify: PropTypes.func,
-	inputChange: PropTypes.func
+	inputChange: PropTypes.func,
+	goBack: PropTypes.func
 };

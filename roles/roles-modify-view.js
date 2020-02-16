@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../../coreView/common/modal';
-import InputBuilder from '../../coreView/common/text-input-builder';
+import TextBuilder from '../../coreView/common/text-input-builder';
 import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
 import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
@@ -82,7 +82,7 @@ export default function RolesModifyView({containerState, item, inputFields, appP
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<InputBuilder item={item} field={adminRoleFormCode} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<TextBuilder item={item} field={adminRoleFormCode} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">

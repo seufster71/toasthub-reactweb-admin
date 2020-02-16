@@ -15,7 +15,7 @@ export default function UsersView({containerState, users, appPrefs, onListLimitC
     	columns = users.appLabels.ADMIN_USER_TABLE;
     }
     let header = "";
-    if (users.appTexts.ADMIN_PERMISSION_PAGE != null && users.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
+    if (users.appTexts.ADMIN_USER_PAGE != null && users.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
 		header = users.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER.value;
 	}
 

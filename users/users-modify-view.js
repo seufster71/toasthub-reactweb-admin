@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../../coreView/common/modal';
 import Input from '../../coreView/common/text-input';
-import InputBuilder from '../../coreView/common/text-input-builder';
+import TextBuilder from '../../coreView/common/text-input-builder';
 import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
-export default function UsersModifyView({containerState, item, inputFields, appPrefs, userAppForms, onSave, onCancel, inputChange}) {
+export default function UsersModifyView({containerState, item, inputFields, appPrefs, userAppForms, onSave, onCancel, inputChange, onBlur}) {
 
 	let options=[];
     if (appPrefs != null && appPrefs.appGlobal != null && appPrefs.appGlobal.LANGUAGES != null && appPrefs.appGlobal.LANGUAGES.length > 0){
@@ -110,40 +110,40 @@ export default function UsersModifyView({containerState, item, inputFields, appP
 			<div className="row">
 				{adminUserFormFirstName.rendered && 
 					<div className="col-sm-4">
-						<Input name={adminUserFormFirstName.name} inputType={adminUserFormFirstName.htmlType} label={adminUserFormFirstName.label} required={adminUserFormFirstName.required} errors={containerState.errors} onChange={inputChange(adminUserFormFirstName.name)} value={(inputFields != null && inputFields[adminUserFormFirstName.name] != null)?inputFields[adminUserFormFirstName.name]:firstNameDefault}/>
+						<Input name={adminUserFormFirstName.name} inputType={adminUserFormFirstName.htmlType} label={adminUserFormFirstName.label} required={adminUserFormFirstName.required} errors={containerState.errors} successes={containerState.successes} onChange={inputChange(adminUserFormFirstName.name)} value={(inputFields != null && inputFields[adminUserFormFirstName.name] != null)?inputFields[adminUserFormFirstName.name]:firstNameDefault}/>
 					</div>	
 				}
 				<div className="col-sm-4">
-					<InputBuilder item={item} field={adminUserFormMiddleName} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<TextBuilder item={item} field={adminUserFormMiddleName} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				</div>
 				<div className="col-sm-4">
-					<InputBuilder item={item} field={adminUserFormLastName} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<TextBuilder item={item} field={adminUserFormLastName} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				</div>
 			</div>
-			<InputBuilder item={item} field={adminUserFormUserName} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
-			<InputBuilder item={item} field={adminUserFormEmail} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
-			<InputBuilder item={item} field={adminUserFormAlternateEmail} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
-			<InputBuilder item={item} field={adminUserFormZipcode} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+			<TextBuilder item={item} field={adminUserFormUserName} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+			<TextBuilder item={item} field={adminUserFormEmail} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+			<TextBuilder item={item} field={adminUserFormAlternateEmail} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+			<TextBuilder item={item} field={adminUserFormZipcode} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 			<div className="row">
 				<div className="col-sm-4">
-					<InputBuilder item={item} field={adminUserFormPassword} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<TextBuilder item={item} field={adminUserFormPassword} inputFields={inputFields} containerState={containerState} onChange={inputChange} onBlur={onBlur}/>
 				</div>
 				<div className="col-sm-4">
-					<InputBuilder item={item} field={adminUserFormVerifyPassword} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<TextBuilder item={item} field={adminUserFormVerifyPassword} inputFields={inputFields} containerState={containerState} onChange={inputChange} onBlur={onBlur}/>
 				</div>
 				<div className="col-sm-4">
-					<Switch item={item} field={adminUserFormForceReset} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
+					<Switch item={item} field={adminUserFormForceReset} inputFields={inputFields} containerState={containerState} onChange={inputChange} />
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminUserFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
+					<Switch item={item} field={adminUserFormActive} inputFields={inputFields} containerState={containerState} onChange={inputChange} />
 				</div>
 				<div className="col-md-4">		
-					<SelectBuilder item={item} field={adminUserFormLanguage} inputFields={inputFields} options={options} errors={containerState.errors} onChange={inputChange}/>
+					<SelectBuilder item={item} field={adminUserFormLanguage} inputFields={inputFields} options={options} containerState={containerState} onChange={inputChange}/>
 				</div>
 				<div className="col-md-4">
-					<SelectBuilder item={item} field={adminUserFormLogLevel} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<SelectBuilder item={item} field={adminUserFormLogLevel} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				</div>
 			</div>
 			
@@ -161,5 +161,6 @@ UsersModifyView.propTypes = {
   userAppForms: PropTypes.object.isRequired,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
-  inputChange: PropTypes.func
+  inputChange: PropTypes.func,
+  onBlur: PropTypes.func
 };
