@@ -8,42 +8,42 @@ import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import moment from 'moment';
 
-export default function RolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function PreferenceModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
-    let adminRoleFormTitle = {};
+    let preferenceFormTitle = {};
 
-    let adminRoleFormCode = {};
+    let preferenceFormCode = {};
     
-    let adminRoleFormApplication = {};
+    let preferenceFormApplication = {};
     let applicationOptions = [];
     if (applicationSelectList != null) {
     	applicationOptions = applicationSelectList;
     }
     
-    let adminRoleFormActive = {};
+    let preferenceFormActive = {};
     let activeDefault = true;
     let activeOptions = [];
 
-    if (itemAppForms != null && itemAppForms.ADMIN_ROLE_FORM != null) {
+    if (itemAppForms != null && itemAppForms.ADMIN_PREFERENCE_FORM != null) {
     	for (let i = 0; i < itemAppForms.ADMIN_ROLE_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_ROLE_FORM[i].name) {
-    		case "ADMIN_ROLE_FORM_TITLE":
-    			adminRoleFormTitle = itemAppForms.ADMIN_ROLE_FORM[i];
+    		switch (itemAppForms.ADMIN_PREFERENCE_FORM[i].name) {
+    		case "ADMIN_PREFERENCE_FORM_TITLE":
+    			preferenceFormTitle = itemAppForms.ADMIN_PREFERENCE_FORM[i];
     			break;
-    		case "ADMIN_ROLE_FORM_CODE":
-    			adminRoleFormCode = itemAppForms.ADMIN_ROLE_FORM[i];
+    		case "ADMIN_PREFERENCE_FORM_CODE":
+    			preferenceFormCode = itemAppForms.ADMIN_PREFERENCE_FORM[i];
     			break;
-    		case "ADMIN_ROLE_FORM_APPLICATION":
-    			adminRoleFormApplication = itemAppForms.ADMIN_ROLE_FORM[i];
+    		case "ADMIN_PREFERENCE_FORM_APPLICATION":
+    			preferenceFormApplication = itemAppForms.ADMIN_PREFERENCE_FORM[i];
     			break;
-    		case "ADMIN_ROLE_FORM_ACTIVE":
-    			adminRoleFormActive = itemAppForms.ADMIN_ROLE_FORM[i];
-    			if (adminRoleFormActive.classModel != "") {
-    				let activeModel = JSON.parse(adminRoleFormActive.classModel);
+    		case "ADMIN_PREFERENCE_FORM_ACTIVE":
+    			preferenceFormActive = itemAppForms.ADMIN_PREFERENCE_FORM[i];
+    			if (preferenceFormActive.classModel != "") {
+    				let activeModel = JSON.parse(preferenceFormActive.classModel);
     				if (item != null && item[activeModel.field] != null) {
     					activeDefault = item[activeModel.field];
     				}
-    				activeOptions = JSON.parse(adminRoleFormActive.value);
+    				activeOptions = JSON.parse(preferenceFormActive.value);
     			}
     			break;
     		}
@@ -77,22 +77,22 @@ export default function RolesModifyView({containerState, item, inputFields, appP
 			{modified}
 			<div className="row">
 				<div className="col-sm-4">
-					<MultiLangTextInput field={adminRoleFormTitle} item={item} inputFields={inputFields} containerState={containerState} onChange={inputChange} appPrefs={appPrefs}/>		
+					<MultiLangTextInput field={preferenceFormTitle} item={item} inputFields={inputFields} containerState={containerState} onChange={inputChange} appPrefs={appPrefs}/>		
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<TextBuilder item={item} field={adminRoleFormCode} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+					<TextBuilder item={item} field={preferenceFormCode} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<SelectBuilder item={item} field={adminRoleFormApplication}  inputFields={inputFields} containerState={containerState} onChange={inputChange} options={applicationOptions}/>
+					<SelectBuilder item={item} field={preferenceFormApplication}  inputFields={inputFields} containerState={containerState} onChange={inputChange} options={applicationOptions}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminRoleFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<Switch item={item} field={preferenceFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			
@@ -103,12 +103,13 @@ export default function RolesModifyView({containerState, item, inputFields, appP
 }
 
 
-RolesModifyView.propTypes = {
+PreferenceModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,
   itemAppForms: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
-  inputChange: PropTypes.func
+  inputChange: PropTypes.func,
+  applicationSelectList: PropTypes.object
 };

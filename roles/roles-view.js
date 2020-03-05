@@ -14,7 +14,7 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 	}
 	
 	let header = "";
-	let parent = "";
+	let parent = null;
 	if (roles.parent != null) {
 		if (roles.appTexts.ADMIN_ROLE_PAGE != null && roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT != null) {
 			header = roles.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT.value;
@@ -26,6 +26,10 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 		}
 	}
 	
+	let deleteModalHeader = "Delete ";
+	if (containerState.selected != null && containerState.selected.title != null) {
+		deleteModalHeader += containerState.selected.title.defaultText;
+	}
 	
 	return (
 		  <div>
@@ -57,13 +61,13 @@ export default function RolesView({containerState, roles, appPrefs, onListLimitC
 	  				<div className="modal-content">
 	  					<div className="modal-header">
 	  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-	  						<h4 className="modal-title">Delete {containerState.selectedName}</h4>
+	  						<h4 className="modal-title">{deleteModalHeader}</h4>
 	  					</div>
 	  					<div className="modal-body">
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn ai-btn-primary" onClick={onDelete(containerState.selectedId)}>Delete</button>
+	  						<button type="button" className="btn ai-btn-primary" onClick={onDelete(containerState.selected)}>Delete</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
 	  					</div>
 	  				</div>

@@ -16,7 +16,7 @@ export default function LanguageView({containerState, languages, appPrefs, onLis
   
   let header = "";
 	if (languages.appTexts.ADMIN_LANGUAGE_PAGE != null && languages.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER != null) {
-		header = languages.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER;
+		header = languages.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER.value;
 	}
   return (
 	<div>

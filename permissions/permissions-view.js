@@ -14,7 +14,7 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	}
 
 	let header = "";
-	let parent = "";
+	let parent = null;
 	if (permissions.parent != null) {
 		if (permissions.appTexts.ADMIN_PERMISSION_PAGE != null && permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT != null) {
 			header = permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT.value;
