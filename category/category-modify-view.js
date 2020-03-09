@@ -32,7 +32,7 @@ export default function CategoryModifyView({containerState, item, inputFields, a
 				<TextBuilder item={item} field={adminCategoryFormName} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				<TextBuilder item={item} field={adminCategoryFormCode} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 	
-		  		<button type="button" className="btn ai-btn-primary" onClick={onSaveCategory()}>Save</button>
+		  		<button type="button" className="btn btn-primary" onClick={onSaveCategory()}>Save</button>
 		  		<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onCancel()}>Cancel</button>
 	  		</div>
 	  	</div>

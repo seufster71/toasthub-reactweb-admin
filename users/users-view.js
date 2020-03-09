@@ -51,7 +51,7 @@ export default function UsersView({containerState, users, appPrefs, onListLimitC
     						<h3>Are you sure you want to delete?</h3>
     					</div>
     					<div className="modal-footer">
-    						<button type="button" className="btn ai-btn-primary" onClick={onDelete(containerState.selectedUserId)}>Delete</button>
+    						<button type="button" className="btn btn-primary" onClick={onDelete(containerState.selectedUserId)}>Delete</button>
     						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
     					</div>
     				</div>

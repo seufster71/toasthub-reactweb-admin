@@ -53,7 +53,7 @@ export default function MenuView({containerState, menus, appPrefs, onListLimitCh
 	  						
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn ai-btn-primary" onClick={onSaveMenu()}>Save</button>
+	  						<button type="button" className="btn btn-primary" onClick={onSaveMenu()}>Save</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
 	  					</div>
 	  				</div>
@@ -70,7 +70,7 @@ export default function MenuView({containerState, menus, appPrefs, onListLimitCh
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn ai-btn-primary" onClick={onDeleteMenu(containerState.selectedId)}>Delete</button>
+	  						<button type="button" className="btn btn-primary" onClick={onDeleteMenu(containerState.selectedId)}>Delete</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
 	  					</div>
 	  				</div>

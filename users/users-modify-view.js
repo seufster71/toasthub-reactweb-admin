@@ -147,7 +147,7 @@ export default function UsersModifyView({containerState, item, inputFields, appP
 				</div>
 			</div>
 			
-			<button type="button" className="btn ai-btn-primary" onClick={onSave()}>Save</button>
+			<button type="button" className="btn btn-primary" onClick={onSave()}>Save</button>
 			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onCancel()}>Cancel</button>
     	</div>
     );

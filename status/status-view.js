@@ -53,7 +53,7 @@ export default function StatusView({containerState, statuses, appPrefs, onListLi
 	  						
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn ai-btn-primary" onClick={onSaveStatus()}>Save</button>
+	  						<button type="button" className="btn btn-primary" onClick={onSaveStatus()}>Save</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
 	  					</div>
 	  				</div>
@@ -70,7 +70,7 @@ export default function StatusView({containerState, statuses, appPrefs, onListLi
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn ai-btn-primary" onClick={onDeleteStatus(containerState.selectedId)}>Delete</button>
+	  						<button type="button" className="btn btn-primary" onClick={onDeleteStatus(containerState.selectedId)}>Delete</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
 	  					</div>
 	  				</div>
