@@ -6,8 +6,8 @@ import Modal from '../../coreView/common/modal';
 import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
-export default function PermissionsView({containerState, permissions, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange, goBack, session }) {
+export default function PermissionsView({containerState, permissions, appPrefs, onListLimitChange, onSearchChange, onSearchClick, onPaginationClick, 
+	onOrderBy, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange, goBack, session }) {
 
 	let columns = [];
 	if (permissions.appLabels != null && permissions.appLabels.ADMIN_PERMISSION_TABLE != null) {
@@ -46,12 +46,14 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 		  	      	onSearchChange={onSearchChange}
 		  	      	onSearchClick={onSearchClick}
 		  	      	onPaginationClick={onPaginationClick}
-		  			onColumnSort={onColumnSort}
+		  			onOrderBy={onOrderBy}
 	  				onHeader={onModify}
 	  				onOption1={onModify}
 	  				onOption2={openDeleteModal}
 	  				onOption3={onRolePermissionModify}
 	  				goBack={goBack}
+		  			orderCriteria={permissions.orderCriteria}
+	  				searchCriteria={permissions.searchCriteria}
 		  	      />
 		  	) : (
 		  		<Table
@@ -68,12 +70,14 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 		  			onSearchChange={onSearchChange}
 		  			onSearchClick={onSearchClick}
 		  			onPaginationClick={onPaginationClick}
-		  			onColumnSort={onColumnSort}
+		  			onOrderBy={onOrderBy}
 		  			onHeader={onModify}
 		  			onOption1={onModify}
 		  			onOption2={openDeleteModal}
 		  			onOption3={onRolePermissionModify}
 		  			goBack={goBack}
+		  			orderCriteria={permissions.orderCriteria}
+		  			searchCriteria={permissions.searchCriteria}
 		  		/>
 	  		)}
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
@@ -106,7 +110,7 @@ PermissionsView.propTypes = {
 	onSearchChange: PropTypes.func,
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
-	onColumnSort: PropTypes.func,
+	onOrderBy: PropTypes.func,
 	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
 	onModify: PropTypes.func,
@@ -114,5 +118,7 @@ PermissionsView.propTypes = {
 	onRolePermissionModify: PropTypes.func,
 	inputChange: PropTypes.func,
 	goBack: PropTypes.func,
-	session: PropTypes.object
+	session: PropTypes.object,
+	orderCriteria: PropTypes.object,
+	searchCriteria: PropTypes.object
 };
