@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../../coreView/common/modal';
-import Input from '../../coreView/common/text-input';
+import TextBuilder from '../../coreView/common/text-input-builder';
 import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
-import Select from '../../coreView/common/select-input';
+import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
-export default function LanguageModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange}) {
+export default function LanguageModifyView({containerState, item, inputFields, appPrefs, 
+	itemAppForms, onSave, onCancel, inputChange}) {
     
 	let adminLanguageFormTitle = {};
 
     let adminLanguageFormCode = {};
-    let codeDefault = "";
     
     let adminLanguageFormActive = {};
     let activeDefault = true;
@@ -35,12 +35,6 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     			break;
     		case "ADMIN_LANGUAGE_FORM_CODE":
     			adminLanguageFormCode = itemAppForms.ADMIN_LANGUAGE_FORM[i];
-    			if (adminLanguageFormCode.classModel != "") {
-    				let codeModel = JSON.parse(adminLanguageFormCode.classModel);
-    				if (item != null && item[codeModel.field] != null) {
-    					codeDefault = item[codeModel.field];
-    				}
-    			}
     			break;
     		case "ADMIN_LANGUAGE_FORM_ACTIVE":
     			adminLanguageFormActive = itemAppForms.ADMIN_LANGUAGE_FORM[i];
@@ -82,30 +76,24 @@ export default function LanguageModifyView({containerState, item, inputFields, a
 
 			<div className="row">
 				<div className="col-sm-4">
-					<MultiLangTextInput formField={adminLanguageFormTitle} item={item} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} appPrefs={appPrefs}/>
+					<MultiLangTextInput field={adminLanguageFormTitle} item={item} inputFields={inputFields} onChange={inputChange} appPrefs={appPrefs}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Input name={adminLanguageFormCode.name} inputType={adminLanguageFormCode.htmlType} label={adminLanguageFormCode.label} rendered={adminLanguageFormCode.rendered} required={adminLanguageFormCode.required} errors={containerState.errors} onChange={inputChange(adminLanguageFormCode.name)} value={(inputFields != null && inputFields[adminLanguageFormCode.name] != null)?inputFields[adminLanguageFormCode.name]:codeDefault}/>
+					<TextBuilder item={item} field={adminLanguageFormCode} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
-				{adminLanguageFormDirection.rendered && 
-					<div className="col-md-4">
-						<Select name={adminLanguageFormDirection.name} label={adminLanguageFormDirection.label} required={adminLanguageFormDirection.required} errors={containerState.errors} options={directionOptions.options} onChange={inputChange(adminLanguageFormDirection.name)} value={(inputFields != null && inputFields[adminLanguageFormDirection.name] != null)?inputFields[adminLanguageFormDirection.name]:directionDefault}/>
-					</div>
-				}
-				{adminLanguageFormActive.rendered && 
-					<div className="col-md-4">
-						<Switch name={adminLanguageFormActive.name} label={adminLanguageFormActive.label} rendered={adminLanguageFormActive.rendered} required={adminLanguageFormActive.required} fieldName={adminLanguageFormActive.name} options={activeOptions.options} value={(inputFields != null && inputFields[adminLanguageFormActive.name] != null)?inputFields[adminLanguageFormActive.name]:activeDefault}  onClick={inputChange} />
-					</div>
-				}
-				{adminLanguageFormDefault.rendered && 
-					<div className="col-md-4">
-						<Switch name={adminLanguageFormDefault.name} label={adminLanguageFormDefault.label} rendered={adminLanguageFormDefault.rendered} required={adminLanguageFormDefault.required} fieldName={adminLanguageFormDefault.name} options={defaultOptions.options} value={(inputFields != null && inputFields[adminLanguageFormDefault.name] != null)?inputFields[adminLanguageFormDefault.name]:defaultDefault}  onClick={inputChange} />
-					</div>
-				}
+				<div className="col-md-4">
+					<SelectBuilder item={item} field={adminLanguageFormDirection} inputFields={inputFields} containerState={containerState} onChange={inputChange} options={directionOptions}/>
+				</div>
+				<div className="col-md-4">
+					<Switch item={item} field={adminLanguageFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions.options}/>
+				</div>
+				<div className="col-md-4">
+					<Switch item={item} field={adminLanguageFormDefault} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={defaultOptions.options}/>
+				</div>
 			</div>
 			
 			<button type="button" className="btn btn-primary" onClick={onSave()}>Save</button>

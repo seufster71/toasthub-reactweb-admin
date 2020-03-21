@@ -7,7 +7,8 @@ import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
-export default function UsersModifyView({containerState, item, inputFields, appPrefs, userAppForms, onSave, onCancel, inputChange, onBlur}) {
+export default function UsersModifyView({containerState, item, inputFields, appPrefs, 
+	userAppForms, onSave, onCancel, inputChange, onBlur}) {
 
 	let options=[];
     if (appPrefs != null && appPrefs.appGlobal != null && appPrefs.appGlobal.LANGUAGES != null && appPrefs.appGlobal.LANGUAGES.length > 0){

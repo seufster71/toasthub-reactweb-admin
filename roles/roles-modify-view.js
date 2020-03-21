@@ -8,7 +8,8 @@ import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import moment from 'moment';
 
-export default function RolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function RolesModifyView({containerState, item, inputFields, appPrefs, 
+	itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminRoleFormTitle = {};
 
@@ -87,7 +88,7 @@ export default function RolesModifyView({containerState, item, inputFields, appP
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<SelectBuilder item={item} field={adminRoleFormApplication}  inputFields={inputFields} containerState={containerState} onChange={inputChange} options={applicationOptions}/>
+					<SelectBuilder item={item} field={adminRoleFormApplication} inputFields={inputFields} containerState={containerState} onChange={inputChange} options={applicationOptions}/>
 				</div>
 			</div>
 			<div className="row">

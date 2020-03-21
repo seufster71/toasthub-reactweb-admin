@@ -27,6 +27,11 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 		}
 	}
 	
+	let deleteModalHeader = "Delete ";
+	if (containerState.selected != null && containerState.selected.title != null) {
+		deleteModalHeader += containerState.selected.title.defaultText;
+	}
+	
 	let viewPortSmall = false;
 	if (session.viewPort === 'small') { viewPortSmall = true }
 	
@@ -85,13 +90,13 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	  				<div className="modal-content">
 	  					<div className="modal-header">
 	  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-	  						<h4 className="modal-title">Delete {containerState.selectedName}</h4>
+	  						<h4 className="modal-title">{deleteModalHeader}</h4>
 	  					</div>
 	  					<div className="modal-body">
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onDelete(containerState.selectedId)}>Delete</button>
+	  						<button type="button" className="btn btn-primary" onClick={onDelete(containerState.selected)}>Delete</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
 	  					</div>
 	  				</div>
@@ -118,7 +123,5 @@ PermissionsView.propTypes = {
 	onRolePermissionModify: PropTypes.func,
 	inputChange: PropTypes.func,
 	goBack: PropTypes.func,
-	session: PropTypes.object,
-	orderCriteria: PropTypes.object,
-	searchCriteria: PropTypes.object
+	session: PropTypes.object
 };
