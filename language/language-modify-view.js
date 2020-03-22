@@ -23,8 +23,6 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     let defaultOptions = [];
     
     let adminLanguageFormDirection = {};
-    let directionDefault = "ltr";
-    let directionOptions = [];
     
     
     if (itemAppForms != null && itemAppForms.ADMIN_LANGUAGE_FORM != null) {
@@ -58,13 +56,6 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     			break;
     		case "ADMIN_LANGUAGE_FORM_DIRECTION":
     			adminLanguageFormDirection = itemAppForms.ADMIN_LANGUAGE_FORM[i];
-    			if (adminLanguageFormDirection.classModel != "") {
-    				let directionModel = JSON.parse(adminLanguageFormDirection.classModel);
-    				if (item != null && item[directionModel.field] != null) {
-    					directionDefault = item[directionModel.field];
-    				}
-    				directionOptions = JSON.parse(adminLanguageFormDirection.value);
-    			}
     			break;
     		}
     	}
@@ -86,7 +77,7 @@ export default function LanguageModifyView({containerState, item, inputFields, a
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<SelectBuilder item={item} field={adminLanguageFormDirection} inputFields={inputFields} containerState={containerState} onChange={inputChange} options={directionOptions}/>
+					<SelectBuilder item={item} field={adminLanguageFormDirection} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				</div>
 				<div className="col-md-4">
 					<Switch item={item} field={adminLanguageFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions.options}/>
