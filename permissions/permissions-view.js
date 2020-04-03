@@ -10,20 +10,20 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	onOrderBy, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange, goBack, session }) {
 
 	let columns = [];
-	if (permissions.appLabels != null && permissions.appLabels.ADMIN_PERMISSION_TABLE != null) {
-		columns = permissions.appLabels.ADMIN_PERMISSION_TABLE;
+	if (permissions.prefLabels != null && permissions.prefLabels.ADMIN_PERMISSION_TABLE != null) {
+		columns = permissions.prefLabels.ADMIN_PERMISSION_TABLE;
 	}
 
 	let header = "";
 	let parent = null;
 	if (permissions.parent != null) {
-		if (permissions.appTexts.ADMIN_PERMISSION_PAGE != null && permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT != null) {
-			header = permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT.value;
+		if (permissions.prefTexts.ADMIN_PERMISSION_PAGE != null && permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT != null) {
+			header = permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT.value;
 		}
 		parent = permissions.parent.title.langTexts[0].text;
 	} else {
-		if (permissions.appTexts.ADMIN_PERMISSION_PAGE != null && permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER != null) {
-			header = permissions.appTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER.value;
+		if (permissions.prefTexts.ADMIN_PERMISSION_PAGE != null && permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER != null) {
+			header = permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER.value;
 		}
 	}
 	

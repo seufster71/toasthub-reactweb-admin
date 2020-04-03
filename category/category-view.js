@@ -10,13 +10,13 @@ export default function CategoryView({containerState, category, appPrefs, onList
 
 	let columns = [];
   
-	if (category.appLabels != null && category.appLabels.ADMIN_CATEGORY_TABLE != null) {
-		columns = category.appLabels.ADMIN_CATEGORY_TABLE;
+	if (category.prefLabels != null && category.prefLabels.ADMIN_CATEGORY_TABLE != null) {
+		columns = category.prefLabels.ADMIN_CATEGORY_TABLE;
 	}
 
 	let header = "";
-	if (category.appTexts.ADMIN_CATEGORY_PAGE != null && category.appTexts.ADMIN_CATEGORY_PAGE.ADMIN_CATEGORY_PAGE_HEADER != null) {
-		header = category.appTexts.ADMIN_CATEGORY_PAGE.ADMIN_CATEGORY_PAGE_HEADER.value;
+	if (category.prefTexts.ADMIN_CATEGORY_PAGE != null && category.prefTexts.ADMIN_CATEGORY_PAGE.ADMIN_CATEGORY_PAGE_HEADER != null) {
+		header = category.prefTexts.ADMIN_CATEGORY_PAGE.ADMIN_CATEGORY_PAGE_HEADER.value;
 	}
   
 	return (

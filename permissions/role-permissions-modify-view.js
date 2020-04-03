@@ -9,7 +9,7 @@ import Switch from '../../coreView/common/switch';
 import Date from '../../coreView/common/date-input';
 import moment from 'moment';
 
-export default function RolePermissionsModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function RolePermissionsModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminRolePermissionFormRights = {};
     
@@ -22,14 +22,14 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     let adminRolePermissionFormActive = {};
 
     
-    if (itemAppForms != null && itemAppForms.ADMIN_ROLE_PERMISSION_FORM != null) {
-    	for (let i = 0; i < itemAppForms.ADMIN_ROLE_PERMISSION_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PERMISSION_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_PERMISSION_FORM.length; i++) {
+    		switch (itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i].name) {
     		case "ADMIN_ROLE_PERMISSION_FORM_RIGHTS":
-    			adminRolePermissionFormRights = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormRights = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
     			break;
     		case "ADMIN_ROLE_PERMISSION_FORM_STARTDATE":
-    			adminRolePermissionFormStartDate = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormStartDate = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
     			if (adminRolePermissionFormStartDate.classModel != "") {
     				let startDateModel = JSON.parse(adminRolePermissionFormStartDate.classModel);
     				if (item != null && item[startDateModel.field] != null) {
@@ -38,7 +38,7 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     			}
     			break;
     		case "ADMIN_ROLE_PERMISSION_FORM_ENDDATE":
-    			adminRolePermissionFormEndDate = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormEndDate = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
     			if (adminRolePermissionFormEndDate.classModel != "") {
     				let endDateModel = JSON.parse(adminRolePermissionFormEndDate.classModel);
     				if (item != null && item[endDateModel.field] != null) {
@@ -47,7 +47,7 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     			}
     			break;
     		case "ADMIN_ROLE_PERMISSION_FORM_ACTIVE":
-    			adminRolePermissionFormActive = itemAppForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormActive = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
     			break;
     		}
     	}
@@ -108,7 +108,7 @@ RolePermissionsModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,
-  itemAppForms: PropTypes.object,
+  itemPrefForms: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inputChange: PropTypes.func

@@ -9,12 +9,12 @@ export default function ServiceView({containerState, services, appPrefs, onListL
 	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openEditModal, openDeleteModal, closeModal, onSaveService, onDeleteService, inputChange}) {
 
 	let columns = [];
-	if (services.appLabels != null && services.appLabels.ADMIN_SERVICE_CRAWLER_TABLE != null) {
-		columns = services.appLabels.ADMIN_SERVICE_CRAWLER_TABLE;
+	if (services.prefLabels != null && services.prefLabels.ADMIN_SERVICE_CRAWLER_TABLE != null) {
+		columns = services.prefLabels.ADMIN_SERVICE_CRAWLER_TABLE;
 	}
 	let header = "Services";
-	if (services.appTexts.ADMIN_SERVICE_CRAWLER_PAGE != null && services.appTexts.ADMIN_SERVICE_CRAWLER_PAGE.ADMIN_SERVICE_CRAWLER_PAGE_HEADER != null) {
-		header = services.appTexts.ADMIN_SERVICE_CRAWLER_PAGE.ADMIN_SERVICE_CRAWLER_PAGE_HEADER;
+	if (services.prefTexts.ADMIN_SERVICE_CRAWLER_PAGE != null && services.prefTexts.ADMIN_SERVICE_CRAWLER_PAGE.ADMIN_SERVICE_CRAWLER_PAGE_HEADER != null) {
+		header = services.prefTexts.ADMIN_SERVICE_CRAWLER_PAGE.ADMIN_SERVICE_CRAWLER_PAGE_HEADER;
 	}
 	
 	return (

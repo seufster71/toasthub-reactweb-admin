@@ -5,30 +5,44 @@ import Table from '../../coreView/common/table';
 import Search from '../../coreView/common/search';
 import Modal from '../../coreView/common/modal';
 import DeleteModal from '../../coreView/common/delete-modal';
-import Tabs from '../../coreView/common/tabs';
 import moment from 'moment';
 
-export default function PreferencesView({containerState, preferenceState, appPrefs, onListLimitChange,
+export default function PreferenceSubView({containerState, preferenceState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, onFilterClick, onSaveFilter, onClearFilter,
-	onModify, onDelete, openDeleteModal, closeModal, onClickTabItem, onToggleItem, inputChange, openFormView, openLabelView, openTextView, openOptionView, session}) {
-
-	let tabLabels = ["Fields","Labels","Texts"];
+	onModify, onDelete, openDeleteModal, closeModal, inputChange, session, goBack}) {
 
 	let columns = [];
-	if (preferenceState.prefLabels != null && preferenceState.prefLabels.ADMIN_PREFERENCE_TABLE != null) {
-		columns = preferenceState.prefLabels.ADMIN_PREFERENCE_TABLE;
+	if (preferenceState.prefLabels != null ) {
+		if (preferenceState.prefLabels.ADMIN_FORMFIELD_PAGE != null && preferenceState.viewType === "FORM") {
+			columns = preferenceState.prefLabels.ADMIN_FORMFIELD_PAGE;
+		} else if (preferenceState.prefLabels.ADMIN_LABEL_PAGE != null && preferenceState.viewType === "LABEL") {
+			columns = preferenceState.prefLabels.ADMIN_LABEL_PAGE;
+		} else if (preferenceState.prefLabels.ADMIN_TEXT_PAGE != null && preferenceState.viewType === "TEXT") {
+			columns = preferenceState.prefLabels.ADMIN_TEXT_PAGE;
+		} else if (preferenceState.prefLabels.ADMIN_OPTION_PAGE != null && preferenceState.viewType === "OPTION") {
+			columns = preferenceState.prefLabels.ADMIN_OPTION_PAGE;
+		}
+	
 	}
 	
 	let header = "";
 	let parent = null;
 	if (preferenceState.parent != null) {
-		if (preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE != null && preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER_PARENT != null) {
-			header = preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER_PARENT.value;
+		if (preferenceState.prefTexts != null) {
+			if (preferenceState.viewType === "FORM" && preferenceState.prefTexts.ADMIN_FORMFIELD_PAGE != null && preferenceState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER_PARENT != null) {
+				header = preferenceState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER_PARENT.value;
+			} else if (preferenceState.viewType === "LABEL" && preferenceState.prefTexts.ADMIN_LABEL_PAGE != null && preferenceState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER_PARENT != null) {
+				header = preferenceState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER_PARENT.value;
+			} else if (preferenceState.viewType === "TEXT" && preferenceState.prefTexts.ADMIN_TEXT_PAGE != null && preferenceState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER_PARENT != null) {
+				header = preferenceState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER_PARENT.value;
+			} else if (preferenceState.viewType === "OPTION" && preferenceState.prefTexts.ADMIN_OPTION_PAGE != null && preferenceState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER_PARENT != null) {
+				header = preferenceState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER_PARENT.value;
+			}
 		}
-		parent = preferenceState.parent.title;
+		parent = preferenceState.parent.title.langTexts[0].text;
 	} else {
 		if (preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE != null && preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER != null) {
-			header = preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value;
+			header = "NO header";
 		}
 	}
 	
@@ -93,8 +107,6 @@ export default function PreferencesView({containerState, preferenceState, appPre
 		listRows.push(<li key="1"><div id={appPrefs.prefTexts.GLOBAL_PAGE.GLOBAL_PAGE_LIST_EMPTY.name}> {appPrefs.prefTexts.GLOBAL_PAGE.GLOBAL_PAGE_LIST_EMPTY.value}</div></li>);
 	}
 	
-	// let header = <h5 style={{display:'inline'}}>{preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value}</h5>;
-	
 	let deleteModalHeader = "Delete ";
 	if (containerState.selected != null && containerState.selected.title != null) {
 		deleteModalHeader += containerState.selected.title.defaultText;
@@ -112,8 +124,8 @@ export default function PreferencesView({containerState, preferenceState, appPre
 					header={header}
 					listRows={listRows}
 					itemCount={preferenceState.itemCount}
-					listStart={preferenceState.listStart}
-					listLimit={preferenceState.listLimit}
+					listStart={preferenceState.pageStart}
+					listLimit={preferenceState.pageLimit}
 					columns={columns}
 					appPrefs={appPrefs}
 					onListLimitChange={onListLimitChange}
@@ -145,15 +157,12 @@ export default function PreferencesView({containerState, preferenceState, appPre
 		  			onHeader={onModify}
 		  			onOption1={onModify}
 		  			onOption2={openDeleteModal}
-		  			onOption3={openFormView}
-		  			onOption4={openLabelView}
-					onOption5={openTextView}
-					onOption6={openOptionView}
 		  			openDeleteModal={openDeleteModal}
 					orderCriteria={preferenceState.orderCriteria}
   					searchCriteria={preferenceState.searchCriteria}
+					goBack={goBack}
 				/>
-			)}
+			)}				
 			<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
 				<div className="modal-dialog">
 					<div className="modal-content">
@@ -176,28 +185,23 @@ export default function PreferencesView({containerState, preferenceState, appPre
 }
 
 
-PreferencesView.propTypes = {
-	containerState: PropTypes.object,
-	preferenceState: PropTypes.object,
-	appPrefs: PropTypes.object,
-	onListLimitChange: PropTypes.func,
-	onSearchChange: PropTypes.func,
-	onSearchClick: PropTypes.func,
-	onPaginationClick: PropTypes.func,
-	onOrderBy: PropTypes.func,
-	onFilterClick: PropTypes.func,
-	onSaveFilter: PropTypes.func,
-	onClearFilter: PropTypes.func,
-	onModify: PropTypes.func,
-	onDelete: PropTypes.func,
-	openDeleteModal: PropTypes.func,
-	closeModal: PropTypes.func,
-	onClickTabItem: PropTypes.func,
-	onToggleItem: PropTypes.func,
-	inputChange: PropTypes.func,
-	openFormView: PropTypes.func,
-	openLabelView: PropTypes.func,
-	openTextView: PropTypes.func,
-	openOptionView: PropTypes.func,
-	session: PropTypes.object
+PreferenceSubView.propTypes = {
+  containerState: PropTypes.object,
+  preferenceState: PropTypes.object,
+  appPrefs: PropTypes.object,
+  onListLimitChange: PropTypes.func,
+  onSearchChange: PropTypes.func,
+  onSearchClick: PropTypes.func,
+  onPaginationClick: PropTypes.func,
+  onOrderBy: PropTypes.func,
+  onFilterClick: PropTypes.func,
+  onSaveFilter: PropTypes.func,
+  onClearFilter: PropTypes.func,
+  onModify: PropTypes.func,
+  onDelete: PropTypes.func,
+  openDeleteModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  onClickTabItem: PropTypes.func,
+  onToggleItem: PropTypes.func,
+  inputChange: PropTypes.func,
 };

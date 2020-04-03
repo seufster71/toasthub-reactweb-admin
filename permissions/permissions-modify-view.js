@@ -8,7 +8,7 @@ import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import moment from 'moment';
 
-export default function PermissionsModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function PermissionsModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminPermissionFormTitle = {};
 
@@ -27,23 +27,23 @@ export default function PermissionsModifyView({containerState, item, inputFields
     let adminPermissionFormActive = {};
 
     
-    if (itemAppForms != null && itemAppForms.ADMIN_PERMISSION_FORM != null) {
-    	for (let i = 0; i < itemAppForms.ADMIN_PERMISSION_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_PERMISSION_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_PERMISSION_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_PERMISSION_FORM.length; i++) {
+    		switch (itemPrefForms.ADMIN_PERMISSION_FORM[i].name) {
     		case "ADMIN_PERMISSION_FORM_TITLE":
-    			adminPermissionFormTitle = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormTitle = itemPrefForms.ADMIN_PERMISSION_FORM[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_CODE":
-    			adminPermissionFormCode = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormCode = itemPrefForms.ADMIN_PERMISSION_FORM[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_APPLICATION":
-    			adminPermissionFormApplication = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormApplication = itemPrefForms.ADMIN_PERMISSION_FORM[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_RIGHTS":
-    			adminPermissionFormRights = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormRights = itemPrefForms.ADMIN_PERMISSION_FORM[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_STARTDATE":
-    			adminPermissionFormStartDate = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormStartDate = itemPrefForms.ADMIN_PERMISSION_FORM[i];
     			if (adminPermissionFormStartDate.classModel != "") {
     				let startDateModel = JSON.parse(adminPermissionFormStartDate.classModel);
     				if (item != null && item[startDateModel.field] != null) {
@@ -52,7 +52,7 @@ export default function PermissionsModifyView({containerState, item, inputFields
     			}
     			break;
     		case "ADMIN_PERMISSION_FORM_ENDDATE":
-    			adminPermissionFormEndDate = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormEndDate = itemPrefForms.ADMIN_PERMISSION_FORM[i];
     			if (adminPermissionFormEndDate.classModel != "") {
     				let endDateModel = JSON.parse(adminPermissionFormEndDate.classModel);
     				if (item != null && item[endDateModel.field] != null) {
@@ -61,7 +61,7 @@ export default function PermissionsModifyView({containerState, item, inputFields
     			}
     			break;
     		case "ADMIN_PERMISSION_FORM_ACTIVE":
-    			adminPermissionFormActive = itemAppForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormActive = itemPrefForms.ADMIN_PERMISSION_FORM[i];
     			break;
     		}
     	}
@@ -127,7 +127,7 @@ PermissionsModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,
-  itemAppForms: PropTypes.object,
+  itemPrefForms: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inputChange: PropTypes.func

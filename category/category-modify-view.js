@@ -5,21 +5,21 @@ import Modal from '../../coreView/common/modal';
 import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
-export default function CategoryModifyView({containerState, item, inputFields, appPrefs, appForms,
+export default function CategoryModifyView({containerState, item, inputFields, appPrefs, prefForms,
 	onSave, onCancel, inputChange}) {
 
 	let adminCategoryFormName = {};
 
     let adminCategoryFormCode = {};
   
-    if (appForms != null && appForms.ADMIN_CATEGORY_FORM != null) {
-    	for (let i = 0; i < appForms.ADMIN_CATEGORY_FORM.length; i++) {
-    		switch (appForms.ADMIN_CATEGORY_FORM[i].name) {
+    if (prefForms != null && prefForms.ADMIN_CATEGORY_FORM != null) {
+    	for (let i = 0; i < prefForms.ADMIN_CATEGORY_FORM.length; i++) {
+    		switch (prefForms.ADMIN_CATEGORY_FORM[i].name) {
     		case "ADMIN_CATEGORY_FORM_NAME":
-    			adminCategoryFormName = appForms.ADMIN_CATEGORY_FORM[i];
+    			adminCategoryFormName = prefForms.ADMIN_CATEGORY_FORM[i];
     			break;
     		case "ADMIN_CATEGORY_FORM_MIDDLENAME":
-    			adminUserFormMiddleName = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormMiddleName = prefForms.ADMIN_USER_FORM[i];
     			break;
     		}
     	}
@@ -45,7 +45,7 @@ CategoryModifyView.propTypes = {
 	item: PropTypes.object,
 	inputFields: PropTypes.object,
 	appPrefs: PropTypes.object,
-	appForms: PropTypes.object,
+	prefForms: PropTypes.object,
 	onSave: PropTypes.func,
 	onCancel: PropTypes.func,
 	inputChange: PropTypes.func

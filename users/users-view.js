@@ -12,13 +12,13 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
 	closeModal, onModify, onDelete, onEditRoles, inputChange, session}) {
 
     let columns = [];
-    if (items.appLabels != null && items.appLabels.ADMIN_USER_TABLE != null) {
-    	columns = items.appLabels.ADMIN_USER_TABLE;
+    if (items.prefLabels != null && items.prefLabels.ADMIN_USER_TABLE != null) {
+    	columns = items.prefLabels.ADMIN_USER_TABLE;
     }
     
     let header = "";
-	if (items.appTexts.ADMIN_USER_PAGE != null && items.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
-		header = items.appTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER.value;
+	if (items.prefTexts.ADMIN_USER_PAGE != null && items.prefTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
+		header = items.prefTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER.value;
 	}
 	
 	let deleteModalHeader = "Delete ";
@@ -49,8 +49,7 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
 	  				onHeader={onModify}
 	  				onOption1={onModify}
 	  				onOption2={openDeleteModal}
-	  				onOption3={onRolePermissionModify}
-	  				goBack={goBack}
+	  				onOption3={onEditRoles}
 		  			orderCriteria={items.orderCriteria}
 	  				searchCriteria={items.searchCriteria}
 		  	      />

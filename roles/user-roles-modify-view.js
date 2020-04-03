@@ -9,7 +9,7 @@ import Switch from '../../coreView/common/switch';
 import Date from '../../coreView/common/date-input';
 import moment from 'moment';
 
-export default function UserRolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function UserRolesModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminUserRolesFormOrder = {};
     
@@ -22,14 +22,14 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     let adminUserRolesFormActive = {};
 
     
-    if (itemAppForms != null && itemAppForms.ADMIN_USER_ROLE_FORM != null) {
-    	for (let i = 0; i < itemAppForms.ADMIN_USER_ROLE_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_USER_ROLE_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_ROLE_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_USER_ROLE_FORM.length; i++) {
+    		switch (itemPrefForms.ADMIN_USER_ROLE_FORM[i].name) {
     		case "ADMIN_USER_ROLE_FORM_ORDER":
-    			adminUserRolesFormOrder = itemAppForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormOrder = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
     			break;
     		case "ADMIN_USER_ROLE_FORM_STARTDATE":
-    			adminUserRolesFormStartDate = itemAppForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormStartDate = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
     			if (adminUserRolesFormStartDate.classModel != "") {
     				let startDateModel = JSON.parse(adminUserRolesFormStartDate.classModel);
     				if (item != null && item[startDateModel.field] != null) {
@@ -38,7 +38,7 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     			}
     			break;
     		case "ADMIN_USER_ROLE_FORM_ENDDATE":
-    			adminUserRolesFormEndDate = itemAppForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormEndDate = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
     			if (adminUserRolesFormEndDate.classModel != "") {
     				let endDateModel = JSON.parse(adminUserRolesFormEndDate.classModel);
     				if (item != null && item[endDateModel.field] != null) {
@@ -47,7 +47,7 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     			}
     			break;
     		case "ADMIN_USER_ROLE_FORM_ACTIVE":
-    			adminUserRolesFormActive = itemAppForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormActive = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
     			break;
     		}
     	}
@@ -108,7 +108,7 @@ UserRolesModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,
-  itemAppForms: PropTypes.object,
+  itemPrefForms: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inputChange: PropTypes.func

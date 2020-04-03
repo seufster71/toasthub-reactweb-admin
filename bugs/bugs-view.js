@@ -6,8 +6,8 @@ export default function BugsView({bugs}) {
 
 
     let columns = [];
-    if (bugs.appLabels != null && bugs.appLabels.ADMIN_BUGS_TABLE != null) {
-      columns = bugs.appLabels.ADMIN_BUGS_TABLE;
+    if (bugs.prefLabels != null && bugs.prefLabels.ADMIN_BUGS_TABLE != null) {
+      columns = bugs.prefLabels.ADMIN_BUGS_TABLE;
     }
     return (
       <Table items={bugs.items} columns={columns} />

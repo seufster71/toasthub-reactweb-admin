@@ -8,7 +8,7 @@ import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
 export default function LanguageModifyView({containerState, item, inputFields, appPrefs, 
-	itemAppForms, onSave, onCancel, inputChange}) {
+	itemPrefForms, onSave, onCancel, inputChange}) {
     
 	let adminLanguageFormTitle = {};
 
@@ -25,17 +25,17 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     let adminLanguageFormDirection = {};
     
     
-    if (itemAppForms != null && itemAppForms.ADMIN_LANGUAGE_FORM != null) {
-    	for (let i = 0; i < itemAppForms.ADMIN_LANGUAGE_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_LANGUAGE_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_LANGUAGE_PAGE != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_LANGUAGE_PAGE.length; i++) {
+    		switch (itemPrefForms.ADMIN_LANGUAGE_PAGE[i].name) {
     		case "ADMIN_LANGUAGE_FORM_TITLE":
-    			adminLanguageFormTitle = itemAppForms.ADMIN_LANGUAGE_FORM[i];
+    			adminLanguageFormTitle = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
     			break;
     		case "ADMIN_LANGUAGE_FORM_CODE":
-    			adminLanguageFormCode = itemAppForms.ADMIN_LANGUAGE_FORM[i];
+    			adminLanguageFormCode = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
     			break;
     		case "ADMIN_LANGUAGE_FORM_ACTIVE":
-    			adminLanguageFormActive = itemAppForms.ADMIN_LANGUAGE_FORM[i];
+    			adminLanguageFormActive = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
     			if (adminLanguageFormActive.classModel != "") {
     				let activeModel = JSON.parse(adminLanguageFormActive.classModel);
     				if (item != null && item[activeModel.field] != null) {
@@ -45,7 +45,7 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     			}
     			break;
     		case "ADMIN_LANGUAGE_FORM_DEFAULT":
-    			adminLanguageFormDefault = itemAppForms.ADMIN_LANGUAGE_FORM[i];
+    			adminLanguageFormDefault = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
     			if (adminLanguageFormDefault.classModel != "") {
     				let defaultModel = JSON.parse(adminLanguageFormDefault.classModel);
     				if (item != null && item[defaultModel.field] != null) {
@@ -55,7 +55,7 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     			}
     			break;
     		case "ADMIN_LANGUAGE_FORM_DIRECTION":
-    			adminLanguageFormDirection = itemAppForms.ADMIN_LANGUAGE_FORM[i];
+    			adminLanguageFormDirection = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
     			break;
     		}
     	}
@@ -98,7 +98,7 @@ LanguageModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,
-  itemAppForms: PropTypes.object,
+  itemPrefForms: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inputChange: PropTypes.func

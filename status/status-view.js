@@ -10,12 +10,12 @@ export default function StatusView({containerState, statuses, appPrefs, onListLi
 
 	let columns = [];
 	  
-	if (statuses.appLabels != null && statuses.appLabels.ADMIN_STATUS_TABLE != null) {
-		columns = statuses.appLabels.ADMIN_STATUS_TABLE;
+	if (statuses.prefLabels != null && statuses.prefLabels.ADMIN_STATUS_TABLE != null) {
+		columns = statuses.prefLabels.ADMIN_STATUS_TABLE;
 	}
 	let header = "Status";
-	if (statuses.appTexts.ADMIN_STATUS_PAGE != null && statuses.appTexts.ADMIN_STATUS_PAGE.ADMIN_STATUS_PAGE_HEADER != null) {
-		header = statuses.appTexts.ADMIN_STATUS_PAGE.ADMIN_STATUS_PAGE_HEADER;
+	if (statuses.prefTexts.ADMIN_STATUS_PAGE != null && statuses.prefTexts.ADMIN_STATUS_PAGE.ADMIN_STATUS_PAGE_HEADER != null) {
+		header = statuses.prefTexts.ADMIN_STATUS_PAGE.ADMIN_STATUS_PAGE_HEADER;
 	}
 	
 	return (

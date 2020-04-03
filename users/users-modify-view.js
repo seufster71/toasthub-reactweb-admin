@@ -8,20 +8,20 @@ import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
 export default function UsersModifyView({containerState, item, inputFields, appPrefs, 
-	userAppForms, onSave, onCancel, inputChange, onBlur}) {
+	itemPrefForms, onSave, onCancel, inputChange, onBlur}) {
 
 	let options=[];
-    if (appPrefs != null && appPrefs.appGlobal != null && appPrefs.appGlobal.LANGUAGES != null && appPrefs.appGlobal.LANGUAGES.length > 0){
-    	for (let i = 0; i < appPrefs.appGlobal.LANGUAGES.length; i++) {
-    		let name = appPrefs.appGlobal.LANGUAGES[i].title.defaultText;
-    		if (appPrefs.appGlobal.LANGUAGES[i].title.langTexts != null) {
-    			for (let j = 0; j < appPrefs.appGlobal.LANGUAGES[i].title.langTexts.length; j++) {
-    				if (appPrefs.appGlobal.LANGUAGES[i].title.langTexts[j].lang == appPrefs.lang) {
-    					name = appPrefs.appGlobal.LANGUAGES[i].title.langTexts[j].text;
+    if (appPrefs != null && appPrefs.prefGlobal != null && appPrefs.prefGlobal.LANGUAGES != null && appPrefs.prefGlobal.LANGUAGES.length > 0){
+    	for (let i = 0; i < appPrefs.prefGlobal.LANGUAGES.length; i++) {
+    		let name = appPrefs.prefGlobal.LANGUAGES[i].title.defaultText;
+    		if (appPrefs.prefGlobal.LANGUAGES[i].title.langTexts != null) {
+    			for (let j = 0; j < appPrefs.prefGlobal.LANGUAGES[i].title.langTexts.length; j++) {
+    				if (appPrefs.prefGlobal.LANGUAGES[i].title.langTexts[j].lang == appPrefs.lang) {
+    					name = appPrefs.prefGlobal.LANGUAGES[i].title.langTexts[j].text;
     				}
     			}
     		}
-    		options.push({"value":appPrefs.appGlobal.LANGUAGES[i].code, "text":name});
+    		options.push({"value":appPrefs.prefGlobal.LANGUAGES[i].code, "text":name});
     	}
     }
     
@@ -52,11 +52,11 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     
     let adminUserFormLogLevel = {};
     
-    if (userAppForms != null && userAppForms.ADMIN_USER_FORM != null) {
-    	for (let i = 0; i < userAppForms.ADMIN_USER_FORM.length; i++) {
-    		switch (userAppForms.ADMIN_USER_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_USER_FORM.length; i++) {
+    		switch (itemPrefForms.ADMIN_USER_FORM[i].name) {
     		case "ADMIN_USER_FORM_FIRSTNAME":
-    			adminUserFormFirstName = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormFirstName = itemPrefForms.ADMIN_USER_FORM[i];
     			if (adminUserFormFirstName.classModel != "") {
     				let firstNameModel = JSON.parse(adminUserFormFirstName.classModel);
     				if (item != null && item[firstNameModel.field] != null) {
@@ -65,40 +65,40 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     			}
     			break;
     		case "ADMIN_USER_FORM_MIDDLENAME":
-    			adminUserFormMiddleName = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormMiddleName = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_LASTNAME":
-    			adminUserFormLastName = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormLastName = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_USERNAME":
-    			adminUserFormUserName = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormUserName = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_EMAIL":
-    			adminUserFormEmail = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormEmail = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_ALTERNATE_EMAIL":
-    			adminUserFormAlternateEmail = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormAlternateEmail = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_ZIPCODE":
-    			adminUserFormZipcode = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormZipcode = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_PASSWORD":
-    			adminUserFormPassword = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormPassword = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_VERIFY_PASSWORD":
-    			adminUserFormVerifyPassword = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormVerifyPassword = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_FORCERESET":
-    			adminUserFormForceReset = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormForceReset = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_ACTIVE":
-    			adminUserFormActive = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormActive = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_LANGUAGE":
-    			adminUserFormLanguage = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormLanguage = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		case "ADMIN_USER_FORM_LOGLEVEL":
-    			adminUserFormLogLevel = userAppForms.ADMIN_USER_FORM[i];
+    			adminUserFormLogLevel = itemPrefForms.ADMIN_USER_FORM[i];
     			break;
     		}
     	}
@@ -159,7 +159,7 @@ UsersModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object.isRequired,
-  userAppForms: PropTypes.object.isRequired,
+  itemPrefForms: PropTypes.object.isRequired,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inputChange: PropTypes.func,

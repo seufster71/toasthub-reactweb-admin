@@ -8,7 +8,7 @@ import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import moment from 'moment';
 
-export default function PreferenceModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function PreferenceModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let preferenceFormTitle = {};
 
@@ -24,20 +24,20 @@ export default function PreferenceModifyView({containerState, item, inputFields,
     let activeDefault = true;
     let activeOptions = [];
 
-    if (itemAppForms != null && itemAppForms.ADMIN_PREFERENCE_FORM != null) {
-    	for (let i = 0; i < itemAppForms.ADMIN_ROLE_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_PREFERENCE_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_PREFERENCE_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_FORM.length; i++) {
+    		switch (itemPrefForms.ADMIN_PREFERENCE_FORM[i].name) {
     		case "ADMIN_PREFERENCE_FORM_TITLE":
-    			preferenceFormTitle = itemAppForms.ADMIN_PREFERENCE_FORM[i];
+    			preferenceFormTitle = itemPrefForms.ADMIN_PREFERENCE_FORM[i];
     			break;
     		case "ADMIN_PREFERENCE_FORM_CODE":
-    			preferenceFormCode = itemAppForms.ADMIN_PREFERENCE_FORM[i];
+    			preferenceFormCode = itemPrefForms.ADMIN_PREFERENCE_FORM[i];
     			break;
     		case "ADMIN_PREFERENCE_FORM_APPLICATION":
-    			preferenceFormApplication = itemAppForms.ADMIN_PREFERENCE_FORM[i];
+    			preferenceFormApplication = itemPrefForms.ADMIN_PREFERENCE_FORM[i];
     			break;
     		case "ADMIN_PREFERENCE_FORM_ACTIVE":
-    			preferenceFormActive = itemAppForms.ADMIN_PREFERENCE_FORM[i];
+    			preferenceFormActive = itemPrefForms.ADMIN_PREFERENCE_FORM[i];
     			if (preferenceFormActive.classModel != "") {
     				let activeModel = JSON.parse(preferenceFormActive.classModel);
     				if (item != null && item[activeModel.field] != null) {
@@ -107,7 +107,7 @@ PreferenceModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,
-  itemAppForms: PropTypes.object,
+  itemPrefForms: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inputChange: PropTypes.func,

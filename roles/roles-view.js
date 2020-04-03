@@ -6,25 +6,25 @@ import Modal from '../../coreView/common/modal';
 import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
-export default function RolesView({containerState, items, appPrefs, onListLimitChange,
+export default function RolesView({containerState, rolesState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, openDeleteModal, 
 	closeModal, onModify, onDelete, onEditPermissions, onUserRoleModify, inputChange, goBack, session}) {
 
 	let columns = [];
-	if (items.appLabels != null && items.appLabels.ADMIN_ROLE_TABLE != null) {
-		columns = items.appLabels.ADMIN_ROLE_TABLE;
+	if (rolesState.prefLabels != null && rolesState.prefLabels.ADMIN_ROLE_TABLE != null) {
+		columns = rolesState.prefLabels.ADMIN_ROLE_TABLE;
 	}
 	
 	let header = "";
 	let parent = null;
-	if (items.parent != null) {
-		if (items.appTexts.ADMIN_ROLE_PAGE != null && items.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT != null) {
-			header = items.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT.value;
+	if (rolesState.parent != null) {
+		if (rolesState.prefTexts.ADMIN_ROLE_PAGE != null && rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT != null) {
+			header = rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT.value;
 		}
-		parent = items.parent.username;
+		parent = rolesState.parent.username;
 	} else {
-		if (items.appTexts.ADMIN_ROLE_PAGE != null && items.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER != null) {
-			header = items.appTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER.value;
+		if (rolesState.prefTexts.ADMIN_ROLE_PAGE != null && rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER != null) {
+			header = rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER.value;
 		}
 	}
 	
@@ -42,10 +42,10 @@ export default function RolesView({containerState, items, appPrefs, onListLimitC
 				<ListBuilder
 		  	      	containerState={containerState}
 		  	      	header={header}
-		  	      	items={items.items}
-		  	      	itemCount={items.itemCount}
-		  	      	listStart={items.listStart}
-		  	      	listLimit={items.listLimit}
+		  	      	items={rolesState.items}
+		  	      	itemCount={rolesState.itemCount}
+		  	      	listStart={rolesState.listStart}
+		  	      	listLimit={rolesState.listLimit}
 		  	     	columns={columns}
 		  	      	appPrefs={appPrefs}
 		  	      	onListLimitChange={onListLimitChange}
@@ -56,19 +56,19 @@ export default function RolesView({containerState, items, appPrefs, onListLimitC
 	  				onHeader={onModify}
 	  				onOption1={onModify}
 	  				onOption2={openDeleteModal}
-	  				onOption3={onRolePermissionModify}
+	  				onOption3={onUserRoleModify}
 	  				goBack={goBack}
-		  			orderCriteria={items.orderCriteria}
-	  				searchCriteria={items.searchCriteria}
+		  			orderCriteria={rolesState.orderCriteria}
+	  				searchCriteria={rolesState.searchCriteria}
 		  	      />
 		  	) : (	
 				<Table
 		  			containerState={containerState}
 		  			header={header}
-		  			items={items.items}
-		  			itemCount={items.itemCount}
-		  			listStart={items.listStart}
-		  			listLimit={items.listLimit}
+		  			items={rolesState.items}
+		  			itemCount={rolesState.itemCount}
+		  			listStart={rolesState.listStart}
+		  			listLimit={rolesState.listLimit}
 		  			columns={columns}
 		  			appPrefs={appPrefs}
 		  			parent={parent}
@@ -84,8 +84,8 @@ export default function RolesView({containerState, items, appPrefs, onListLimitC
 		  			onOption4={onUserRoleModify}
 		  			openDeleteModal={openDeleteModal}
 		  			goBack={goBack}
-					orderCriteria={items.orderCriteria}
-  					searchCriteria={items.searchCriteria}
+					orderCriteria={rolesState.orderCriteria}
+  					searchCriteria={rolesState.searchCriteria}
 				/>
 			)}
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
@@ -112,7 +112,7 @@ export default function RolesView({containerState, items, appPrefs, onListLimitC
 
 RolesView.propTypes = {
 	containerState: PropTypes.object,
-	items: PropTypes.object,
+	rolesState: PropTypes.object,
 	appPrefs: PropTypes.object,
 	onListLimitChange: PropTypes.func,
 	onSearchChange: PropTypes.func,

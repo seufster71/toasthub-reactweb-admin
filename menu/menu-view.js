@@ -9,13 +9,13 @@ export default function MenuView({containerState, menus, appPrefs, onListLimitCh
 	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openEditModal, openDeleteModal, closeModal, onSaveMenu, onDeleteMenu, inputChange}) {
 
 	let columns = [];
-	if (menus.appLabels != null && menus.appLabels.ADMIN_MENU_TABLE != null) {
-		columns = menus.appLabels.ADMIN_MENU_TABLE;
+	if (menus.prefLabels != null && menus.prefLabels.ADMIN_MENU_TABLE != null) {
+		columns = menus.prefLabels.ADMIN_MENU_TABLE;
 	}
 	
 	let header = "";
-	if (menus.appTexts.ADMIN_MENU_PAGE != null && menus.appTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER != null) {
-		header = menus.appTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER;
+	if (menus.prefTexts.ADMIN_MENU_PAGE != null && menus.prefTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER != null) {
+		header = menus.prefTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER;
 	}
 	
 	return (

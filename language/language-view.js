@@ -11,13 +11,13 @@ export default function LanguageView({containerState, items, appPrefs, onListLim
 	closeModal, onModify, onDelete, inputChange, session}) {
 
 	let columns = [];
-	if (items.appLabels != null && items.appLabels.ADMIN_LANGUAGE_TABLE != null) {
-		columns = items.appLabels.ADMIN_LANGUAGE_TABLE;
+	if (items.prefLabels != null && items.prefLabels.ADMIN_LANGUAGE_PAGE != null) {
+		columns = items.prefLabels.ADMIN_LANGUAGE_PAGE;
 	}
   
 	let header = "";
-	if (items.appTexts.ADMIN_LANGUAGE_PAGE != null && items.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER != null) {
-		header = items.appTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER.value;
+	if (items.prefTexts.ADMIN_LANGUAGE_PAGE != null && items.prefTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER != null) {
+		header = items.prefTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER.value;
 	}
 	
 	let deleteModalHeader = "Delete ";

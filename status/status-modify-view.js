@@ -8,7 +8,7 @@ import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import moment from 'moment';
 
-export default function RolesModifyView({containerState, item, inputFields, appPrefs, itemAppForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function RolesModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminRoleFormTitle = {};
 
@@ -24,20 +24,20 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     let activeDefault = true;
     let activeOptions = [];
 
-    if (itemAppForms != null && itemAppForms.ADMIN_ROLE_FORM != null) {
-    	for (let i = 0; i < itemAppForms.ADMIN_ROLE_FORM.length; i++) {
-    		switch (itemAppForms.ADMIN_ROLE_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_FORM.length; i++) {
+    		switch (itemPrefForms.ADMIN_ROLE_FORM[i].name) {
     		case "ADMIN_ROLE_FORM_TITLE":
-    			adminRoleFormTitle = itemAppForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormTitle = itemPrefForms.ADMIN_ROLE_FORM[i];
     			break;
     		case "ADMIN_ROLE_FORM_CODE":
-    			adminRoleFormCode = itemAppForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormCode = itemPrefForms.ADMIN_ROLE_FORM[i];
     			break;
     		case "ADMIN_ROLE_FORM_APPLICATION":
-    			adminRoleFormApplication = itemAppForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormApplication = itemPrefForms.ADMIN_ROLE_FORM[i];
     			break;
     		case "ADMIN_ROLE_FORM_ACTIVE":
-    			adminRoleFormActive = itemAppForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormActive = itemPrefForms.ADMIN_ROLE_FORM[i];
     			if (adminRoleFormActive.classModel != "") {
     				let activeModel = JSON.parse(adminRoleFormActive.classModel);
     				if (item != null && item[activeModel.field] != null) {
@@ -107,7 +107,7 @@ RolesModifyView.propTypes = {
   containerState: PropTypes.object,
   item: PropTypes.object,
   appPrefs: PropTypes.object,
-  itemAppForms: PropTypes.object,
+  itemPrefForms: PropTypes.object,
   onSave: PropTypes.func,
   onCancel: PropTypes.func,
   inputChange: PropTypes.func
