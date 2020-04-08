@@ -14,6 +14,7 @@ export default function LanguageView({containerState, items, appPrefs, onListLim
 	if (items.prefLabels != null && items.prefLabels.ADMIN_LANGUAGE_PAGE != null) {
 		columns = items.prefLabels.ADMIN_LANGUAGE_PAGE;
 	}
+	let group = "TABLE1";
   
 	let header = "";
 	if (items.prefTexts.ADMIN_LANGUAGE_PAGE != null && items.prefTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER != null) {
@@ -62,6 +63,7 @@ export default function LanguageView({containerState, items, appPrefs, onListLim
 		  			listStart={items.listStart}
 		  			listLimit={items.listLimit}
 		  			columns={columns}
+	  				labelGroup={group}
 		  			appPrefs={appPrefs}
 		  			onListLimitChange={onListLimitChange}
 		  			onSearchChange={onSearchChange}

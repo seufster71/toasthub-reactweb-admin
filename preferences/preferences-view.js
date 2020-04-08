@@ -15,9 +15,10 @@ export default function PreferencesView({containerState, preferenceState, appPre
 	let tabLabels = ["Fields","Labels","Texts"];
 
 	let columns = [];
-	if (preferenceState.prefLabels != null && preferenceState.prefLabels.ADMIN_PREFERENCE_TABLE != null) {
-		columns = preferenceState.prefLabels.ADMIN_PREFERENCE_TABLE;
+	if (preferenceState.prefLabels != null && preferenceState.prefLabels.ADMIN_PREFERENCE_PAGE != null) {
+		columns = preferenceState.prefLabels.ADMIN_PREFERENCE_PAGE;
 	}
+	let group = "TABLE1";
 	
 	let header = "";
 	let parent = null;
@@ -135,6 +136,7 @@ export default function PreferencesView({containerState, preferenceState, appPre
 		  			listStart={preferenceState.listStart}
 		  			listLimit={preferenceState.listLimit}
 		  			columns={columns}
+					labelGroup={group}
 		  			appPrefs={appPrefs}
 		  			parent={parent}
 		  			onListLimitChange={onListLimitChange}

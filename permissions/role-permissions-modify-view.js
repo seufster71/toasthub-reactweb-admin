@@ -22,14 +22,15 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     let adminRolePermissionFormActive = {};
 
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PERMISSION_FORM != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_PERMISSION_FORM.length; i++) {
-    		switch (itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PERMISSION_PAGE != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_PERMISSION_PAGE.length; i++) {
+    		let formItems = itemPrefForms.ADMIN_ROLE_PERMISSION_PAGE;
+    		switch (formItems[i].name) {
     		case "ADMIN_ROLE_PERMISSION_FORM_RIGHTS":
-    			adminRolePermissionFormRights = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormRights = formItems[i];
     			break;
     		case "ADMIN_ROLE_PERMISSION_FORM_STARTDATE":
-    			adminRolePermissionFormStartDate = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormStartDate = formItems[i];
     			if (adminRolePermissionFormStartDate.classModel != "") {
     				let startDateModel = JSON.parse(adminRolePermissionFormStartDate.classModel);
     				if (item != null && item[startDateModel.field] != null) {
@@ -38,7 +39,7 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     			}
     			break;
     		case "ADMIN_ROLE_PERMISSION_FORM_ENDDATE":
-    			adminRolePermissionFormEndDate = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormEndDate = formItems[i];
     			if (adminRolePermissionFormEndDate.classModel != "") {
     				let endDateModel = JSON.parse(adminRolePermissionFormEndDate.classModel);
     				if (item != null && item[endDateModel.field] != null) {
@@ -47,7 +48,7 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     			}
     			break;
     		case "ADMIN_ROLE_PERMISSION_FORM_ACTIVE":
-    			adminRolePermissionFormActive = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM[i];
+    			adminRolePermissionFormActive = formItems[i];
     			break;
     		}
     	}

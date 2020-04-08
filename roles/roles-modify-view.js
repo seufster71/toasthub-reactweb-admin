@@ -25,20 +25,21 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     let activeDefault = true;
     let activeOptions = [];
 
-    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_FORM != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_FORM.length; i++) {
-    		switch (itemPrefForms.ADMIN_ROLE_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PAGE != null) {
+    	let fromItems = itemPrefForms.ADMIN_ROLE_PAGE;
+    	for (let i = 0; i < fromItems.length; i++) {
+    		switch (fromItems[i].name) {
     		case "ADMIN_ROLE_FORM_TITLE":
-    			adminRoleFormTitle = itemPrefForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormTitle = fromItems[i];
     			break;
     		case "ADMIN_ROLE_FORM_CODE":
-    			adminRoleFormCode = itemPrefForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormCode = fromItems[i];
     			break;
     		case "ADMIN_ROLE_FORM_APPLICATION":
-    			adminRoleFormApplication = itemPrefForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormApplication = fromItems[i];
     			break;
     		case "ADMIN_ROLE_FORM_ACTIVE":
-    			adminRoleFormActive = itemPrefForms.ADMIN_ROLE_FORM[i];
+    			adminRoleFormActive = fromItems[i];
     			if (adminRoleFormActive.classModel != "") {
     				let activeModel = JSON.parse(adminRoleFormActive.classModel);
     				if (item != null && item[activeModel.field] != null) {

@@ -12,9 +12,10 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
 	closeModal, onModify, onDelete, onEditRoles, inputChange, session}) {
 
     let columns = [];
-    if (items.prefLabels != null && items.prefLabels.ADMIN_USER_TABLE != null) {
-    	columns = items.prefLabels.ADMIN_USER_TABLE;
+    if (items.prefLabels != null && items.prefLabels.ADMIN_USER_PAGE != null) {
+    	columns = items.prefLabels.ADMIN_USER_PAGE;
     }
+    let group = "TABLE1";
     
     let header = "";
 	if (items.prefTexts.ADMIN_USER_PAGE != null && items.prefTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
@@ -62,6 +63,7 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
 	    			listStart={items.listStart}
 	    			listLimit={items.listLimit}
 	    			columns={columns}
+	    			labelGroup = {group}
 	    			appPrefs={appPrefs}
 	    			onListLimitChange={onListLimitChange}
 	    			onSearchChange={onSearchChange}

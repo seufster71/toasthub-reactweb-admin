@@ -10,9 +10,10 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	onOrderBy, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange, goBack, session }) {
 
 	let columns = [];
-	if (permissions.prefLabels != null && permissions.prefLabels.ADMIN_PERMISSION_TABLE != null) {
-		columns = permissions.prefLabels.ADMIN_PERMISSION_TABLE;
+	if (permissions.prefLabels != null && permissions.prefLabels.ADMIN_PERMISSION_PAGE != null) {
+		columns = permissions.prefLabels.ADMIN_PERMISSION_PAGE;
 	}
+	let group = "TABLE1";
 
 	let header = "";
 	let parent = null;
@@ -69,6 +70,7 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 		  			listStart={permissions.listStart}
 		  			listLimit={permissions.listLimit}
 		  			columns={columns}
+		  		    labelGroup={group}
 		  			appPrefs={appPrefs}
 		  			parent={parent}
 		  			onListLimitChange={onListLimitChange}

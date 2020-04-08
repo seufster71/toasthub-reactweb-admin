@@ -11,9 +11,10 @@ export default function RolesView({containerState, rolesState, appPrefs, onListL
 	closeModal, onModify, onDelete, onEditPermissions, onUserRoleModify, inputChange, goBack, session}) {
 
 	let columns = [];
-	if (rolesState.prefLabels != null && rolesState.prefLabels.ADMIN_ROLE_TABLE != null) {
-		columns = rolesState.prefLabels.ADMIN_ROLE_TABLE;
+	if (rolesState.prefLabels != null && rolesState.prefLabels.ADMIN_ROLE_PAGE != null) {
+		columns = rolesState.prefLabels.ADMIN_ROLE_PAGE;
 	}
+	let group = "TABLE1";
 	
 	let header = "";
 	let parent = null;
@@ -70,6 +71,7 @@ export default function RolesView({containerState, rolesState, appPrefs, onListL
 		  			listStart={rolesState.listStart}
 		  			listLimit={rolesState.listLimit}
 		  			columns={columns}
+					labelGroup={group}
 		  			appPrefs={appPrefs}
 		  			parent={parent}
 		  			onListLimitChange={onListLimitChange}

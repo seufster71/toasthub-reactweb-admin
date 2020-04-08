@@ -12,6 +12,7 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 	onModify, onDelete, openDeleteModal, closeModal, inputChange, session, goBack}) {
 
 	let columns = [];
+	let group = "TABLE1";
 	if (preferenceState.prefLabels != null ) {
 		if (preferenceState.prefLabels.ADMIN_FORMFIELD_PAGE != null && preferenceState.viewType === "FORM") {
 			columns = preferenceState.prefLabels.ADMIN_FORMFIELD_PAGE;
@@ -147,6 +148,7 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 		  			listStart={preferenceState.listStart}
 		  			listLimit={preferenceState.listLimit}
 		  			columns={columns}
+					labelGroup={group}
 		  			appPrefs={appPrefs}
 		  			parent={parent}
 		  			onListLimitChange={onListLimitChange}

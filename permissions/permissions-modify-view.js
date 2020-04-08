@@ -27,23 +27,24 @@ export default function PermissionsModifyView({containerState, item, inputFields
     let adminPermissionFormActive = {};
 
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_PERMISSION_FORM != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_PERMISSION_FORM.length; i++) {
-    		switch (itemPrefForms.ADMIN_PERMISSION_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_PERMISSION_PAGE != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_PERMISSION_PAGE.length; i++) {
+    		let formItems = itemPrefForms.ADMIN_PERMISSION_PAGE;
+    		switch (formItems[i].name) {
     		case "ADMIN_PERMISSION_FORM_TITLE":
-    			adminPermissionFormTitle = itemPrefForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormTitle = formItems[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_CODE":
-    			adminPermissionFormCode = itemPrefForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormCode = formItems[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_APPLICATION":
-    			adminPermissionFormApplication = itemPrefForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormApplication = formItems[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_RIGHTS":
-    			adminPermissionFormRights = itemPrefForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormRights = formItems[i];
     			break;
     		case "ADMIN_PERMISSION_FORM_STARTDATE":
-    			adminPermissionFormStartDate = itemPrefForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormStartDate = formItems[i];
     			if (adminPermissionFormStartDate.classModel != "") {
     				let startDateModel = JSON.parse(adminPermissionFormStartDate.classModel);
     				if (item != null && item[startDateModel.field] != null) {
@@ -52,7 +53,7 @@ export default function PermissionsModifyView({containerState, item, inputFields
     			}
     			break;
     		case "ADMIN_PERMISSION_FORM_ENDDATE":
-    			adminPermissionFormEndDate = itemPrefForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormEndDate = formItems[i];
     			if (adminPermissionFormEndDate.classModel != "") {
     				let endDateModel = JSON.parse(adminPermissionFormEndDate.classModel);
     				if (item != null && item[endDateModel.field] != null) {
@@ -61,7 +62,7 @@ export default function PermissionsModifyView({containerState, item, inputFields
     			}
     			break;
     		case "ADMIN_PERMISSION_FORM_ACTIVE":
-    			adminPermissionFormActive = itemPrefForms.ADMIN_PERMISSION_FORM[i];
+    			adminPermissionFormActive = formItems[i];
     			break;
     		}
     	}

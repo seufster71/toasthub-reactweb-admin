@@ -22,14 +22,15 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     let adminUserRolesFormActive = {};
 
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_ROLE_FORM != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_USER_ROLE_FORM.length; i++) {
-    		switch (itemPrefForms.ADMIN_USER_ROLE_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_ROLE_PAGE != null) {
+    	let formItems = itemPrefForms.ADMIN_USER_ROLE_PAGE;
+    	for (let i = 0; i < formItems.length; i++) {
+    		switch (formItems[i].name) {
     		case "ADMIN_USER_ROLE_FORM_ORDER":
-    			adminUserRolesFormOrder = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormOrder = formItems[i];
     			break;
     		case "ADMIN_USER_ROLE_FORM_STARTDATE":
-    			adminUserRolesFormStartDate = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormStartDate = formItems[i];
     			if (adminUserRolesFormStartDate.classModel != "") {
     				let startDateModel = JSON.parse(adminUserRolesFormStartDate.classModel);
     				if (item != null && item[startDateModel.field] != null) {
@@ -38,7 +39,7 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     			}
     			break;
     		case "ADMIN_USER_ROLE_FORM_ENDDATE":
-    			adminUserRolesFormEndDate = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormEndDate = formItems[i];
     			if (adminUserRolesFormEndDate.classModel != "") {
     				let endDateModel = JSON.parse(adminUserRolesFormEndDate.classModel);
     				if (item != null && item[endDateModel.field] != null) {
@@ -47,7 +48,7 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     			}
     			break;
     		case "ADMIN_USER_ROLE_FORM_ACTIVE":
-    			adminUserRolesFormActive = itemPrefForms.ADMIN_USER_ROLE_FORM[i];
+    			adminUserRolesFormActive = formItems[i];
     			break;
     		}
     	}

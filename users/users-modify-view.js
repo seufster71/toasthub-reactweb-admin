@@ -52,11 +52,12 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     
     let adminUserFormLogLevel = {};
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_FORM != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_USER_FORM.length; i++) {
-    		switch (itemPrefForms.ADMIN_USER_FORM[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_PAGE != null) {
+    	let formItems = itemPrefForms.ADMIN_USER_PAGE;
+    	for (let i = 0; i < formItems.length; i++) {
+    		switch (formItems[i].name) {
     		case "ADMIN_USER_FORM_FIRSTNAME":
-    			adminUserFormFirstName = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormFirstName = formItems[i];
     			if (adminUserFormFirstName.classModel != "") {
     				let firstNameModel = JSON.parse(adminUserFormFirstName.classModel);
     				if (item != null && item[firstNameModel.field] != null) {
@@ -65,40 +66,40 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     			}
     			break;
     		case "ADMIN_USER_FORM_MIDDLENAME":
-    			adminUserFormMiddleName = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormMiddleName = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_LASTNAME":
-    			adminUserFormLastName = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormLastName = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_USERNAME":
-    			adminUserFormUserName = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormUserName = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_EMAIL":
-    			adminUserFormEmail = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormEmail = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_ALTERNATE_EMAIL":
-    			adminUserFormAlternateEmail = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormAlternateEmail = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_ZIPCODE":
-    			adminUserFormZipcode = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormZipcode = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_PASSWORD":
-    			adminUserFormPassword = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormPassword = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_VERIFY_PASSWORD":
-    			adminUserFormVerifyPassword = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormVerifyPassword = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_FORCERESET":
-    			adminUserFormForceReset = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormForceReset = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_ACTIVE":
-    			adminUserFormActive = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormActive = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_LANGUAGE":
-    			adminUserFormLanguage = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormLanguage = formItems[i];
     			break;
     		case "ADMIN_USER_FORM_LOGLEVEL":
-    			adminUserFormLogLevel = itemPrefForms.ADMIN_USER_FORM[i];
+    			adminUserFormLogLevel = formItems[i];
     			break;
     		}
     	}
