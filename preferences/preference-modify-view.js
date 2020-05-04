@@ -10,29 +10,31 @@ import FormBuilder from '../../coreView/common/form-builder';
 import moment from 'moment';
 
 export default function PreferenceModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, viewType}) {
-    
+	let formName = "ADMIN_PREFERENCE_PAGE";
+	let formTitle = "Preferences";
+	let formGroup = "FORM1";
+	
     if (viewType === "FORM") {
-    	let formName = "ADMIN_FORMFIELD_PAGE";
-    	let formTitle = "Formfields";
-    	let formGroup = "FORM-NAME";
-    	return (
-			<FormBuilder containerState={containerState} item={item} formName={formName} formTitle={formTitle} formGroup={formGroup} inputFields={inputFields} appPrefs={appPrefs} prefForms={itemPrefForms} onSave={onSave} onCancel={onCancel} onChange={inputChange}/>
-    	);
+    	formName = "ADMIN_FORMFIELD_PAGE";
+    	formTitle = "Formfields";
+    	formGroup = "FORM-NAME";
     } else if (viewType === "LABEL") {
-    	let formName = "ADMIN_LABEL_PAGE";
-    	let formTitle = "Labels";
-    	let formGroup = "FORM-NAME";
-    	return (
-			<FormBuilder containerState={containerState} item={item} formName={formName} formTitle={formTitle} formGroup={formGroup} inputFields={inputFields} appPrefs={appPrefs} prefForms={itemPrefForms} onSave={onSave} onCancel={onCancel} onChange={inputChange}/>
-    	);
-    } else {
-    	let formName = "ADMIN_PREFERENCE_PAGE";
-    	let formTitle = "Preferences";
-    	let formGroup = "FORM1";
-	    return (
-	    	<FormBuilder containerState={containerState} item={item} formName={formName} formTitle={formTitle} formGroup={formGroup} inputFields={inputFields} appPrefs={appPrefs} prefForms={itemPrefForms} onSave={onSave} onCancel={onCancel} onChange={inputChange}/>
-	    );
+    	formName = "ADMIN_LABEL_PAGE";
+    	formTitle = "Labels";
+    	formGroup = "FORM-NAME";
+    } else if (viewType === "TEXT") {
+    	formName = "ADMIN_TEXT_PAGE";
+    	formTitle = "Texts";
+    	formGroup = "FORM-NAME";
+    } else if (viewType === "OPTION") {
+    	formName = "ADMIN_OPTION_PAGE";
+    	formTitle = "Options";
+    	formGroup = "FORM-NAME";
     }
+    
+    return (
+	    <FormBuilder containerState={containerState} item={item} formName={formName} formTitle={formTitle} formGroup={formGroup} inputFields={inputFields} appPrefs={appPrefs} prefForms={itemPrefForms} onSave={onSave} onCancel={onCancel} onChange={inputChange}/>
+	);
 }
 
 

@@ -22,6 +22,7 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 			columns = preferenceState.prefLabels.ADMIN_TEXT_PAGE;
 		} else if (preferenceState.prefLabels.ADMIN_OPTION_PAGE != null && preferenceState.viewType === "OPTION") {
 			columns = preferenceState.prefLabels.ADMIN_OPTION_PAGE;
+			group = null;
 		}
 	
 	}
