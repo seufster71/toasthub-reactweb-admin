@@ -6,19 +6,19 @@ import Modal from '../../coreView/common/modal';
 import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
-export default function LanguageView({containerState, items, appPrefs, onListLimitChange,
+export default function LanguageView({containerState, langState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, openDeleteModal, 
 	closeModal, onModify, onDelete, inputChange, session}) {
 
 	let columns = [];
-	if (items.prefLabels != null && items.prefLabels.ADMIN_LANGUAGE_PAGE != null) {
-		columns = items.prefLabels.ADMIN_LANGUAGE_PAGE;
+	if (langState.prefLabels != null && langState.prefLabels.ADMIN_LANGUAGE_PAGE != null) {
+		columns = langState.prefLabels.ADMIN_LANGUAGE_PAGE;
 	}
 	let group = "TABLE1";
   
 	let header = "";
-	if (items.prefTexts.ADMIN_LANGUAGE_PAGE != null && items.prefTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER != null) {
-		header = items.prefTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER.value;
+	if (langState.prefTexts.ADMIN_LANGUAGE_PAGE != null && langState.prefTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER != null) {
+		header = langState.prefTexts.ADMIN_LANGUAGE_PAGE.ADMIN_LANGUAGE_PAGE_HEADER.value;
 	}
 	
 	let deleteModalHeader = "Delete ";
@@ -35,10 +35,10 @@ export default function LanguageView({containerState, items, appPrefs, onListLim
     			<ListBuilder
 		  	      	containerState={containerState}
 		  	      	header={header}
-		  	      	items={items.items}
-		  	      	itemCount={items.itemCount}
-		  	      	listStart={items.listStart}
-		  	      	listLimit={items.listLimit}
+		  	      	items={langState.items}
+		  	      	itemCount={langState.itemCount}
+		  	      	listStart={langState.listStart}
+		  	      	listLimit={langState.listLimit}
 		  	     	columns={columns}
 		  	      	appPrefs={appPrefs}
 		  	      	onListLimitChange={onListLimitChange}
@@ -51,17 +51,17 @@ export default function LanguageView({containerState, items, appPrefs, onListLim
 	  				onOption2={openDeleteModal}
 	  				onOption3={onRolePermissionModify}
 	  				goBack={goBack}
-		  			orderCriteria={items.orderCriteria}
-	  				searchCriteria={items.searchCriteria}
+		  			orderCriteria={langState.orderCriteria}
+	  				searchCriteria={langState.searchCriteria}
 		  	      />
     		) : (
 	  			<Table
 		  			containerState={containerState}
 		  			header={header}
-		  			items={items.items}
-		  			itemCount={items.itemCount}
-		  			listStart={items.listStart}
-		  			listLimit={items.listLimit}
+		  			items={langState.items}
+		  			itemCount={langState.itemCount}
+		  			listStart={langState.listStart}
+		  			listLimit={langState.listLimit}
 		  			columns={columns}
 	  				labelGroup={group}
 		  			appPrefs={appPrefs}
@@ -74,8 +74,8 @@ export default function LanguageView({containerState, items, appPrefs, onListLim
 		  			onOption1={onModify}
 		  			onOption2={openDeleteModal}
 		  			openDeleteModal={openDeleteModal}
-	  				orderCriteria={items.orderCriteria}
-  					searchCriteria={items.searchCriteria}
+	  				orderCriteria={langState.orderCriteria}
+  					searchCriteria={langState.searchCriteria}
 		  		/>
 		  	)}
 	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
@@ -102,7 +102,7 @@ export default function LanguageView({containerState, items, appPrefs, onListLim
 
 LanguageView.propTypes = {
 	containerState: PropTypes.object,
-	items: PropTypes.object,
+	langState: PropTypes.object,
 	appPrefs: PropTypes.object,
 	onListLimitChange: PropTypes.func,
 	onSearchChange: PropTypes.func,
