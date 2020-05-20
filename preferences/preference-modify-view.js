@@ -1,13 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../coreView/common/modal';
-import TextBuilder from '../../coreView/common/text-input-builder';
-import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
-import SelectBuilder from '../../coreView/common/select-input-builder';
-import CheckBox from '../../coreView/common/checkBox';
-import Switch from '../../coreView/common/switch';
 import FormBuilder from '../../coreView/common/form-builder';
-import moment from 'moment';
 
 export default function PreferenceModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, viewType}) {
 	let formName = "ADMIN_PREFERENCE_PAGE";
