@@ -112,7 +112,7 @@ export default function UsersModifyView({containerState, item, inputFields, appP
 			<div className="row">
 				{adminUserFormFirstName.rendered && 
 					<div className="col-sm-4">
-						<Input name={adminUserFormFirstName.name} inputType={adminUserFormFirstName.htmlType} label={adminUserFormFirstName.label} required={adminUserFormFirstName.required} errors={containerState.errors} successes={containerState.successes} onChange={inputChange(adminUserFormFirstName.name)} value={(inputFields != null && inputFields[adminUserFormFirstName.name] != null)?inputFields[adminUserFormFirstName.name]:firstNameDefault}/>
+						<Input name={adminUserFormFirstName.name} inputType={adminUserFormFirstName.htmlType} label={adminUserFormFirstName.label} required={adminUserFormFirstName.required} errors={containerState.errors} successes={containerState.successes} onChange={() => inputChange(adminUserFormFirstName.name)} value={(inputFields != null && inputFields[adminUserFormFirstName.name] != null)?inputFields[adminUserFormFirstName.name]:firstNameDefault}/>
 					</div>	
 				}
 				<div className="col-sm-4">
@@ -149,8 +149,8 @@ export default function UsersModifyView({containerState, item, inputFields, appP
 				</div>
 			</div>
 			
-			<button type="button" className="btn btn-primary" onClick={onSave()}>Save</button>
-			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onCancel()}>Cancel</button>
+			<button type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
+			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
     	</div>
     );
 }

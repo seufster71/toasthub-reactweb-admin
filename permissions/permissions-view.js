@@ -7,7 +7,7 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function PermissionsView({containerState, permissions, appPrefs, onListLimitChange, onSearchChange, onSearchClick, onPaginationClick, 
-	onOrderBy, openDeleteModal, closeModal, onModify, onDelete, onRolePermissionModify, inputChange, goBack, session }) {
+	onOrderBy, onOption, closeModal, inputChange, goBack, session }) {
 
 	let columns = [];
 	if (permissions.prefLabels != null && permissions.prefLabels.ADMIN_PERMISSION_PAGE != null) {
@@ -53,10 +53,7 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 		  	      	onSearchClick={onSearchClick}
 		  	      	onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
-	  				onHeader={onModify}
-	  				onOption1={onModify}
-	  				onOption2={openDeleteModal}
-	  				onOption3={onRolePermissionModify}
+	  				onOption={onOption}
 	  				goBack={goBack}
 		  			orderCriteria={permissions.orderCriteria}
 	  				searchCriteria={permissions.searchCriteria}
@@ -78,16 +75,13 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 		  			onSearchClick={onSearchClick}
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
-		  			onHeader={onModify}
-		  			onOption1={onModify}
-		  			onOption2={openDeleteModal}
-		  			onOption3={onRolePermissionModify}
+		  			onOption={onOption}
 		  			goBack={goBack}
 		  			orderCriteria={permissions.orderCriteria}
 		  			searchCriteria={permissions.searchCriteria}
 		  		/>
 	  		)}
-	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
+	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
 	  			<div className="modal-dialog">
 	  				<div className="modal-content">
 	  					<div className="modal-header">
@@ -98,8 +92,8 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onDelete(containerState.selected)}>Delete</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
+	  						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 	  					</div>
 	  				</div>
 	  			</div>
@@ -120,9 +114,7 @@ PermissionsView.propTypes = {
 	onOrderBy: PropTypes.func,
 	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	onModify: PropTypes.func,
-	onDelete: PropTypes.func,
-	onRolePermissionModify: PropTypes.func,
+	onOption: PropTypes.func,
 	inputChange: PropTypes.func,
 	goBack: PropTypes.func,
 	session: PropTypes.object

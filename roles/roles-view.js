@@ -7,8 +7,8 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function RolesView({containerState, rolesState, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, openDeleteModal, 
-	closeModal, onModify, onDelete, onEditPermissions, onUserRoleModify, inputChange, goBack, session}) {
+	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, onOption, 
+	closeModal, onEditPermissions, onUserRoleModify, inputChange, goBack, session}) {
 
 	let columns = [];
 	if (rolesState.prefLabels != null && rolesState.prefLabels.ADMIN_ROLE_PAGE != null) {
@@ -54,10 +54,7 @@ export default function RolesView({containerState, rolesState, appPrefs, onListL
 		  	      	onSearchClick={onSearchClick}
 		  	      	onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
-	  				onHeader={onModify}
-	  				onOption1={onModify}
-	  				onOption2={openDeleteModal}
-	  				onOption3={onUserRoleModify}
+	  				onOption={onOption}
 	  				goBack={goBack}
 		  			orderCriteria={rolesState.orderCriteria}
 	  				searchCriteria={rolesState.searchCriteria}
@@ -79,18 +76,13 @@ export default function RolesView({containerState, rolesState, appPrefs, onListL
 		  			onSearchClick={onSearchClick}
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
-		  			onHeader={onModify}
-		  			onOption1={onModify}
-		  			onOption2={openDeleteModal}
-		  			onOption3={onEditPermissions}
-		  			onOption4={onUserRoleModify}
-		  			openDeleteModal={openDeleteModal}
+		  			onOption={onOption}
 		  			goBack={goBack}
 					orderCriteria={rolesState.orderCriteria}
   					searchCriteria={rolesState.searchCriteria}
 				/>
 			)}
-	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
+	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
 	  			<div className="modal-dialog">
 	  				<div className="modal-content">
 	  					<div className="modal-header">
@@ -101,8 +93,8 @@ export default function RolesView({containerState, rolesState, appPrefs, onListL
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onDelete(containerState.selected)}>Delete</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
+	  						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 	  					</div>
 	  				</div>
 	  			</div>
@@ -123,10 +115,7 @@ RolesView.propTypes = {
 	onOrderBy: PropTypes.func,
 	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	onModify: PropTypes.func,
-	onDelete: PropTypes.func,
-	onEditPermissions: PropTypes.func,
-	onUserRoleModify: PropTypes.func,
+	onOption: PropTypes.func,
 	inputChange: PropTypes.func,
 	goBack: PropTypes.func,
 	session: PropTypes.object
