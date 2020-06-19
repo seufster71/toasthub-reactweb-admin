@@ -6,7 +6,7 @@ import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
 import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
-import Date from '../../coreView/common/date-input';
+import DateBuilder from '../../coreView/common/date-input-builder';
 import moment from 'moment';
 
 export default function RolePermissionsModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
@@ -20,11 +20,11 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     let endDateDefault = "";
     
     let adminRolePermissionFormActive = {};
-
+    let activeOptions = [];
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PERMISSION_PAGE != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_PERMISSION_PAGE.length; i++) {
-    		let formItems = itemPrefForms.ADMIN_ROLE_PERMISSION_PAGE;
+    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PERMISSION_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_PERMISSION_FORM.length; i++) {
+    		let formItems = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM;
     		switch (formItems[i].name) {
     		case "ADMIN_ROLE_PERMISSION_FORM_RIGHTS":
     			adminRolePermissionFormRights = formItems[i];
@@ -49,6 +49,20 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     			break;
     		case "ADMIN_ROLE_PERMISSION_FORM_ACTIVE":
     			adminRolePermissionFormActive = formItems[i];
+    			if (adminRolePermissionFormActive.value != "") {
+    				let valueObj = JSON.parse(adminRolePermissionFormActive.value);
+    				if (valueObj.options != null) {
+    					activeOptions = valueObj.options;
+    				} else if (valueObj.referPref != null) {
+    					let pref = appPrefs.prefTexts[valueObj.referPref.prefName][valueObj.referPref.prefItem];
+    					if (pref != null && pref.value != null && pref.value != "") {
+    						let value = JSON.parse(pref.value);
+    						if (value.options != null) {
+    							activeOptions = value.options;
+    						}
+    					}
+    				}
+    			}
     			break;
     		}
     	}
@@ -84,17 +98,17 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Date item={item} field={adminRolePermissionFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder item={item} field={adminRolePermissionFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Date item={item} field={adminRolePermissionFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder item={item} field={adminRolePermissionFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminRolePermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
+					<Switch item={item} field={adminRolePermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>
 			

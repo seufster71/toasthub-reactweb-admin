@@ -18,14 +18,14 @@ export default function PermissionsView({containerState, permissions, appPrefs, 
 	let header = "";
 	let parent = null;
 	if (permissions.parent != null) {
-		if (permissions.prefTexts.ADMIN_PERMISSION_PAGE != null && permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT != null) {
-			header = permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER_PARENT.value;
-		}
 		parent = permissions.parent.title.langTexts[0].text;
-	} else {
-		if (permissions.prefTexts.ADMIN_PERMISSION_PAGE != null && permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER != null) {
-			header = permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER.value;
-		}
+	}
+	if (permissions.prefTexts.ADMIN_PERMISSION_PAGE != null && permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER != null) {
+		header = permissions.prefTexts.ADMIN_PERMISSION_PAGE.ADMIN_PERMISSION_PAGE_HEADER.value;
+	}
+	
+	if (goBack != null && parent != null && parent != "") {
+		header = <span>{header} : <a onClick={() => goBack()} aria-hidden="true">{parent}</a></span>;
 	}
 	
 	let deleteModalHeader = "Delete ";

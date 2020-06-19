@@ -21,7 +21,7 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     				}
     			}
     		}
-    		options.push({"value":appPrefs.prefGlobal.LANGUAGES[i].code, "text":name});
+    		options.push({"value":appPrefs.prefGlobal.LANGUAGES[i].code, "label":name});
     	}
     }
     
@@ -52,8 +52,8 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     
     let adminUserFormLogLevel = {};
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_PAGE != null) {
-    	let formItems = itemPrefForms.ADMIN_USER_PAGE;
+    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_FORM != null) {
+    	let formItems = itemPrefForms.ADMIN_USER_FORM;
     	for (let i = 0; i < formItems.length; i++) {
     		switch (formItems[i].name) {
     		case "ADMIN_USER_FORM_FIRSTNAME":

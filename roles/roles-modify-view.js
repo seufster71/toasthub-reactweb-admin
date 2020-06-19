@@ -24,9 +24,9 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     let adminRoleFormActive = {};
     let activeDefault = true;
     let activeOptions = [];
-
-    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PAGE != null) {
-    	let fromItems = itemPrefForms.ADMIN_ROLE_PAGE;
+    
+    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_FORM != null) {
+    	let fromItems = itemPrefForms.ADMIN_ROLE_FORM;
     	for (let i = 0; i < fromItems.length; i++) {
     		switch (fromItems[i].name) {
     		case "ADMIN_ROLE_FORM_TITLE":
@@ -40,12 +40,20 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     			break;
     		case "ADMIN_ROLE_FORM_ACTIVE":
     			adminRoleFormActive = fromItems[i];
-    			if (adminRoleFormActive.classModel != "") {
-    				let activeModel = JSON.parse(adminRoleFormActive.classModel);
-    				if (item != null && item[activeModel.field] != null) {
-    					activeDefault = item[activeModel.field];
+    		    
+    			if (adminRoleFormActive.value != "") {
+    				let valueObj = JSON.parse(adminRoleFormActive.value);
+    				if (valueObj.options != null) {
+    					activeOptions = valueObj.options;
+    				} else if (valueObj.referPref != null) {
+    					let pref = appPrefs.prefTexts[valueObj.referPref.prefName][valueObj.referPref.prefItem];
+    					if (pref != null && pref.value != null && pref.value != "") {
+    						let value = JSON.parse(pref.value);
+    						if (value.options != null) {
+    							activeOptions = value.options;
+    						}
+    					}
     				}
-    				activeOptions = JSON.parse(adminRoleFormActive.value);
     			}
     			break;
     		}
@@ -72,6 +80,8 @@ export default function RolesModifyView({containerState, item, inputFields, appP
     	modified = <div>Last Modified: {modified}</div>
     }
     
+    
+    
     return (
     	<div className="col-lg-12">
 			<h4 className="modal-title">Role</h4>
@@ -94,7 +104,7 @@ export default function RolesModifyView({containerState, item, inputFields, appP
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminRoleFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<Switch item={item} field={adminRoleFormActive} inputFields={inputFields} containerState={containerState} onChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>
 			

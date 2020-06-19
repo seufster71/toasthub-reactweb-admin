@@ -19,14 +19,14 @@ export default function RolesView({containerState, rolesState, appPrefs, onListL
 	let header = "";
 	let parent = null;
 	if (rolesState.parent != null) {
-		if (rolesState.prefTexts.ADMIN_ROLE_PAGE != null && rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT != null) {
-			header = rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER_PARENT.value;
-		}
 		parent = rolesState.parent.username;
-	} else {
-		if (rolesState.prefTexts.ADMIN_ROLE_PAGE != null && rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER != null) {
-			header = rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER.value;
-		}
+	}
+	if (rolesState.prefTexts.ADMIN_ROLE_PAGE != null && rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER != null) {
+		header = rolesState.prefTexts.ADMIN_ROLE_PAGE.ADMIN_ROLE_PAGE_HEADER.value;
+	}
+	
+	if (goBack != null && parent != null && parent != "") {
+		header = <span>{header} : <a onClick={() => goBack()} aria-hidden="true">{parent}</a></span>;
 	}
 	
 	let deleteModalHeader = "Delete ";

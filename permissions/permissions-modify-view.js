@@ -25,11 +25,12 @@ export default function PermissionsModifyView({containerState, item, inputFields
     let endDateDefault = "";
     
     let adminPermissionFormActive = {};
+    let activeOptions = [];
 
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_PERMISSION_PAGE != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_PERMISSION_PAGE.length; i++) {
-    		let formItems = itemPrefForms.ADMIN_PERMISSION_PAGE;
+    if (itemPrefForms != null && itemPrefForms.ADMIN_PERMISSION_FORM != null) {
+    	for (let i = 0; i < itemPrefForms.ADMIN_PERMISSION_FORM.length; i++) {
+    		let formItems = itemPrefForms.ADMIN_PERMISSION_FORM;
     		switch (formItems[i].name) {
     		case "ADMIN_PERMISSION_FORM_TITLE":
     			adminPermissionFormTitle = formItems[i];
@@ -63,6 +64,21 @@ export default function PermissionsModifyView({containerState, item, inputFields
     			break;
     		case "ADMIN_PERMISSION_FORM_ACTIVE":
     			adminPermissionFormActive = formItems[i];
+    			
+    			if (adminPermissionFormActive.value != "") {
+    				let valueObj = JSON.parse(adminPermissionFormActive.value);
+    				if (valueObj.options != null) {
+    					activeOptions = valueObj.options;
+    				} else if (valueObj.referPref != null) {
+    					let pref = appPrefs.prefTexts[valueObj.referPref.prefName][valueObj.referPref.prefItem];
+    					if (pref != null && pref.value != null && pref.value != "") {
+    						let value = JSON.parse(pref.value);
+    						if (value.options != null) {
+    							activeOptions = value.options;
+    						}
+    					}
+    				}
+    			}
     			break;
     		}
     	}
@@ -113,7 +129,7 @@ export default function PermissionsModifyView({containerState, item, inputFields
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminPermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
+					<Switch item={item} field={adminPermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>
 			

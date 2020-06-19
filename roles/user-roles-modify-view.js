@@ -6,7 +6,7 @@ import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
 import SelectBuilder from '../../coreView/common/select-input-builder';
 import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
-import Date from '../../coreView/common/date-input';
+import DateBuilder from '../../coreView/common/date-input-builder';
 import moment from 'moment';
 
 export default function UserRolesModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
@@ -20,10 +20,10 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     let endDateDefault = "";
     
     let adminUserRolesFormActive = {};
-
+    let optionsBLN = [];
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_ROLE_PAGE != null) {
-    	let formItems = itemPrefForms.ADMIN_USER_ROLE_PAGE;
+    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_ROLE_FORM != null) {
+    	let formItems = itemPrefForms.ADMIN_USER_ROLE_FORM;
     	for (let i = 0; i < formItems.length; i++) {
     		switch (formItems[i].name) {
     		case "ADMIN_USER_ROLE_FORM_ORDER":
@@ -48,6 +48,21 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     			}
     			break;
     		case "ADMIN_USER_ROLE_FORM_ACTIVE":
+    		   
+    			if (formItems[i].value != "") {
+    				let valueObj = JSON.parse(formItems[i].value);
+    				if (valueObj.options != null) {
+    					optionsBLN = valueObj.options;
+    				} else if (valueObj.referPref != null) {
+    					let pref = appPrefs.prefTexts[valueObj.referPref.prefName][valueObj.referPref.prefItem];
+    					if (pref != null && pref.value != null && pref.value != "") {
+    						let value = JSON.parse(pref.value);
+    						if (value.options != null) {
+    							optionsBLN = value.options;
+    						}
+    					}
+    				}
+    			}
     			adminUserRolesFormActive = formItems[i];
     			break;
     		}
@@ -72,6 +87,7 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     	modified = <div>Last Modified: {modified}</div>
     }
     
+    
     return (
     	<div className="col-lg-12">
 			<h4 className="modal-title">User to Role</h4>
@@ -84,17 +100,17 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Date item={item} field={adminUserRolesFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder item={item} field={adminUserRolesFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<Date item={item} field={adminUserRolesFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder item={item} field={adminUserRolesFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminUserRolesFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} />
+					<Switch item={item} field={adminUserRolesFormActive} inputFields={inputFields} containerState={containerState} onChange={inputChange} options={optionsBLN}/>
 				</div>
 			</div>
 			
