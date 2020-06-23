@@ -3,26 +3,26 @@ import PropTypes from 'prop-types';
 import FormBuilder from '../../coreView/common/form-builder';
 
 export default function PreferenceModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, viewType}) {
-	let formName = "ADMIN_PREFERENCE_PAGE";
+	let formName = "ADMIN_PREFERENCE_FORM";
 	let formTitle = "Preferences";
 	let formGroup = "FORM1";
 	
     if (viewType === "FORM") {
-    	formName = "ADMIN_FORMFIELD_PAGE";
+    	formName = "ADMIN_FORMFIELD_FORM";
     	formTitle = "Formfields";
-    	formGroup = "FORM-NAME";
+    	formGroup = "FORM1";
     } else if (viewType === "LABEL") {
-    	formName = "ADMIN_LABEL_PAGE";
+    	formName = "ADMIN_LABEL_FORM";
     	formTitle = "Labels";
-    	formGroup = "FORM-NAME";
+    	formGroup = "FORM1";
     } else if (viewType === "TEXT") {
-    	formName = "ADMIN_TEXT_PAGE";
+    	formName = "ADMIN_TEXT_FORM";
     	formTitle = "Texts";
-    	formGroup = "FORM-NAME";
+    	formGroup = "FORM1";
     } else if (viewType === "OPTION") {
-    	formName = "ADMIN_OPTION_PAGE";
+    	formName = "ADMIN_OPTION_FORM";
     	formTitle = "Options";
-    	formGroup = "FORM-NAME";
+    	formGroup = "FORM1";
     }
     
     return (

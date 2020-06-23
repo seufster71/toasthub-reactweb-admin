@@ -7,8 +7,8 @@ import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
 export default function LanguageView({containerState, langState, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, openDeleteModal, 
-	closeModal, onModify, onDelete, inputChange, session}) {
+	onSearchChange, onSearchClick, onPaginationClick, onOrderBy,
+	closeModal, onOption, inputChange, session}) {
 
 	let columns = [];
 	if (langState.prefLabels != null && langState.prefLabels.ADMIN_LANGUAGE_PAGE != null) {
@@ -46,10 +46,7 @@ export default function LanguageView({containerState, langState, appPrefs, onLis
 		  	      	onSearchClick={onSearchClick}
 		  	      	onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
-	  				onHeader={onModify}
-	  				onOption1={onModify}
-	  				onOption2={openDeleteModal}
-	  				onOption3={onRolePermissionModify}
+	  				onOption={onOption}
 	  				goBack={goBack}
 		  			orderCriteria={langState.orderCriteria}
 	  				searchCriteria={langState.searchCriteria}
@@ -70,15 +67,12 @@ export default function LanguageView({containerState, langState, appPrefs, onLis
 		  			onSearchClick={onSearchClick}
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
-		  			onHeader={onModify}
-		  			onOption1={onModify}
-		  			onOption2={openDeleteModal}
-		  			openDeleteModal={openDeleteModal}
+		  			onOption={onOption}
 	  				orderCriteria={langState.orderCriteria}
   					searchCriteria={langState.searchCriteria}
 		  		/>
 		  	)}
-	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
+	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
 	  			<div className="modal-dialog">
 	  				<div className="modal-content">
 	  					<div className="modal-header">
@@ -89,8 +83,8 @@ export default function LanguageView({containerState, langState, appPrefs, onLis
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onDelete(containerState.selected)}>Delete</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
+	  						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 	  					</div>
 	  				</div>
 	  			</div>
@@ -109,10 +103,8 @@ LanguageView.propTypes = {
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
 	onOrderBy: PropTypes.func,
-	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	onModify: PropTypes.func,
-	onDelete: PropTypes.func,
+	onOption: PropTypes.func,
 	inputChange: PropTypes.func,
 	session: PropTypes.object
 };

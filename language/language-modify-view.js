@@ -24,38 +24,52 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     
     let adminLanguageFormDirection = {};
     
-    
-    if (itemPrefForms != null && itemPrefForms.ADMIN_LANGUAGE_PAGE != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_LANGUAGE_PAGE.length; i++) {
-    		switch (itemPrefForms.ADMIN_LANGUAGE_PAGE[i].name) {
+    if (itemPrefForms != null && itemPrefForms.ADMIN_LANGUAGE_FORM != null) {
+    	let formItems = itemPrefForms.ADMIN_LANGUAGE_FORM;
+    	for (let i = 0; i < formItems.length; i++) {
+    		switch (formItems[i].name) {
     		case "ADMIN_LANGUAGE_FORM_TITLE":
-    			adminLanguageFormTitle = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
+    			adminLanguageFormTitle = formItems[i];
     			break;
     		case "ADMIN_LANGUAGE_FORM_CODE":
-    			adminLanguageFormCode = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
+    			adminLanguageFormCode = formItems[i];
     			break;
     		case "ADMIN_LANGUAGE_FORM_ACTIVE":
-    			adminLanguageFormActive = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
-    			if (adminLanguageFormActive.classModel != "") {
-    				let activeModel = JSON.parse(adminLanguageFormActive.classModel);
-    				if (item != null && item[activeModel.field] != null) {
-    					activeDefault = item[activeModel.field];
+    			adminLanguageFormActive = formItems[i];
+    			if (adminLanguageFormActive.value != "") {
+    				let valueObj = JSON.parse(adminLanguageFormActive.value);
+    				if (valueObj.options != null) {
+    					activeOptions = valueObj.options;
+    				} else if (valueObj.referPref != null) {
+    					let pref = appPrefs.prefTexts[valueObj.referPref.prefName][valueObj.referPref.prefItem];
+    					if (pref != null && pref.value != null && pref.value != "") {
+    						let value = JSON.parse(pref.value);
+    						if (value.options != null) {
+    							activeOptions = value.options;
+    						}
+    					}
     				}
-    				activeOptions = JSON.parse(adminLanguageFormActive.value);
     			}
     			break;
     		case "ADMIN_LANGUAGE_FORM_DEFAULT":
-    			adminLanguageFormDefault = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
-    			if (adminLanguageFormDefault.classModel != "") {
-    				let defaultModel = JSON.parse(adminLanguageFormDefault.classModel);
-    				if (item != null && item[defaultModel.field] != null) {
-    					defaultDefault = item[defaultModel.field];
+    			adminLanguageFormDefault = formItems[i];
+    			if (adminLanguageFormDefault.value != "") {
+    				let valueObj = JSON.parse(adminLanguageFormDefault.value);
+    				if (valueObj.options != null) {
+    					defaultOptions = valueObj.options;
+    				} else if (valueObj.referPref != null) {
+    					let pref = appPrefs.prefTexts[valueObj.referPref.prefName][valueObj.referPref.prefItem];
+    					if (pref != null && pref.value != null && pref.value != "") {
+    						let value = JSON.parse(pref.value);
+    						if (value.options != null) {
+    							defaultOptions = value.options;
+    						}
+    					}
     				}
-    				defaultOptions = JSON.parse(adminLanguageFormDefault.value);
     			}
     			break;
     		case "ADMIN_LANGUAGE_FORM_DIRECTION":
-    			adminLanguageFormDirection = itemPrefForms.ADMIN_LANGUAGE_PAGE[i];
+    			adminLanguageFormDirection = formItems[i];
     			break;
     		}
     	}
@@ -80,15 +94,15 @@ export default function LanguageModifyView({containerState, item, inputFields, a
 					<SelectBuilder item={item} field={adminLanguageFormDirection} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
 				</div>
 				<div className="col-md-4">
-					<Switch item={item} field={adminLanguageFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions.options}/>
+					<Switch item={item} field={adminLanguageFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions}/>
 				</div>
 				<div className="col-md-4">
-					<Switch item={item} field={adminLanguageFormDefault} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={defaultOptions.options}/>
+					<Switch item={item} field={adminLanguageFormDefault} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={defaultOptions}/>
 				</div>
 			</div>
 			
-			<button type="button" className="btn btn-primary" onClick={onSave()}>Save</button>
-			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onCancel()}>Cancel</button>
+			<button type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
+			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
     	</div>
     );
 }

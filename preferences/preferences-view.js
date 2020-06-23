@@ -9,8 +9,8 @@ import Tabs from '../../coreView/common/tabs';
 import moment from 'moment';
 
 export default function PreferencesView({containerState, preferenceState, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, onFilterClick, onSaveFilter, onClearFilter,
-	onModify, onDelete, openDeleteModal, closeModal, onClickTabItem, onToggleItem, inputChange, openFormView, openLabelView, openTextView, openOptionView, session}) {
+	onSearchChange, onSearchClick, onPaginationClick, onOrderBy,
+	onOption, closeModal, onClickTabItem, onToggleItem, inputChange, openFormView, openLabelView, openTextView, openOptionView, session}) {
 
 	let tabLabels = ["Fields","Labels","Texts"];
 
@@ -23,15 +23,12 @@ export default function PreferencesView({containerState, preferenceState, appPre
 	let header = "";
 	let parent = null;
 	if (preferenceState.parent != null) {
-		if (preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE != null && preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER_PARENT != null) {
-			header = preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER_PARENT.value;
-		}
 		parent = preferenceState.parent.title;
-	} else {
-		if (preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE != null && preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER != null) {
-			header = preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value;
-		}
 	}
+	if (preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE != null && preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER != null) {
+		header = preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value;
+	}
+
 	
 	let listRows = [];
 	let listItems = preferenceState.items;
@@ -80,8 +77,8 @@ export default function PreferencesView({containerState, preferenceState, appPre
                   	<div><small>Modified: {modified}</small></div>
                 </div>
                 <div className="col-md-4">
-                  	<i className="fa fa-pencil-square-o fa-1" onClick={onModify()}/>
-                  	<i className="fa fa-trash fa-1" onClick={onDelete()}/>
+                  	<i className="fa fa-pencil-square-o fa-1" onClick={() => onOption("MODIFY")}/>
+                  	<i className="fa fa-trash fa-1" onClick={() => onOption("DELETE")}/>
                 	<i className="fa fa-id-card fa-1" aria-hidden="true"></i>
                 	<i className="fa fa-tag fa-1" aria-hidden="true"></i>
                 	<i className="fa fa-file-text fa-1" aria-hidden="true"></i>
@@ -122,10 +119,7 @@ export default function PreferencesView({containerState, preferenceState, appPre
 					onSearchClick={onSearchClick}
 					onPaginationClick={onPaginationClick}
 					onOrderBy={onOrderBy}
-					onHeader={onModify}
-					onOption1={onModify}
-					onOption2={openDeleteModal}
-					onFilterClick={onFilterClick}
+					onOption={onOption}
 					striped={striped}/>
 			) : (	
 				<Table
@@ -144,19 +138,12 @@ export default function PreferencesView({containerState, preferenceState, appPre
 		  			onSearchClick={onSearchClick}
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
-		  			onHeader={onModify}
-		  			onOption1={onModify}
-		  			onOption2={openDeleteModal}
-		  			onOption3={openFormView}
-		  			onOption4={openLabelView}
-					onOption5={openTextView}
-					onOption6={openOptionView}
-		  			openDeleteModal={openDeleteModal}
+		  			onOption={onOption}
 					orderCriteria={preferenceState.orderCriteria}
   					searchCriteria={preferenceState.searchCriteria}
 				/>
 			)}
-			<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
+			<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -167,8 +154,8 @@ export default function PreferencesView({containerState, preferenceState, appPre
 							<h3>Are you sure you want to delete?</h3>
 						</div>
 						<div className="modal-footer">
-							<button type="button" className="btn btn-primary" onClick={onDelete(containerState.selected)}>Delete</button>
-							<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
+							<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+							<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 						</div>
 					</div>
 				</div>
@@ -187,12 +174,7 @@ PreferencesView.propTypes = {
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
 	onOrderBy: PropTypes.func,
-	onFilterClick: PropTypes.func,
-	onSaveFilter: PropTypes.func,
-	onClearFilter: PropTypes.func,
-	onModify: PropTypes.func,
-	onDelete: PropTypes.func,
-	openDeleteModal: PropTypes.func,
+	onOption: PropTypes.func,
 	closeModal: PropTypes.func,
 	onClickTabItem: PropTypes.func,
 	onToggleItem: PropTypes.func,
