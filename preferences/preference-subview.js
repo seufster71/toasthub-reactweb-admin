@@ -7,21 +7,21 @@ import Modal from '../../coreView/common/modal';
 import DeleteModal from '../../coreView/common/delete-modal';
 import moment from 'moment';
 
-export default function PreferenceSubView({containerState, preferenceState, appPrefs, onListLimitChange,
+export default function PreferenceSubView({containerState, itemState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy,
 	onOption, onDelete, openDeleteModal, closeModal, inputChange, session, goBack}) {
 
 	let columns = [];
 	let group = "TABLE1";
-	if (preferenceState.prefLabels != null ) {
-		if (preferenceState.prefLabels.ADMIN_FORMFIELD_PAGE != null && preferenceState.viewType === "FORM") {
-			columns = preferenceState.prefLabels.ADMIN_FORMFIELD_PAGE;
-		} else if (preferenceState.prefLabels.ADMIN_LABEL_PAGE != null && preferenceState.viewType === "LABEL") {
-			columns = preferenceState.prefLabels.ADMIN_LABEL_PAGE;
-		} else if (preferenceState.prefLabels.ADMIN_TEXT_PAGE != null && preferenceState.viewType === "TEXT") {
-			columns = preferenceState.prefLabels.ADMIN_TEXT_PAGE;
-		} else if (preferenceState.prefLabels.ADMIN_OPTION_PAGE != null && preferenceState.viewType === "OPTION") {
-			columns = preferenceState.prefLabels.ADMIN_OPTION_PAGE;
+	if (itemState.prefLabels != null ) {
+		if (itemState.prefLabels.ADMIN_FORMFIELD_PAGE != null && itemState.viewType === "FORM") {
+			columns = itemState.prefLabels.ADMIN_FORMFIELD_PAGE;
+		} else if (itemState.prefLabels.ADMIN_LABEL_PAGE != null && itemState.viewType === "LABEL") {
+			columns = itemState.prefLabels.ADMIN_LABEL_PAGE;
+		} else if (itemState.prefLabels.ADMIN_TEXT_PAGE != null && itemState.viewType === "TEXT") {
+			columns = itemState.prefLabels.ADMIN_TEXT_PAGE;
+		} else if (itemState.prefLabels.ADMIN_OPTION_PAGE != null && itemState.viewType === "OPTION") {
+			columns = itemState.prefLabels.ADMIN_OPTION_PAGE;
 			group = null;
 		}
 	
@@ -29,26 +29,32 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 	
 	let header = "";
 	let parent = null;
-	if (preferenceState.parent != null) {
-		parent = preferenceState.parent.title.langTexts[0].text;
+	if (itemState.parent != null) {
+		parent = itemState.parent.title.langTexts[0].text;
 	}
-	if (preferenceState.prefTexts != null) {
-		if (preferenceState.viewType === "FORM" && preferenceState.prefTexts.ADMIN_FORMFIELD_PAGE != null && preferenceState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER != null) {
-			header = preferenceState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER.value;
-		} else if (preferenceState.viewType === "LABEL" && preferenceState.prefTexts.ADMIN_LABEL_PAGE != null && preferenceState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER != null) {
-			header = preferenceState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER.value;
-		} else if (preferenceState.viewType === "TEXT" && preferenceState.prefTexts.ADMIN_TEXT_PAGE != null && preferenceState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER != null) {
-			header = preferenceState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER.value;
-		} else if (preferenceState.viewType === "OPTION" && preferenceState.prefTexts.ADMIN_OPTION_PAGE != null && preferenceState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER != null) {
-			header = preferenceState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER.value;
+	if (itemState.prefTexts != null) {
+		if (itemState.viewType === "FORM" && itemState.prefTexts.ADMIN_FORMFIELD_PAGE != null && itemState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER != null) {
+			header = itemState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER.value;
+		} else if (itemState.viewType === "LABEL" && itemState.prefTexts.ADMIN_LABEL_PAGE != null && itemState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER != null) {
+			header = itemState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER.value;
+		} else if (itemState.viewType === "TEXT" && itemState.prefTexts.ADMIN_TEXT_PAGE != null && itemState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER != null) {
+			header = itemState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER.value;
+		} else if (itemState.viewType === "OPTION" && itemState.prefTexts.ADMIN_OPTION_PAGE != null && itemState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER != null) {
+			header = itemState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER.value;
 		}
 	}
+	
+	let moveHeader = "";
+	if (itemState.moveSelectedItem != null) {
+		moveHeader = "Moving:" + itemState.moveSelectedItem.name;
+	}
+	
 	if (goBack != null && parent != null && parent != "") {
 		header = <span>{header} : <a onClick={() => goBack()} aria-hidden="true">{parent}</a></span>;
 	}
 	
 	let listRows = [];
-	let listItems = preferenceState.items;
+	let listItems = itemState.items;
 	if (listItems != null && listItems.length > 0) {
 		for (let i = 0; i < listItems.length; i++) {
 			let showTab = false;
@@ -124,9 +130,9 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 					containerState={containerState}
 					header={header}
 					listRows={listRows}
-					itemCount={preferenceState.itemCount}
-					listStart={preferenceState.pageStart}
-					listLimit={preferenceState.pageLimit}
+					itemCount={itemState.itemCount}
+					listStart={itemState.pageStart}
+					listLimit={itemState.pageLimit}
 					columns={columns}
 					appPrefs={appPrefs}
 					onListLimitChange={onListLimitChange}
@@ -140,10 +146,10 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 				<Table
 		  			containerState={containerState}
 		  			header={header}
-		  			items={preferenceState.items}
-		  			itemCount={preferenceState.itemCount}
-		  			listStart={preferenceState.listStart}
-		  			listLimit={preferenceState.listLimit}
+		  			items={itemState.items}
+		  			itemCount={itemState.itemCount}
+		  			listStart={itemState.listStart}
+		  			listLimit={itemState.listLimit}
 		  			columns={columns}
 					labelGroup={group}
 		  			appPrefs={appPrefs}
@@ -154,8 +160,10 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
 		  			onOption={onOption}
-					orderCriteria={preferenceState.orderCriteria}
-  					searchCriteria={preferenceState.searchCriteria}
+					orderCriteria={itemState.orderCriteria}
+  					searchCriteria={itemState.searchCriteria}
+					moveSelectedItem={itemState.moveSelectedItem}
+    				moveHeader={moveHeader}
 					goBack={goBack}
 				/>
 			)}				
@@ -183,7 +191,7 @@ export default function PreferenceSubView({containerState, preferenceState, appP
 
 PreferenceSubView.propTypes = {
   containerState: PropTypes.object,
-  preferenceState: PropTypes.object,
+  itemState: PropTypes.object,
   appPrefs: PropTypes.object,
   onListLimitChange: PropTypes.func,
   onSearchChange: PropTypes.func,

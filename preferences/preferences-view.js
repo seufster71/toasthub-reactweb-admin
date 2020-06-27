@@ -8,30 +8,30 @@ import DeleteModal from '../../coreView/common/delete-modal';
 import Tabs from '../../coreView/common/tabs';
 import moment from 'moment';
 
-export default function PreferencesView({containerState, preferenceState, appPrefs, onListLimitChange,
+export default function PreferencesView({containerState, itemState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy,
 	onOption, closeModal, onClickTabItem, onToggleItem, inputChange, openFormView, openLabelView, openTextView, openOptionView, session}) {
 
 	let tabLabels = ["Fields","Labels","Texts"];
 
 	let columns = [];
-	if (preferenceState.prefLabels != null && preferenceState.prefLabels.ADMIN_PREFERENCE_PAGE != null) {
-		columns = preferenceState.prefLabels.ADMIN_PREFERENCE_PAGE;
+	if (itemState.prefLabels != null && itemState.prefLabels.ADMIN_PREFERENCE_PAGE != null) {
+		columns = itemState.prefLabels.ADMIN_PREFERENCE_PAGE;
 	}
 	let group = "TABLE1";
 	
 	let header = "";
 	let parent = null;
-	if (preferenceState.parent != null) {
-		parent = preferenceState.parent.title;
+	if (itemState.parent != null) {
+		parent = itemState.parent.title;
 	}
-	if (preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE != null && preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER != null) {
-		header = preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value;
+	if (itemState.prefTexts.ADMIN_PREFERENCE_PAGE != null && itemState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER != null) {
+		header = itemState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value;
 	}
 
 	
 	let listRows = [];
-	let listItems = preferenceState.items;
+	let listItems = itemState.items;
 	if (listItems != null && listItems.length > 0) {
 		for (let i = 0; i < listItems.length; i++) {
 			let showTab = false;
@@ -91,7 +91,7 @@ export default function PreferencesView({containerState, preferenceState, appPre
 		listRows.push(<li key="1"><div id={appPrefs.prefTexts.GLOBAL_PAGE.GLOBAL_PAGE_LIST_EMPTY.name}> {appPrefs.prefTexts.GLOBAL_PAGE.GLOBAL_PAGE_LIST_EMPTY.value}</div></li>);
 	}
 	
-	// let header = <h5 style={{display:'inline'}}>{preferenceState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value}</h5>;
+	// let header = <h5 style={{display:'inline'}}>{itemState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value}</h5>;
 	
 	let deleteModalHeader = "Delete ";
 	if (containerState.selected != null && containerState.selected.title != null) {
@@ -109,9 +109,9 @@ export default function PreferencesView({containerState, preferenceState, appPre
 					containerState={containerState}
 					header={header}
 					listRows={listRows}
-					itemCount={preferenceState.itemCount}
-					listStart={preferenceState.listStart}
-					listLimit={preferenceState.listLimit}
+					itemCount={itemState.itemCount}
+					listStart={itemState.listStart}
+					listLimit={itemState.listLimit}
 					columns={columns}
 					appPrefs={appPrefs}
 					onListLimitChange={onListLimitChange}
@@ -125,10 +125,10 @@ export default function PreferencesView({containerState, preferenceState, appPre
 				<Table
 		  			containerState={containerState}
 		  			header={header}
-		  			items={preferenceState.items}
-		  			itemCount={preferenceState.itemCount}
-		  			listStart={preferenceState.listStart}
-		  			listLimit={preferenceState.listLimit}
+		  			items={itemState.items}
+		  			itemCount={itemState.itemCount}
+		  			listStart={itemState.listStart}
+		  			listLimit={itemState.listLimit}
 		  			columns={columns}
 					labelGroup={group}
 		  			appPrefs={appPrefs}
@@ -139,8 +139,8 @@ export default function PreferencesView({containerState, preferenceState, appPre
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
 		  			onOption={onOption}
-					orderCriteria={preferenceState.orderCriteria}
-  					searchCriteria={preferenceState.searchCriteria}
+					orderCriteria={itemState.orderCriteria}
+  					searchCriteria={itemState.searchCriteria}
 				/>
 			)}
 			<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
@@ -167,7 +167,7 @@ export default function PreferencesView({containerState, preferenceState, appPre
 
 PreferencesView.propTypes = {
 	containerState: PropTypes.object,
-	preferenceState: PropTypes.object,
+	itemState: PropTypes.object,
 	appPrefs: PropTypes.object,
 	onListLimitChange: PropTypes.func,
 	onSearchChange: PropTypes.func,
