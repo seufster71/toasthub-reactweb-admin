@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import FormBuilder from '../../coreView/common/form-builder';
 
-export default function CategoryModifyView({containerState, item, inputFields, appPrefs, 
+export default function MenuModifyView({containerState, item, inputFields, appPrefs, 
 	itemPrefForms, onSave, onCancel, inputChange}) {
 
-	let formName = "ADMIN_CATEGORY_FORM";
-	let formTitle = "Category";
+	let formName = "ADMIN_MENU_FORM";
+	let formTitle = "Menu";
 	let formGroup = "FORM1";
     		
 	return (
@@ -15,7 +15,7 @@ export default function CategoryModifyView({containerState, item, inputFields, a
 }
 
 
-CategoryModifyView.propTypes = {
+MenuModifyView.propTypes = {
 	containerState: PropTypes.object,
 	item: PropTypes.object,
 	inputFields: PropTypes.object,

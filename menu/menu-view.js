@@ -5,73 +5,85 @@ import Modal from '../../coreView/common/modal';
 import Input from '../../coreView/common/text-input';
 import Select from '../../coreView/common/select-input';
 
-export default function MenuView({containerState, menus, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openEditModal, openDeleteModal, closeModal, onSaveMenu, onDeleteMenu, inputChange}) {
+export default function MenuView({containerState, itemState, appPrefs, onListLimitChange,
+	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, onOption,
+	closeModal, inputChange, session}) {
 
 	let columns = [];
-	if (menus.prefLabels != null && menus.prefLabels.ADMIN_MENU_TABLE != null) {
-		columns = menus.prefLabels.ADMIN_MENU_TABLE;
+	if (itemState.prefLabels != null && itemState.prefLabels.ADMIN_MENU_PAGE != null) {
+		columns = itemState.prefLabels.ADMIN_MENU_PAGE;
 	}
+	let group = "TABLE1";
+    
 	
 	let header = "";
-	if (menus.prefTexts.ADMIN_MENU_PAGE != null && menus.prefTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER != null) {
-		header = menus.prefTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER;
+	if (itemState.prefTexts.ADMIN_MENU_PAGE != null && itemState.prefTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER != null) {
+		header = itemState.prefTexts.ADMIN_MENU_PAGE.ADMIN_MENU_PAGE_HEADER.value;
 	}
+	
+	let deleteModalHeader = "Delete ";
+	if (containerState.selected != null && containerState.selected.title != null) {
+		deleteModalHeader += containerState.selected.title.defaultText;
+	}
+	
+	let viewPortSmall = false;
+	if (session.viewPort === 'small') { viewPortSmall = true }
 	
 	return (
 		<div>
-	  		<Table
-	  			containerState={containerState}
-	  			header={header}
-	  			items={menus.items}
-	  			itemCount={menus.itemCount}
-	  			listStart={menus.listStart}
-	  			listLimit={menus.listLimit}
-	  			columns={columns}
-	  			appPrefs={appPrefs}
-	  			onListLimitChange={onListLimitChange}
-	  			onSearchChange={onSearchChange}
-	  			onSearchClick={onSearchClick}
-	  			onPaginationClick={onPaginationClick}
-	  			onColumnSort={onColumnSort}
-	  			openEditModal={openEditModal}
-	  			openDeleteModal={openDeleteModal}
-	  		/>
-	  		<Modal isOpen={containerState.isEditModalOpen} onClose={closeModal()} >
+			{viewPortSmall ? (
+    			<ListBuilder
+		  	      	containerState={containerState}
+		  	      	header={header}
+		  	      	items={items.items}
+		  	      	itemCount={items.itemCount}
+		  	      	listStart={items.listStart}
+		  	      	listLimit={items.listLimit}
+		  	     	columns={columns}
+		  	      	appPrefs={appPrefs}
+		  	      	onListLimitChange={onListLimitChange}
+		  	      	onSearchChange={onSearchChange}
+		  	      	onSearchClick={onSearchClick}
+		  	      	onPaginationClick={onPaginationClick}
+		  			onOrderBy={onOrderBy}
+	  				onOption={onOption}
+		  			orderCriteria={items.orderCriteria}
+	  				searchCriteria={items.searchCriteria}
+		  	      />
+    		) : (
+		  		<Table
+		  			containerState={containerState}
+		  			header={header}
+		  			items={itemState.items}
+		  			itemCount={itemState.itemCount}
+		  			listStart={itemState.listStart}
+		  			listLimit={itemState.listLimit}
+		  			columns={columns}
+		  			labelGroup = {group}
+		  			appPrefs={appPrefs}
+		  			onListLimitChange={onListLimitChange}
+		  			onSearchChange={onSearchChange}
+		  			onSearchClick={onSearchClick}
+		  			onPaginationClick={onPaginationClick}
+		  			onOrderBy={onOrderBy}
+		  			onOption={onOption}
+		  			orderCriteria={itemState.orderCriteria}
+		  			searchCriteria={itemState.searchCriteria}
+		  		/>
+	  		)}
+	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
 	  			<div className="modal-dialog">
 	  				<div className="modal-content">
 	  					<div className="modal-header">
 	  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-	  						<h4 className="modal-title">User</h4>
-	  					</div>
-	  					<div className="modal-body">
-	  						<Input name="MENU_NAME_input" label="Name" required="true" errors={containerState.errors} onChange={inputChange('name')} value={(menus.selected != null && menus.selected.name != null)?menus.selected.name:""}/>
-	  						<Input name="MENU_CODE_input" label="Code" required="true" errors={containerState.errors} onChange={inputChange('code')} value={(menus.selected != null && menus.selected.code != null)?menus.selected.code:""}/>
-	  						
-	          
-	  						
-	  						
-	  					</div>
-	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onSaveMenu()}>Save</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
-	  					</div>
-	  				</div>
-	  			</div>
-	  		</Modal>
-	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
-	  			<div className="modal-dialog">
-	  				<div className="modal-content">
-	  					<div className="modal-header">
-	  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-	  						<h4 className="modal-title">Delete {containerState.selectedName}</h4>
+	  						<h4 className="modal-title">{deleteModalHeader}</h4>
 	  					</div>
 	  					<div className="modal-body">
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onDeleteMenu(containerState.selectedId)}>Delete</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
+	  						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 	  					</div>
 	  				</div>
 	  			</div>
@@ -82,17 +94,16 @@ export default function MenuView({containerState, menus, appPrefs, onListLimitCh
 
 MenuView.propTypes = {
 	containerState: PropTypes.object,
-	menus: PropTypes.object,
+	itemState: PropTypes.object,
 	appPrefs: PropTypes.object,
 	onListLimitChange: PropTypes.func,
 	onSearchChange: PropTypes.func,
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
-	onColumnSort: PropTypes.func,
-	openEditModal: PropTypes.func,
+	onOrderBy: PropTypes.func,
 	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	onSaveLanguage: PropTypes.func,
-	onDeleteLanguage: PropTypes.func,
-	inputChange: PropTypes.func
+	onOption: PropTypes.func,
+	inputChange: PropTypes.func,
+	session: PropTypes.object
 };
