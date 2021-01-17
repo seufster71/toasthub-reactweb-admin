@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../coreView/common/modal';
-import Input from '../../coreView/common/text-input';
 import TextBuilder from '../../coreView/common/text-input-builder';
 import SelectBuilder from '../../coreView/common/select-input-builder';
-import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
-export default function UsersModifyView({containerState, item, inputFields, appPrefs, 
-	itemPrefForms, onSave, onCancel, inputChange, onBlur}) {
+export default function UsersModifyView({itemState, appPrefs, 
+	onSave, onCancel, inputChange, onBlur}) {
 
 	let options=[];
     if (appPrefs != null && appPrefs.prefGlobal != null && appPrefs.prefGlobal.LANGUAGES != null && appPrefs.prefGlobal.LANGUAGES.length > 0){
@@ -24,9 +21,8 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     		options.push({"value":appPrefs.prefGlobal.LANGUAGES[i].code, "label":name});
     	}
     }
-    
+    let item = itemState.selected;
     let adminUserFormFirstName = {};
-    let firstNameDefault = "";
     
     let adminUserFormMiddleName = {};
 
@@ -52,8 +48,8 @@ export default function UsersModifyView({containerState, item, inputFields, appP
     
     let adminUserFormLogLevel = {};
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_FORM != null) {
-    	let formItems = itemPrefForms.ADMIN_USER_FORM;
+    if (itemState.prefForms != null && itemState.prefForms.ADMIN_USER_FORM != null) {
+    	let formItems = itemState.prefForms.ADMIN_USER_FORM;
     	for (let i = 0; i < formItems.length; i++) {
     		switch (formItems[i].name) {
     		case "ADMIN_USER_FORM_FIRSTNAME":
@@ -110,42 +106,40 @@ export default function UsersModifyView({containerState, item, inputFields, appP
 			<h4 className="modal-title">User</h4>
 
 			<div className="row">
-				{adminUserFormFirstName.rendered && 
-					<div className="col-sm-4">
-						<Input name={adminUserFormFirstName.name} inputType={adminUserFormFirstName.htmlType} label={adminUserFormFirstName.label} required={adminUserFormFirstName.required} errors={containerState.errors} successes={containerState.successes} onChange={() => inputChange(adminUserFormFirstName.name)} value={(inputFields != null && inputFields[adminUserFormFirstName.name] != null)?inputFields[adminUserFormFirstName.name]:firstNameDefault}/>
-					</div>	
-				}
 				<div className="col-sm-4">
-					<TextBuilder item={item} field={adminUserFormMiddleName} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+					<TextBuilder field={adminUserFormFirstName} itemState={itemState} inputChange={inputChange}/>
 				</div>
 				<div className="col-sm-4">
-					<TextBuilder item={item} field={adminUserFormLastName} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+					<TextBuilder field={adminUserFormMiddleName} itemState={itemState} inputChange={inputChange}/>
+				</div>
+				<div className="col-sm-4">
+					<TextBuilder field={adminUserFormLastName} itemState={itemState} inputChange={inputChange}/>
 				</div>
 			</div>
-			<TextBuilder item={item} field={adminUserFormUserName} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
-			<TextBuilder item={item} field={adminUserFormEmail} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
-			<TextBuilder item={item} field={adminUserFormAlternateEmail} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
-			<TextBuilder item={item} field={adminUserFormZipcode} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+			<TextBuilder field={adminUserFormUserName} itemState={itemState} inputChange={inputChange}/>
+			<TextBuilder field={adminUserFormEmail} itemState={itemState} inputChange={inputChange}/>
+			<TextBuilder field={adminUserFormAlternateEmail} itemState={itemState} inputChange={inputChange}/>
+			<TextBuilder field={adminUserFormZipcode} itemState={itemState} inputChange={inputChange}/>
 			<div className="row">
 				<div className="col-sm-4">
-					<TextBuilder item={item} field={adminUserFormPassword} inputFields={inputFields} containerState={containerState} onChange={inputChange} onBlur={onBlur}/>
+					<TextBuilder field={adminUserFormPassword} itemState={itemState} inputChange={inputChange} onBlur={onBlur}/>
 				</div>
 				<div className="col-sm-4">
-					<TextBuilder item={item} field={adminUserFormVerifyPassword} inputFields={inputFields} containerState={containerState} onChange={inputChange} onBlur={onBlur}/>
+					<TextBuilder field={adminUserFormVerifyPassword} itemState={itemState} inputChange={inputChange} onBlur={onBlur}/>
 				</div>
 				<div className="col-sm-4">
-					<Switch item={item} field={adminUserFormForceReset} inputFields={inputFields} containerState={containerState} onChange={inputChange} />
+					<Switch field={adminUserFormForceReset} itemState={itemState} inputChange={inputChange} />
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminUserFormActive} inputFields={inputFields} containerState={containerState} onChange={inputChange} />
+					<Switch field={adminUserFormActive} itemState={itemState} inputChange={inputChange} />
 				</div>
 				<div className="col-md-4">		
-					<SelectBuilder item={item} field={adminUserFormLanguage} inputFields={inputFields} options={options} containerState={containerState} onChange={inputChange}/>
+					<SelectBuilder field={adminUserFormLanguage} options={options} itemState={itemState} inputChange={inputChange}/>
 				</div>
 				<div className="col-md-4">
-					<SelectBuilder item={item} field={adminUserFormLogLevel} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+					<SelectBuilder field={adminUserFormLogLevel} itemState={itemState} inputChange={inputChange}/>
 				</div>
 			</div>
 			
@@ -157,12 +151,10 @@ export default function UsersModifyView({containerState, item, inputFields, appP
 
 
 UsersModifyView.propTypes = {
-  containerState: PropTypes.object,
-  item: PropTypes.object,
+  itemState: PropTypes.object.isRequired,
   appPrefs: PropTypes.object.isRequired,
-  itemPrefForms: PropTypes.object.isRequired,
-  onSave: PropTypes.func,
-  onCancel: PropTypes.func,
-  inputChange: PropTypes.func,
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  inputChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func
 };

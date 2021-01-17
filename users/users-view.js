@@ -3,28 +3,26 @@ import PropTypes from 'prop-types';
 import Table from '../../coreView/common/table';
 import ListBuilder from '../../coreView/common/list-builder';
 import Modal from '../../coreView/common/modal';
-import Input from '../../coreView/common/text-input';
-import Select from '../../coreView/common/select-input';
 
 
-export default function UsersView({containerState, items, appPrefs, onListLimitChange,
+export default function UsersView({itemState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, onOption, 
 	closeModal, inputChange, session}) {
 
     let columns = [];
-    if (items.prefLabels != null && items.prefLabels.ADMIN_USER_PAGE != null) {
-    	columns = items.prefLabels.ADMIN_USER_PAGE;
+    if (itemState.prefLabels != null && itemState.prefLabels.ADMIN_USER_PAGE != null) {
+    	columns = itemState.prefLabels.ADMIN_USER_PAGE;
     }
     let group = "TABLE1";
     
     let header = "";
-	if (items.prefTexts.ADMIN_USER_PAGE != null && items.prefTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
-		header = items.prefTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER.value;
+	if (itemState.prefTexts.ADMIN_USER_PAGE != null && itemState.prefTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER != null) {
+		header = itemState.prefTexts.ADMIN_USER_PAGE.ADMIN_USER_PAGE_HEADER.value;
 	}
 	
 	let deleteModalHeader = "Delete ";
-	if (containerState.selected != null && containerState.selected.title != null) {
-		deleteModalHeader += containerState.selected.title.defaultText;
+	if (itemState.selected != null && itemState.selected.title != null) {
+		deleteModalHeader += itemState.selected.title.defaultText;
 	}
 	
 	let viewPortSmall = false;
@@ -34,12 +32,8 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
     	<div>
     		{viewPortSmall ? (
     			<ListBuilder
-		  	      	containerState={containerState}
+		  	      	itemState={itemState}
 		  	      	header={header}
-		  	      	items={items.items}
-		  	      	itemCount={items.itemCount}
-		  	      	listStart={items.listStart}
-		  	      	listLimit={items.listLimit}
 		  	     	columns={columns}
 		  	      	appPrefs={appPrefs}
 		  	      	onListLimitChange={onListLimitChange}
@@ -48,17 +42,11 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
 		  	      	onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
 	  				onOption={onOption}
-		  			orderCriteria={items.orderCriteria}
-	  				searchCriteria={items.searchCriteria}
 		  	      />
     		) : (
 	    		<Table
-	    			containerState={containerState}
+	    			itemState={itemState}
 	    			header={header}
-	    			items={items.items}
-	    			itemCount={items.itemCount}
-	    			listStart={items.listStart}
-	    			listLimit={items.listLimit}
 	    			columns={columns}
 	    			labelGroup = {group}
 	    			appPrefs={appPrefs}
@@ -68,11 +56,9 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
 	    			onPaginationClick={onPaginationClick}
 	    			onOrderBy={onOrderBy}
 	    			onOption={onOption}
-	    			orderCriteria={items.orderCriteria}
-					searchCriteria={items.searchCriteria}
 	    		/>
     		)}
-    		<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
+    		<Modal isOpen={itemState.isDeleteModalOpen} onClose={() => closeModal()} >
     			<div className="modal-dialog">
     				<div className="modal-content">
     					<div className="modal-header">
@@ -83,7 +69,7 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
     						<h3>Are you sure you want to delete?</h3>
     					</div>
     					<div className="modal-footer">
-    						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+    						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",itemState.selected)}>Delete</button>
     						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
     					</div>
     				</div>
@@ -95,17 +81,16 @@ export default function UsersView({containerState, items, appPrefs, onListLimitC
 
 
 UsersView.propTypes = {
-  containerState: PropTypes.object,
-  items: PropTypes.object,
-  appPrefs: PropTypes.object,
-  onListLimitChange: PropTypes.func,
-  onSearchChange: PropTypes.func,
-  onSearchClick: PropTypes.func,
-  onPaginationClick: PropTypes.func,
-  onOrderBy: PropTypes.func, 
-  openDeleteModal: PropTypes.func,
-  closeModal: PropTypes.func,
-  onOption: PropTypes.func,
-  inputChange: PropTypes.func,
-  session: PropTypes.object
+  	itemState: PropTypes.object.isRequired,
+  	appPrefs: PropTypes.object,
+  	onListLimitChange: PropTypes.func,
+  	onSearchChange: PropTypes.func,
+  	onSearchClick: PropTypes.func,
+  	onPaginationClick: PropTypes.func,
+  	onOrderBy: PropTypes.func, 
+  	openDeleteModal: PropTypes.func,
+  	closeModal: PropTypes.func,
+  	onOption: PropTypes.func,
+  	inputChange: PropTypes.func,
+  	session: PropTypes.object
 };

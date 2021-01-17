@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../coreView/common/modal';
 import TextBuilder from '../../coreView/common/text-input-builder';
 import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
 import SelectBuilder from '../../coreView/common/select-input-builder';
-import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import moment from 'moment';
 
-export default function PermissionsModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function PermissionsModifyView({itemState, appPrefs, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminPermissionFormTitle = {};
 
@@ -26,11 +24,11 @@ export default function PermissionsModifyView({containerState, item, inputFields
     
     let adminPermissionFormActive = {};
     let activeOptions = [];
-
+	let item = itemState.selected;
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_PERMISSION_FORM != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_PERMISSION_FORM.length; i++) {
-    		let formItems = itemPrefForms.ADMIN_PERMISSION_FORM;
+    if (itemState.prefForms != null && itemState.prefForms.ADMIN_PERMISSION_FORM != null) {
+    	for (let i = 0; i < itemState.prefForms.ADMIN_PERMISSION_FORM.length; i++) {
+    		let formItems = itemState.prefForms.ADMIN_PERMISSION_FORM;
     		switch (formItems[i].name) {
     		case "ADMIN_PERMISSION_FORM_TITLE":
     			adminPermissionFormTitle = formItems[i];
@@ -109,27 +107,27 @@ export default function PermissionsModifyView({containerState, item, inputFields
 			{modified}
 			<div className="row">
 				<div className="col-sm-4">
-					<MultiLangTextInput item={item} field={adminPermissionFormTitle} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} appPrefs={appPrefs}/>		
+					<MultiLangTextInput itemState={itemState} field={adminPermissionFormTitle} inputChange={inputChange} appPrefs={appPrefs}/>		
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<TextBuilder item={item} field={adminPermissionFormCode} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<TextBuilder itemState={itemState} field={adminPermissionFormCode} inputChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<SelectBuilder item={item} field={adminPermissionFormApplication} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={applicationSelectList}/>
+					<SelectBuilder itemState={itemState} field={adminPermissionFormApplication} inputChange={inputChange} options={applicationSelectList}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<SelectBuilder item={item} field={adminPermissionFormRights} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<SelectBuilder itemState={itemState} field={adminPermissionFormRights} inputChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminPermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions}/>
+					<Switch itemState={itemState} field={adminPermissionFormActive} inputChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>
 			
@@ -141,11 +139,9 @@ export default function PermissionsModifyView({containerState, item, inputFields
 
 
 PermissionsModifyView.propTypes = {
-  containerState: PropTypes.object,
-  item: PropTypes.object,
-  appPrefs: PropTypes.object,
-  itemPrefForms: PropTypes.object,
-  onSave: PropTypes.func,
-  onCancel: PropTypes.func,
-  inputChange: PropTypes.func
+  	itemState: PropTypes.object.isRequired,
+  	appPrefs: PropTypes.object.isRequired,
+  	onSave: PropTypes.func.isRequired,
+  	onCancel: PropTypes.func.isRequired,
+  	inputChange: PropTypes.func.isRequired
 };

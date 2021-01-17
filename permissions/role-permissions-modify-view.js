@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../coreView/common/modal';
-import InputBuilder from '../../coreView/common/text-input-builder';
-import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
 import SelectBuilder from '../../coreView/common/select-input-builder';
-import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import DateBuilder from '../../coreView/common/date-input-builder';
 import moment from 'moment';
 
-export default function RolePermissionsModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function RolePermissionsModifyView({itemState, appPrefs, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminRolePermissionFormRights = {};
     
@@ -21,10 +17,11 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
     
     let adminRolePermissionFormActive = {};
     let activeOptions = [];
+    let item = itemState.selected;
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_ROLE_PERMISSION_FORM != null) {
-    	for (let i = 0; i < itemPrefForms.ADMIN_ROLE_PERMISSION_FORM.length; i++) {
-    		let formItems = itemPrefForms.ADMIN_ROLE_PERMISSION_FORM;
+    if (itemState.prefForms != null && itemState.prefForms.ADMIN_ROLE_PERMISSION_FORM != null) {
+    	for (let i = 0; i < itemState.prefForms.ADMIN_ROLE_PERMISSION_FORM.length; i++) {
+    		let formItems = itemState.prefForms.ADMIN_ROLE_PERMISSION_FORM;
     		switch (formItems[i].name) {
     		case "ADMIN_ROLE_PERMISSION_FORM_RIGHTS":
     			adminRolePermissionFormRights = formItems[i];
@@ -93,22 +90,22 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
 			{modified}
 			<div className="row">
 				<div className="col-sm-4">
-					<SelectBuilder item={item} field={adminRolePermissionFormRights} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<SelectBuilder itemState={itemState} field={adminRolePermissionFormRights} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<DateBuilder item={item} field={adminRolePermissionFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder itemState={itemState} field={adminRolePermissionFormStartDate} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<DateBuilder item={item} field={adminRolePermissionFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder itemState={itemState} field={adminRolePermissionFormEndDate} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminRolePermissionFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions}/>
+					<Switch itemState={itemState} field={adminRolePermissionFormActive} onChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>
 			
@@ -120,11 +117,9 @@ export default function RolePermissionsModifyView({containerState, item, inputFi
 
 
 RolePermissionsModifyView.propTypes = {
-  containerState: PropTypes.object,
-  item: PropTypes.object,
-  appPrefs: PropTypes.object,
-  itemPrefForms: PropTypes.object,
-  onSave: PropTypes.func,
-  onCancel: PropTypes.func,
-  inputChange: PropTypes.func
+	itemState: PropTypes.object.isRequired,
+	appPrefs: PropTypes.object.isRequired,
+	onSave: PropTypes.func.isRequired,
+	onCancel: PropTypes.func.isRequired,
+	inputChange: PropTypes.func.isRequired
 };

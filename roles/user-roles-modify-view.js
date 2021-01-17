@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../coreView/common/modal';
 import InputBuilder from '../../coreView/common/text-input-builder';
-import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
-import SelectBuilder from '../../coreView/common/select-input-builder';
-import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 import DateBuilder from '../../coreView/common/date-input-builder';
 import moment from 'moment';
 
-export default function UserRolesModifyView({containerState, item, inputFields, appPrefs, itemPrefForms, onSave, onCancel, inputChange, applicationSelectList}) {
+export default function UserRolesModifyView({itemState, appPrefs, onSave, onCancel, inputChange, applicationSelectList}) {
     
     let adminUserRolesFormOrder = {};
     
@@ -21,9 +17,10 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
     
     let adminUserRolesFormActive = {};
     let optionsBLN = [];
+    let item = itemState.selected;
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_USER_ROLE_FORM != null) {
-    	let formItems = itemPrefForms.ADMIN_USER_ROLE_FORM;
+    if (itemState.prefForms != null && itemState.prefForms.ADMIN_USER_ROLE_FORM != null) {
+    	let formItems = itemState.prefForms.ADMIN_USER_ROLE_FORM;
     	for (let i = 0; i < formItems.length; i++) {
     		switch (formItems[i].name) {
     		case "ADMIN_USER_ROLE_FORM_ORDER":
@@ -95,22 +92,22 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
 			{modified}
 			<div className="row">
 				<div className="col-sm-4">
-					<InputBuilder item={item} field={adminUserRolesFormOrder} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<InputBuilder field={adminUserRolesFormOrder} itemState={itemState} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<DateBuilder item={item} field={adminUserRolesFormStartDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder field={adminUserRolesFormStartDate} itemState={itemState} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<DateBuilder item={item} field={adminUserRolesFormEndDate} inputFields={inputFields} errors={containerState.errors} onChange={inputChange}/>
+					<DateBuilder field={adminUserRolesFormEndDate} itemState={itemState} onChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminUserRolesFormActive} inputFields={inputFields} containerState={containerState} onChange={inputChange} options={optionsBLN}/>
+					<Switch field={adminUserRolesFormActive} itemState={itemState} onChange={inputChange} options={optionsBLN}/>
 				</div>
 			</div>
 			
@@ -122,11 +119,9 @@ export default function UserRolesModifyView({containerState, item, inputFields, 
 
 
 UserRolesModifyView.propTypes = {
-  containerState: PropTypes.object,
-  item: PropTypes.object,
-  appPrefs: PropTypes.object,
-  itemPrefForms: PropTypes.object,
-  onSave: PropTypes.func,
-  onCancel: PropTypes.func,
-  inputChange: PropTypes.func
+  itemState: PropTypes.object.isRequired,
+  appPrefs: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  inputChange: PropTypes.func.isRequired
 };
