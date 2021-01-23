@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Table from '../../coreView/common/table';
 import Modal from '../../coreView/common/modal';
-import Input from '../../coreView/common/text-input';
-import Select from '../../coreView/common/select-input';
 
-export default function CategoryView({containerState, itemState, appPrefs, onListLimitChange,
+export default function CategoryView({itemState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy,
 	closeModal, onOption, inputChange, session}) {
 
@@ -21,8 +19,8 @@ export default function CategoryView({containerState, itemState, appPrefs, onLis
 	}
   
 	let deleteModalHeader = "Delete ";
-	if (containerState.selected != null && containerState.selected.title != null) {
-		deleteModalHeader += containerState.selected.title.defaultText;
+	if (itemState.selected != null && itemState.selected.title != null) {
+		deleteModalHeader += itemState.selected.title.defaultText;
 	}
 	
 	let viewPortSmall = false;
@@ -32,12 +30,8 @@ export default function CategoryView({containerState, itemState, appPrefs, onLis
 		 <div>
 		 	{viewPortSmall ? (
 	    		<ListBuilder
-		  	      	containerState={containerState}
+		  	      	itemState={itemState}
 		  	      	header={header}
-		  	      	items={itemState.items}
-		  	      	itemCount={itemState.itemCount}
-		  	      	listStart={itemState.listStart}
-		  	      	listLimit={itemState.listLimit}
 		  	     	columns={columns}
 		  	      	appPrefs={appPrefs}
 		  	      	onListLimitChange={onListLimitChange}
@@ -47,17 +41,11 @@ export default function CategoryView({containerState, itemState, appPrefs, onLis
 		  			onOrderBy={onOrderBy}
 	  				onOption={onOption}
 	  				goBack={goBack}
-		  			orderCriteria={itemState.orderCriteria}
-	  				searchCriteria={itemState.searchCriteria}
 		  	      />
 	    	) : (
 		  		<Table
-		  			containerState={containerState}
+		  			itemState={itemState}
 		  			header={header}
-		  			items={itemState.items}
-		  			itemCount={itemState.itemCount}
-		  			listStart={itemState.listStart}
-		  			listLimit={itemState.listLimit}
 		  			columns={columns}
 		  			labelGroup={group}
 		  			appPrefs={appPrefs}
@@ -67,11 +55,9 @@ export default function CategoryView({containerState, itemState, appPrefs, onLis
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
 	  				onOption={onOption}
-  					orderCriteria={itemState.orderCriteria}
-					searchCriteria={itemState.searchCriteria}
 		  		/>
 	  		)}
-		  	<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
+		  	<Modal isOpen={itemState.isDeleteModalOpen} onClose={() => closeModal()} >
 	  			<div className="modal-dialog">
 	  				<div className="modal-content">
 	  					<div className="modal-header">
@@ -82,7 +68,7 @@ export default function CategoryView({containerState, itemState, appPrefs, onLis
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+	  						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",itemState.selected)}>Delete</button>
 	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 	  					</div>
 	  				</div>
@@ -94,15 +80,14 @@ export default function CategoryView({containerState, itemState, appPrefs, onLis
 
 
 CategoryView.propTypes = {
-	containerState: PropTypes.object,
-	itemState: PropTypes.object,
-	appPrefs: PropTypes.object,
+	itemState: PropTypes.object.isRequired,
+	appPrefs: PropTypes.object.isRequired,
 	onListLimitChange: PropTypes.func,
 	onSearchChange: PropTypes.func,
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
 	closeModal: PropTypes.func,
 	onOption: PropTypes.func,
-	inputChange: PropTypes.func,
+	inputChange: PropTypes.func.isRequired,
 	session: PropTypes.object
 };

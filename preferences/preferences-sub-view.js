@@ -2,25 +2,23 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import List from '../../coreView/common/list';
 import Table from '../../coreView/common/table';
-import Search from '../../coreView/common/search';
 import Modal from '../../coreView/common/modal';
-import DeleteModal from '../../coreView/common/delete-modal';
 import moment from 'moment';
 
-export default function PreferenceSubView({containerState, itemState, appPrefs, onListLimitChange,
+export default function PreferenceSubView({itemState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy,
-	onOption, onDelete, openDeleteModal, closeModal, inputChange, session, goBack}) {
+	onOption, closeModal, session, goBack}) {
 
 	let columns = [];
 	let group = "TABLE1";
 	if (itemState.prefLabels != null ) {
-		if (itemState.prefLabels.ADMIN_FORMFIELD_PAGE != null && itemState.viewType === "FORM") {
+		if (itemState.prefLabels.ADMIN_FORMFIELD_PAGE != null && itemState.subType === "FORM") {
 			columns = itemState.prefLabels.ADMIN_FORMFIELD_PAGE;
-		} else if (itemState.prefLabels.ADMIN_LABEL_PAGE != null && itemState.viewType === "LABEL") {
+		} else if (itemState.prefLabels.ADMIN_LABEL_PAGE != null && itemState.subType === "LABEL") {
 			columns = itemState.prefLabels.ADMIN_LABEL_PAGE;
-		} else if (itemState.prefLabels.ADMIN_TEXT_PAGE != null && itemState.viewType === "TEXT") {
+		} else if (itemState.prefLabels.ADMIN_TEXT_PAGE != null && itemState.subType === "TEXT") {
 			columns = itemState.prefLabels.ADMIN_TEXT_PAGE;
-		} else if (itemState.prefLabels.ADMIN_OPTION_PAGE != null && itemState.viewType === "OPTION") {
+		} else if (itemState.prefLabels.ADMIN_OPTION_PAGE != null && itemState.subType === "OPTION") {
 			columns = itemState.prefLabels.ADMIN_OPTION_PAGE;
 			group = null;
 		}
@@ -33,16 +31,17 @@ export default function PreferenceSubView({containerState, itemState, appPrefs, 
 		parent = itemState.parent.title.langTexts[0].text;
 	}
 	if (itemState.prefTexts != null) {
-		if (itemState.viewType === "FORM" && itemState.prefTexts.ADMIN_FORMFIELD_PAGE != null && itemState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER != null) {
+		if (itemState.subType === "FORM" && itemState.prefTexts.ADMIN_FORMFIELD_PAGE != null && itemState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER != null) {
 			header = itemState.prefTexts.ADMIN_FORMFIELD_PAGE.ADMIN_FORMFIELD_PAGE_HEADER.value;
-		} else if (itemState.viewType === "LABEL" && itemState.prefTexts.ADMIN_LABEL_PAGE != null && itemState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER != null) {
+		} else if (itemState.subType === "LABEL" && itemState.prefTexts.ADMIN_LABEL_PAGE != null && itemState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER != null) {
 			header = itemState.prefTexts.ADMIN_LABEL_PAGE.ADMIN_LABEL_PAGE_HEADER.value;
-		} else if (itemState.viewType === "TEXT" && itemState.prefTexts.ADMIN_TEXT_PAGE != null && itemState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER != null) {
+		} else if (itemState.subType === "TEXT" && itemState.prefTexts.ADMIN_TEXT_PAGE != null && itemState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER != null) {
 			header = itemState.prefTexts.ADMIN_TEXT_PAGE.ADMIN_TEXT_PAGE_HEADER.value;
-		} else if (itemState.viewType === "OPTION" && itemState.prefTexts.ADMIN_OPTION_PAGE != null && itemState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER != null) {
+		} else if (itemState.subType === "OPTION" && itemState.prefTexts.ADMIN_OPTION_PAGE != null && itemState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER != null) {
 			header = itemState.prefTexts.ADMIN_OPTION_PAGE.ADMIN_OPTION_PAGE_HEADER.value;
 		}
 	}
+	
 	
 	let moveHeader = "";
 	if (itemState.moveSelectedItem != null) {
@@ -115,8 +114,8 @@ export default function PreferenceSubView({containerState, itemState, appPrefs, 
 	}
 	
 	let deleteModalHeader = "Delete ";
-	if (containerState.selected != null && containerState.selected.title != null) {
-		deleteModalHeader += containerState.selected.title.defaultText;
+	if (itemState.selected != null && itemState.selected.title != null) {
+		deleteModalHeader += itemState.selected.title.defaultText;
 	}
 	let striped = true;
 	
@@ -127,12 +126,9 @@ export default function PreferenceSubView({containerState, itemState, appPrefs, 
 		<div className="main_content">
 			{viewPortSmall ? (
 				<List
-					containerState={containerState}
+					itemState={itemState}
 					header={header}
-					listRows={listRows}
-					itemCount={itemState.itemCount}
-					listStart={itemState.pageStart}
-					listLimit={itemState.pageLimit}
+					parent={parent}
 					columns={columns}
 					appPrefs={appPrefs}
 					onListLimitChange={onListLimitChange}
@@ -144,12 +140,8 @@ export default function PreferenceSubView({containerState, itemState, appPrefs, 
 					striped={striped}/>
 			) : (	
 				<Table
-		  			containerState={containerState}
+		  			itemState={itemState}
 		  			header={header}
-		  			items={itemState.items}
-		  			itemCount={itemState.itemCount}
-		  			listStart={itemState.listStart}
-		  			listLimit={itemState.listLimit}
 		  			columns={columns}
 					labelGroup={group}
 		  			appPrefs={appPrefs}
@@ -167,7 +159,7 @@ export default function PreferenceSubView({containerState, itemState, appPrefs, 
 					goBack={goBack}
 				/>
 			)}				
-			<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
+			<Modal isOpen={itemState.isDeleteModalOpen} onClose={() => closeModal()} >
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -178,7 +170,7 @@ export default function PreferenceSubView({containerState, itemState, appPrefs, 
 							<h3>Are you sure you want to delete?</h3>
 						</div>
 						<div className="modal-footer">
-							<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+							<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",itemState.selected)}>Delete</button>
 							<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 						</div>
 					</div>
@@ -190,17 +182,16 @@ export default function PreferenceSubView({containerState, itemState, appPrefs, 
 
 
 PreferenceSubView.propTypes = {
-  containerState: PropTypes.object,
-  itemState: PropTypes.object,
-  appPrefs: PropTypes.object,
-  onListLimitChange: PropTypes.func,
-  onSearchChange: PropTypes.func,
-  onSearchClick: PropTypes.func,
-  onPaginationClick: PropTypes.func,
-  onOrderBy: PropTypes.func,
-  onOption: PropTypes.func,
-  closeModal: PropTypes.func,
-  onClickTabItem: PropTypes.func,
-  onToggleItem: PropTypes.func,
-  inputChange: PropTypes.func,
+  	itemState: PropTypes.object.isRequired,
+  	appPrefs: PropTypes.object.isRequired,
+  	onListLimitChange: PropTypes.func,
+  	onSearchChange: PropTypes.func,
+  	onSearchClick: PropTypes.func,
+  	onPaginationClick: PropTypes.func,
+  	onOrderBy: PropTypes.func,
+  	onOption: PropTypes.func,
+  	closeModal: PropTypes.func,
+  	onClickTabItem: PropTypes.func,
+  	onToggleItem: PropTypes.func,
+  	inputChange: PropTypes.func,
 };

@@ -2,15 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import List from '../../coreView/common/list';
 import Table from '../../coreView/common/table';
-import Search from '../../coreView/common/search';
 import Modal from '../../coreView/common/modal';
-import DeleteModal from '../../coreView/common/delete-modal';
-import Tabs from '../../coreView/common/tabs';
 import moment from 'moment';
 
-export default function PreferencesView({containerState, itemState, appPrefs, onListLimitChange,
+export default function PreferencesView({itemState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy,
-	onOption, closeModal, onClickTabItem, onToggleItem, inputChange, openFormView, openLabelView, openTextView, openOptionView, session}) {
+	onOption, closeModal, session}) {
 
 	let tabLabels = ["Fields","Labels","Texts"];
 
@@ -94,8 +91,8 @@ export default function PreferencesView({containerState, itemState, appPrefs, on
 	// let header = <h5 style={{display:'inline'}}>{itemState.prefTexts.ADMIN_PREFERENCE_PAGE.ADMIN_PREFERENCE_PAGE_HEADER.value}</h5>;
 	
 	let deleteModalHeader = "Delete ";
-	if (containerState.selected != null && containerState.selected.title != null) {
-		deleteModalHeader += containerState.selected.title.defaultText;
+	if (itemState.selected != null && itemState.selected.title != null) {
+		deleteModalHeader += itemState.selected.title.defaultText;
 	}
 	let striped = true;
 	
@@ -106,12 +103,8 @@ export default function PreferencesView({containerState, itemState, appPrefs, on
 		<div className="main_content">
 			{viewPortSmall ? (
 				<List
-					containerState={containerState}
+					itemState={itemState}
 					header={header}
-					listRows={listRows}
-					itemCount={itemState.itemCount}
-					listStart={itemState.listStart}
-					listLimit={itemState.listLimit}
 					columns={columns}
 					appPrefs={appPrefs}
 					onListLimitChange={onListLimitChange}
@@ -123,12 +116,8 @@ export default function PreferencesView({containerState, itemState, appPrefs, on
 					striped={striped}/>
 			) : (	
 				<Table
-		  			containerState={containerState}
+		  			itemState={itemState}
 		  			header={header}
-		  			items={itemState.items}
-		  			itemCount={itemState.itemCount}
-		  			listStart={itemState.listStart}
-		  			listLimit={itemState.listLimit}
 		  			columns={columns}
 					labelGroup={group}
 		  			appPrefs={appPrefs}
@@ -139,11 +128,9 @@ export default function PreferencesView({containerState, itemState, appPrefs, on
 		  			onPaginationClick={onPaginationClick}
 		  			onOrderBy={onOrderBy}
 		  			onOption={onOption}
-					orderCriteria={itemState.orderCriteria}
-  					searchCriteria={itemState.searchCriteria}
 				/>
 			)}
-			<Modal isOpen={containerState.isDeleteModalOpen} onClose={() => closeModal()} >
+			<Modal isOpen={itemState.isDeleteModalOpen} onClose={() => closeModal()} >
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -154,7 +141,7 @@ export default function PreferencesView({containerState, itemState, appPrefs, on
 							<h3>Are you sure you want to delete?</h3>
 						</div>
 						<div className="modal-footer">
-							<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",containerState.selected)}>Delete</button>
+							<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",itemState.selected)}>Delete</button>
 							<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 						</div>
 					</div>
@@ -166,9 +153,8 @@ export default function PreferencesView({containerState, itemState, appPrefs, on
 
 
 PreferencesView.propTypes = {
-	containerState: PropTypes.object,
-	itemState: PropTypes.object,
-	appPrefs: PropTypes.object,
+	itemState: PropTypes.object.isRequired,
+	appPrefs: PropTypes.object.isRequired,
 	onListLimitChange: PropTypes.func,
 	onSearchChange: PropTypes.func,
 	onSearchClick: PropTypes.func,

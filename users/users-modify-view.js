@@ -54,12 +54,6 @@ export default function UsersModifyView({itemState, appPrefs,
     		switch (formItems[i].name) {
     		case "ADMIN_USER_FORM_FIRSTNAME":
     			adminUserFormFirstName = formItems[i];
-    			if (adminUserFormFirstName.classModel != "") {
-    				let firstNameModel = JSON.parse(adminUserFormFirstName.classModel);
-    				if (item != null && item[firstNameModel.field] != null) {
-    					firstNameDefault = item[firstNameModel.field];
-    				}
-    			}
     			break;
     		case "ADMIN_USER_FORM_MIDDLENAME":
     			adminUserFormMiddleName = formItems[i];

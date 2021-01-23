@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../../coreView/common/modal';
 import TextBuilder from '../../coreView/common/text-input-builder';
 import MultiLangTextInput from '../../coreView/common/multi-lang-text-input';
 import SelectBuilder from '../../coreView/common/select-input-builder';
-import CheckBox from '../../coreView/common/checkBox';
 import Switch from '../../coreView/common/switch';
 
-export default function LanguageModifyView({containerState, item, inputFields, appPrefs, 
-	itemPrefForms, onSave, onCancel, inputChange}) {
+export default function LanguageModifyView({itemState, appPrefs, 
+	onSave, onCancel, inputChange}) {
     
 	let adminLanguageFormTitle = {};
 
@@ -24,8 +22,8 @@ export default function LanguageModifyView({containerState, item, inputFields, a
     
     let adminLanguageFormDirection = {};
     
-    if (itemPrefForms != null && itemPrefForms.ADMIN_LANGUAGE_FORM != null) {
-    	let formItems = itemPrefForms.ADMIN_LANGUAGE_FORM;
+    if (itemState.prefForms != null && itemState.prefForms.ADMIN_LANGUAGE_FORM != null) {
+    	let formItems = itemState.prefForms.ADMIN_LANGUAGE_FORM;
     	for (let i = 0; i < formItems.length; i++) {
     		switch (formItems[i].name) {
     		case "ADMIN_LANGUAGE_FORM_TITLE":
@@ -81,23 +79,27 @@ export default function LanguageModifyView({containerState, item, inputFields, a
 
 			<div className="row">
 				<div className="col-sm-4">
-					<MultiLangTextInput field={adminLanguageFormTitle} item={item} inputFields={inputFields} onChange={inputChange} appPrefs={appPrefs}/>
+					<MultiLangTextInput field={adminLanguageFormTitle} itemState={itemState} inputChange={inputChange} appPrefs={appPrefs}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-sm-4">
-					<TextBuilder item={item} field={adminLanguageFormCode} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+					<TextBuilder itemState={itemState} field={adminLanguageFormCode} inputChange={inputChange}/>
 				</div>
 			</div>
 			<div className="row">
 				<div className="col-md-4">
-					<SelectBuilder item={item} field={adminLanguageFormDirection} inputFields={inputFields} containerState={containerState} onChange={inputChange}/>
+					<SelectBuilder itemState={itemState} field={adminLanguageFormDirection} inputChange={inputChange}/>
 				</div>
+			</div>
+			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminLanguageFormActive} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={activeOptions}/>
+					<Switch itemState={itemState} field={adminLanguageFormActive} inputChange={inputChange} options={activeOptions}/>
 				</div>
+			</div>	
+			<div className="row">
 				<div className="col-md-4">
-					<Switch item={item} field={adminLanguageFormDefault} inputFields={inputFields} errors={containerState.errors} onChange={inputChange} options={defaultOptions}/>
+					<Switch itemState={itemState} field={adminLanguageFormDefault} inputChange={inputChange} options={defaultOptions}/>
 				</div>
 			</div>
 			
@@ -109,11 +111,9 @@ export default function LanguageModifyView({containerState, item, inputFields, a
 
 
 LanguageModifyView.propTypes = {
-  containerState: PropTypes.object,
-  item: PropTypes.object,
-  appPrefs: PropTypes.object,
-  itemPrefForms: PropTypes.object,
-  onSave: PropTypes.func,
-  onCancel: PropTypes.func,
-  inputChange: PropTypes.func
+  itemState: PropTypes.object.isRequired,
+  appPrefs: PropTypes.object.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  inputChange: PropTypes.func.isRequired
 };
