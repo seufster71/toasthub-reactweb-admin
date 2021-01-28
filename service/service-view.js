@@ -1,76 +1,74 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Table from '../../coreView/common/table';
+import ListBuilder from '../../coreView/common/list-builder';
 import Modal from '../../coreView/common/modal';
-import Input from '../../coreView/common/text-input';
-import Select from '../../coreView/common/select-input';
 
-export default function ServiceView({containerState, services, appPrefs, onListLimitChange,
-	onSearchChange, onSearchClick, onPaginationClick, onColumnSort, openEditModal, openDeleteModal, closeModal, onSaveService, onDeleteService, inputChange}) {
+export default function ServiceView({itemState, appPrefs, onListLimitChange,
+	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, onOption, 
+	closeModal, session}) {
 
 	let columns = [];
-	if (services.prefLabels != null && services.prefLabels.ADMIN_SERVICE_CRAWLER_TABLE != null) {
-		columns = services.prefLabels.ADMIN_SERVICE_CRAWLER_TABLE;
+	if (itemState.prefLabels != null && itemState.prefLabels.ADMIN_SERVICES_PAGE != null) {
+		columns = itemState.prefLabels.ADMIN_SERVICES_PAGE;
 	}
-	let header = "Services";
-	if (services.prefTexts.ADMIN_SERVICE_CRAWLER_PAGE != null && services.prefTexts.ADMIN_SERVICE_CRAWLER_PAGE.ADMIN_SERVICE_CRAWLER_PAGE_HEADER != null) {
-		header = services.prefTexts.ADMIN_SERVICE_CRAWLER_PAGE.ADMIN_SERVICE_CRAWLER_PAGE_HEADER;
+	let group = "TABLE1";
+	
+	let header = "";
+	if (itemState.prefTexts.ADMIN_SERVICES_PAGE != null && itemState.prefTexts.ADMIN_SERVICES_PAGE.ADMIN_SERVICES_PAGE_HEADER != null) {
+		header = itemState.prefTexts.ADMIN_SERVICES_PAGE.ADMIN_SERVICES_PAGE_HEADER.value;
 	}
+	
+	let deleteModalHeader = "Delete ";
+	if (itemState.selected != null && itemState.selected.title != null) {
+		deleteModalHeader += itemState.selected.title.defaultText;
+	}
+	
+	let viewPortSmall = false;
+	if (session.viewPort === 'small') { viewPortSmall = true }
 	
 	return (
 		<div>
-	  		<Table
-	  			containerState={containerState}
-	  			header={header}
-	  			items={services.items}
-	  			itemCount={services.itemCount}
-	  			listStart={services.listStart}
-	  			listLimit={services.listLimit}
-	  			columns={columns}
-	  			appPrefs={appPrefs}
-	  			onListLimitChange={onListLimitChange}
-	  			onSearchChange={onSearchChange}
-	  			onSearchClick={onSearchClick}
-	  			onPaginationClick={onPaginationClick}
-	  			onColumnSort={onColumnSort}
-	  			openEditModal={openEditModal}
-	  			openDeleteModal={openDeleteModal}
-	  		/>
-	  		<Modal isOpen={containerState.isEditModalOpen} onClose={closeModal()} >
+			{viewPortSmall ? (
+    			<ListBuilder
+		  	      	itemState={itemState}
+		  	      	header={header}
+		  	     	columns={columns}
+		  	      	appPrefs={appPrefs}
+		  	      	onListLimitChange={onListLimitChange}
+		  	      	onSearchChange={onSearchChange}
+		  	      	onSearchClick={onSearchClick}
+		  	      	onPaginationClick={onPaginationClick}
+		  			onOrderBy={onOrderBy}
+	  				onOption={onOption}
+		  	      />
+    		) : (
+		  		<Table
+		  			itemState={itemState}
+		  			header={header}
+		  			columns={columns}
+		  			labelGroup = {group}
+		  			appPrefs={appPrefs}
+		  			onListLimitChange={onListLimitChange}
+		  			onSearchChange={onSearchChange}
+		  			onSearchClick={onSearchClick}
+		  			onPaginationClick={onPaginationClick}
+					onOption={onOption}
+		  		/>
+	  		)}
+	  		<Modal isOpen={itemState.isDeleteModalOpen} onClose={() => closeModal()} >
 	  			<div className="modal-dialog">
 	  				<div className="modal-content">
 	  					<div className="modal-header">
 	  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-	  						<h4 className="modal-title">User</h4>
-	  					</div>
-	  					<div className="modal-body">
-	  						<Input name="SERVICE_NAME_input" label="Name" required="true" errors={containerState.errors} onChange={inputChange('name')} value={(services.selected != null && services.selected.name != null)?services.selected.name:""}/>
-	  						<Input name="SERVICE_CODE_input" label="Code" required="true" errors={containerState.errors} onChange={inputChange('code')} value={(services.selected != null && services.selected.code != null)?services.selected.code:""}/>
-	  						
-	          
-	  						
-	  						
-	  					</div>
-	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onSaveService()}>Save</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
-	  					</div>
-	  				</div>
-	  			</div>
-	  		</Modal>
-	  		<Modal isOpen={containerState.isDeleteModalOpen} onClose={closeModal()} >
-	  			<div className="modal-dialog">
-	  				<div className="modal-content">
-	  					<div className="modal-header">
-	  						<button type="button" className="close" data-dismiss="modal" aria-hidden="true"><i className="fa fa-close"/></button>
-	  						<h4 className="modal-title">Delete {containerState.selectedName}</h4>
+	  						<h4 className="modal-title">{deleteModalHeader}</h4>
 	  					</div>
 	  					<div className="modal-body">
 	  						<h3>Are you sure you want to delete?</h3>
 	  					</div>
 	  					<div className="modal-footer">
-	  						<button type="button" className="btn btn-primary" onClick={onDeleteService(containerState.selectedId)}>Delete</button>
-	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal()}>Close</button>
+	  						<button type="button" className="btn btn-primary" onClick={() => onOption("DELETEFINAL",itemState.selected)}>Delete</button>
+	  						<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => closeModal()}>Close</button>
 	  					</div>
 	  				</div>
 	  			</div>
@@ -81,18 +79,15 @@ export default function ServiceView({containerState, services, appPrefs, onListL
 
 
 ServiceView.propTypes = {
-	containerState: PropTypes.object,
-	services: PropTypes.object,
-	appPrefs: PropTypes.object,
+	itemState: PropTypes.object.isRequired,
+	appPrefs: PropTypes.object.isRequired,
 	onListLimitChange: PropTypes.func,
 	onSearchChange: PropTypes.func,
 	onSearchClick: PropTypes.func,
 	onPaginationClick: PropTypes.func,
-	onColumnSort: PropTypes.func,
-	openEditModal: PropTypes.func,
+	onOrderBy: PropTypes.func,
 	openDeleteModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	onSaveService: PropTypes.func,
-	onDeleteService: PropTypes.func,
-	inputChange: PropTypes.func
+	onOption: PropTypes.func,
+  	session: PropTypes.object
 };

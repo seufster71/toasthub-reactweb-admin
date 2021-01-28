@@ -21,7 +21,6 @@ export default function UsersModifyView({itemState, appPrefs,
     		options.push({"value":appPrefs.prefGlobal.LANGUAGES[i].code, "label":name});
     	}
     }
-    let item = itemState.selected;
     let adminUserFormFirstName = {};
     
     let adminUserFormMiddleName = {};

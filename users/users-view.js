@@ -7,7 +7,7 @@ import Modal from '../../coreView/common/modal';
 
 export default function UsersView({itemState, appPrefs, onListLimitChange,
 	onSearchChange, onSearchClick, onPaginationClick, onOrderBy, onOption, 
-	closeModal, inputChange, session}) {
+	closeModal, session}) {
 
     let columns = [];
     if (itemState.prefLabels != null && itemState.prefLabels.ADMIN_USER_PAGE != null) {
@@ -82,7 +82,7 @@ export default function UsersView({itemState, appPrefs, onListLimitChange,
 
 UsersView.propTypes = {
   	itemState: PropTypes.object.isRequired,
-  	appPrefs: PropTypes.object,
+  	appPrefs: PropTypes.object.isRequired,
   	onListLimitChange: PropTypes.func,
   	onSearchChange: PropTypes.func,
   	onSearchClick: PropTypes.func,
@@ -91,6 +91,5 @@ UsersView.propTypes = {
   	openDeleteModal: PropTypes.func,
   	closeModal: PropTypes.func,
   	onOption: PropTypes.func,
-  	inputChange: PropTypes.func,
   	session: PropTypes.object
 };
