@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TextBuilder from '../../coreView/common/text-input-builder';
 import SelectBuilder from '../../coreView/common/select-input-builder';

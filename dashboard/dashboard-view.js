@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Charts from 'react-chartjs-2';
 import StatTile from '../../coreView/common/stat-tile';
 import Graph from '../../coreView/common/graphs';
 import ProgressBar from '../../coreView/common/progress-bar';
 
-export default function DashboardView({currentState, fields, texts, labels, onChangeLogin,
+export default function DashboardView({itemState, fields, texts, labels, onChangeLogin,
   onChangeRegistration, fieldChangeEvent, onForgotPassword,
   fieldBlurEvent, buttonClick, handleChange, changeView, stats }) {
 
@@ -49,8 +48,8 @@ export default function DashboardView({currentState, fields, texts, labels, onCh
       }]
     };
     let v1 = "0";
-    if (stats.itemCount != null) {
-      v1 = stats.itemCount.toString();
+    if (itemState.stats != null && itemState.stats.itemCount != null) {
+      v1 = itemState.stats.itemCount.toString();
     }
     let v2 = "15,000";
     let v3 = "+12,000";
