@@ -86,7 +86,7 @@ export default function UserRolesModifyView({itemState, appPrefs, onSave, onCanc
     
     
     return (
-    	<div className="col-lg-12">
+    	<div className="container">
 			<h4 className="modal-title">User to Role</h4>
 			{created}
 			{modified}

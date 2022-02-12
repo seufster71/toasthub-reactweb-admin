@@ -101,7 +101,7 @@ export default function PermissionsModifyView({itemState, appPrefs, onSave, onCa
     }
     
     return (
-    	<div className="col-lg-12">
+    	<div className="container">
 			<h4 className="modal-title">Permission</h4>
 			{created}
 			{modified}

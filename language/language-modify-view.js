@@ -73,7 +73,7 @@ export default function LanguageModifyView({itemState, appPrefs,
     	}
     }
     return (
-    	<div className="col-lg-12">
+    	<div className="container">
     		
 			<h4 className="modal-title">Language</h4>
 

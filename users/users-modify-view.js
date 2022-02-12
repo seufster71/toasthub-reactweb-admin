@@ -94,7 +94,7 @@ export default function UsersModifyView({itemState, appPrefs,
     	}
     }
     return (
-    	<div className="col-lg-12">
+    	<div className="container">
     		
 			<h4 className="modal-title">User</h4>
 

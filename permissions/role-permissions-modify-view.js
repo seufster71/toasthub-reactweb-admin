@@ -84,7 +84,7 @@ export default function RolePermissionsModifyView({itemState, appPrefs, onSave, 
     }
     
     return (
-    	<div className="col-lg-12">
+    	<div className="container">
 			<h4 className="modal-title">Role to Permission</h4>
 			{created}
 			{modified}
