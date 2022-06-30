@@ -74,7 +74,7 @@ export default function PreferencesView({itemState, appPrefs, onListLimitChange,
                   	<div><small>Modified: {modified}</small></div>
                 </div>
                 <div className="col-md-4">
-                  	<i className="fa fa-pencil-square-o fa-1" onClick={() => onOption("MODIFY")}/>
+                  	<i className="fa-regular fa-pen-to-square thub-1" onClick={() => onOption("MODIFY")}/>
                   	<i className="fa fa-trash fa-1" onClick={() => onOption("DELETE")}/>
                 	<i className="fa fa-id-card fa-1" aria-hidden="true"></i>
                 	<i className="fa fa-tag fa-1" aria-hidden="true"></i>
