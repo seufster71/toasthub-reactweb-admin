@@ -86,29 +86,33 @@ export default function RolesModifyView({itemState, appPrefs,
 			<h4 className="modal-title">Role</h4>
 			{created}
 			{modified}
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<MultiLangTextInput field={adminRoleFormTitle} itemState={itemState} inputChange={inputChange} appPrefs={appPrefs}/>		
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<TextBuilder field={adminRoleFormCode} itemState={itemState} inputChange={inputChange}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<SelectBuilder field={adminRoleFormApplication} itemState={itemState} inputChange={inputChange} options={applicationOptions}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-md-4">
 					<Switch field={adminRoleFormActive} itemState={itemState} inputChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>
 			
-			<button type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
-			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+			<div className="row thub-field">
+				<div className="col-md-4">
+					<button id={itemState.pageName+"-BUTTON-SAVE"} type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
+					<button id={itemState.pageName+"-BUTTON-CANCEL"} type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+				</div>
+			</div>
     	</div>
     );
 }

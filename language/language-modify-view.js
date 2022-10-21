@@ -77,34 +77,37 @@ export default function LanguageModifyView({itemState, appPrefs,
     		
 			<h4 className="modal-title">Language</h4>
 
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<MultiLangTextInput field={adminLanguageFormTitle} itemState={itemState} inputChange={inputChange} appPrefs={appPrefs}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<TextBuilder itemState={itemState} field={adminLanguageFormCode} inputChange={inputChange}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-md-4">
 					<SelectBuilder itemState={itemState} field={adminLanguageFormDirection} inputChange={inputChange}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-md-4">
 					<Switch itemState={itemState} field={adminLanguageFormActive} inputChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>	
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-md-4">
 					<Switch itemState={itemState} field={adminLanguageFormDefault} inputChange={inputChange} options={defaultOptions}/>
 				</div>
 			</div>
-			
-			<button type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
-			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+			<div className="row thub-field">
+				<div className="col-sm-4">
+					<button id={itemState.pageName+"-BUTTON-SAVE"} type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
+					<button id={itemState.pageName+"-BUTTON-CANCEL"} type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+				</div>
+			</div>
     	</div>
     );
 }
