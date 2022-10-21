@@ -98,7 +98,7 @@ export default function UsersModifyView({itemState, appPrefs,
     		
 			<h4 className="modal-title">User</h4>
 
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<TextBuilder field={adminUserFormFirstName} itemState={itemState} inputChange={inputChange}/>
 				</div>
@@ -113,7 +113,7 @@ export default function UsersModifyView({itemState, appPrefs,
 			<TextBuilder field={adminUserFormEmail} itemState={itemState} inputChange={inputChange}/>
 			<TextBuilder field={adminUserFormAlternateEmail} itemState={itemState} inputChange={inputChange}/>
 			<TextBuilder field={adminUserFormZipcode} itemState={itemState} inputChange={inputChange}/>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<TextBuilder field={adminUserFormPassword} itemState={itemState} inputChange={inputChange} onBlur={onBlur}/>
 				</div>
@@ -124,7 +124,7 @@ export default function UsersModifyView({itemState, appPrefs,
 					<Switch field={adminUserFormForceReset} itemState={itemState} inputChange={inputChange} />
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-md-4">
 					<Switch field={adminUserFormActive} itemState={itemState} inputChange={inputChange} />
 				</div>
@@ -135,9 +135,12 @@ export default function UsersModifyView({itemState, appPrefs,
 					<SelectBuilder field={adminUserFormLogLevel} itemState={itemState} inputChange={inputChange}/>
 				</div>
 			</div>
-			
-			<button type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
-			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+			<div className="row thub-field">
+				<div className="col-md-4">
+					<button id={itemState.pageName+"-BUTTON-SAVE"} type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
+					<button id={itemState.pageName+"-BUTTON-CANCEL"} type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+				</div>
+			</div>
     	</div>
     );
 }

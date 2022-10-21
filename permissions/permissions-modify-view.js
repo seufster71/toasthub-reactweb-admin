@@ -105,34 +105,37 @@ export default function PermissionsModifyView({itemState, appPrefs, onSave, onCa
 			<h4 className="modal-title">Permission</h4>
 			{created}
 			{modified}
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<MultiLangTextInput itemState={itemState} field={adminPermissionFormTitle} inputChange={inputChange} appPrefs={appPrefs}/>		
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<TextBuilder itemState={itemState} field={adminPermissionFormCode} inputChange={inputChange}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<SelectBuilder itemState={itemState} field={adminPermissionFormApplication} inputChange={inputChange} options={applicationSelectList}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-sm-4">
 					<SelectBuilder itemState={itemState} field={adminPermissionFormRights} inputChange={inputChange}/>
 				</div>
 			</div>
-			<div className="row">
+			<div className="row thub-field">
 				<div className="col-md-4">
 					<Switch itemState={itemState} field={adminPermissionFormActive} inputChange={inputChange} options={activeOptions}/>
 				</div>
 			</div>
-			
-			<button type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
-			<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+			<div className="row thub-field">
+				<div className="col-md-4">
+					<button id={itemState.pageName+"-BUTTON-SAVE"} type="button" className="btn btn-primary" onClick={() => onSave()}>Save</button>
+					<button id={itemState.pageName+"-BUTTON-CANCEL"} type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => onCancel()}>Cancel</button>
+				</div>
+			</div>
     	</div>
     );
 }
